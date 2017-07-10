@@ -1,4 +1,4 @@
-package com.xxxman.test.hj.autotest_hj_android;
+package com.xxxman.test.hj;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
