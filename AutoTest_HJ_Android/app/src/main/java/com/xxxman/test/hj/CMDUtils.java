@@ -41,6 +41,8 @@ public class CMDUtils {
         int result;
         try {
             Process process = Runtime.getRuntime().exec(command);
+            Log.i(TAG, "process:" + process);
+
             result = process.waitFor();
             if (isNeedResultMsg) {
                 StringBuilder successMsg = new StringBuilder();

@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 @RunWith(AndroidJUnit4.class)
 public class HJTest1 {
 
@@ -29,6 +31,11 @@ public class HJTest1 {
     public void setUp() throws RemoteException {
         Log.d("--------",(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
         Log.d("--------","上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        try {
+            Runtime.getRuntime().exec("su");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
         mContext = InstrumentationRegistry.getContext();
 
