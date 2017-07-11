@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
-                    "com.xxxman.test.hj.HJTest1 com.xxxman.test.hj.autotest_hj_android.test/android.support.test.runner.AndroidJUnitRunner";
+                    "com.xxxman.autotest.shell.HJTest1 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.e(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
