@@ -23,6 +23,7 @@
                 android:text="分享阳光任务"
                 />
             <TextView
+                android:id="@+id/task_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="已完成0个，待处理1000个!" />

@@ -1,9 +1,14 @@
 package com.xxxman.autotest.shell;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
@@ -18,6 +23,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
@@ -52,6 +59,17 @@ public class HJTest1 {
         Log.d(TAG,path);
         List<FileUtil.UserRecord> list = FileUtil.ReadTxtFile(path+"/user_list.txt");
         Log.d(TAG,"user_list.txt中用户数量："+list.size());
+
+//        SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(Environment.getDataDirectory()+"/data/com.xxxman.autotest.shell/hj.db",null);
+//        if (!SQLUtil.tabbleIsExist(db,"count")){
+//            SQLUtil.createTable(db);
+//        }
+//        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
+//        cv.put("task_count",list.size());
+//        cv.put("suess_count",0);
+//        cv.put("fail_count",0);
+//        db.insert("count",null,cv);//执行插入操作
+
         for(FileUtil.UserRecord user:list) {
             try {
                 test1(user) ;
