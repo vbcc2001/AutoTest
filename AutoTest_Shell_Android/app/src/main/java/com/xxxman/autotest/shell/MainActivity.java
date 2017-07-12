@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button getRoot;
     TextView rootTextView;
     TextView taskView;
+    SQLUtil sqlUtil = new SQLUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,27 +41,33 @@ public class MainActivity extends AppCompatActivity {
         rootTextView = (TextView) findViewById(R.id.root_view);
         taskView =  (TextView) findViewById(R.id.task_view);
 
-        String path = null;
-        try {
-            path = Environment.getExternalStorageDirectory().getCanonicalPath();
-        } catch (IOException e) {
-            e.printStackTrace();
+        //读取txt文档
+        if (!sqlUtil.tabbleIsExist("user")){
+            try {
+                sqlUtil.createTableUser();
+                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                List<User> list = FileUtil.ReadTxtFile(path+"/user_list.txt");
+                Log.d(TAG,"user_list.txt中用户数量："+list.size());
+                sqlUtil.inserUser(list);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+            }
         }
-        Log.d(TAG,path);
-        List<FileUtil.UserRecord> list = FileUtil.ReadTxtFile(path+"/user_list.txt");
-        Log.d(TAG,"user_list.txt中用户数量："+list.size());
-
-        SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(Environment.getDataDirectory()+"/data/com.xxxman.autotest.shell/hj.db",null);
-        if (!SQLUtil.tabbleIsExist(db,"count")){
-            SQLUtil.createTable(db);
+        if (!sqlUtil.tabbleIsExist("count")){
+            sqlUtil.createTableCount();
         }
-        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
-        cv.put("task_count",list.size());
-        cv.put("suess_count",0);
-        cv.put("fail_count",0);
-        db.insert("count",null,cv);//执行插入操作
-        taskView.setText("已完成0个，待处理"+list.size()+"个!" );
 
+        int user_count = 0;
+        int task_count = 0;
+        //int end_count = 0;
+        int success_count = 0;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String dateString = formatter.format(new Date());
+        user_count =sqlUtil.selectUserCount();
+        task_count =sqlUtil.selectTaskCount();
+        success_count =sqlUtil.selectSuccessCount();
+        taskView.setText(dateString+"\n任务数"+user_count+"，已处理"+task_count+"个，成功"+success_count+"个!" );
 
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
@@ -68,25 +77,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runMyUiautomator(View v) {
-        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
-        cv.put("task_count",0);
-        cv.put("suess_count",0);
-        cv.put("fail_count",0);
-        SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(Environment.getDataDirectory()+"/data/com.xxxman.autotest.shell/hj.db",null);
-        if (SQLUtil.tabbleIsExist(db,"count")){
-            String sql =  "select task_count,suess_count,fail_count  from count order by _id desc limit 0,1";
-            Cursor c  = db.rawQuery(sql,null);
-            while (c.moveToNext())
-            {
-                cv.put("task_count",c.getInt(c.getColumnIndex("task_count")));
-                cv.put("suess_count",c.getInt(c.getColumnIndex("suess_count")));
-                cv.put("fail_count",c.getInt(c.getColumnIndex("fail_count")));
-            }
-            Log.i(TAG, "任务数为:"+cv.get("task_count"));
+        if (sqlUtil.tabbleIsExist("user")) {
+            new UiautomatorThread().start();
+            Log.i(TAG, "runMyUiautomator: ");
+        }else{
+            Toast.makeText(getApplicationContext(), "无用户可进行测试！", Toast.LENGTH_LONG).show();
         }
-        Log.i(TAG, "runMyUiautomator: ");
-        //get_root();
-        new UiautomatorThread().start();
     }
 
     /**

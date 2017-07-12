@@ -27,11 +27,11 @@ public class FileUtil {
     private static final String TAG = FileUtil.class.getSimpleName();
 
     //读取文本文件中的内容
-    public static List<UserRecord> ReadTxtFile(String strFilePath)
+    public static List<User> ReadTxtFile(String strFilePath)
     {
         String path = strFilePath;
         String content = ""; //文件内容字符串
-        List<UserRecord> list = new ArrayList<UserRecord>();
+        List<User> list = new ArrayList<User>();
         //打开文件
         File file = new File(path);
         //如果path是传递过来的参数，可以做一个非目录的判断
@@ -52,7 +52,7 @@ public class FileUtil {
                     while (( line = buffreader.readLine()) != null) {
                         String[] strArray = null;
                         strArray = line.split(",");
-                        list.add(new UserRecord(strArray[0],strArray[1]));
+                        list.add(new User(0,strArray[0],strArray[1]));
                     }
                     instream.close();
                 }
@@ -67,13 +67,5 @@ public class FileUtil {
             }
         }
         return list;
-    }
-    static class UserRecord {
-        String phone;
-        String password;
-        public UserRecord(String phone, String password) {
-            this.phone = phone;
-            this.password = password;
-        }
     }
 }

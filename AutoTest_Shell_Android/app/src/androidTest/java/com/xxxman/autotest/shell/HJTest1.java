@@ -36,6 +36,7 @@ public class HJTest1 {
     String APP = "com.huajiao";
     int log_count = 0;
     int count_get_sun = 0;
+    SQLUtil sqlUtil = new SQLUtil();
 
     @Before
     public void setUp() throws RemoteException {
@@ -50,29 +51,13 @@ public class HJTest1 {
     }
     @Test
     public void test_for(){
-        String path = null;
-        try {
-            path = Environment.getExternalStorageDirectory().getCanonicalPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG,path);
-        List<FileUtil.UserRecord> list = FileUtil.ReadTxtFile(path+"/user_list.txt");
-        Log.d(TAG,"user_list.txt中用户数量："+list.size());
-
-//        SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(Environment.getDataDirectory()+"/data/com.xxxman.autotest.shell/hj.db",null);
-//        if (!SQLUtil.tabbleIsExist(db,"count")){
-//            SQLUtil.createTable(db);
-//        }
-//        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
-//        cv.put("task_count",list.size());
-//        cv.put("suess_count",0);
-//        cv.put("fail_count",0);
-//        db.insert("count",null,cv);//执行插入操作
-
-        for(FileUtil.UserRecord user:list) {
+        List<User> list = sqlUtil.selectUser();
+        for(User user:list) {
             try {
+                //计数
+                sqlUtil.inserCount(user);
                 test1(user) ;
+                sqlUtil.updateEndCount(user);
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
@@ -84,7 +69,7 @@ public class HJTest1 {
         }
     }
 
-    public void test1(FileUtil.UserRecord user) throws Exception {
+    public void test1(User user) throws Exception {
 
         int count_share = 0;
 
@@ -99,7 +84,7 @@ public class HJTest1 {
             share();
             count_share++;
         }
-        getSunshine();          //6.领取阳光
+        getSunshine(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
         closeAd();          //尝试关广告
         quit();         //8.退出
@@ -117,7 +102,7 @@ public class HJTest1 {
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
     }
     //登录流程
-    public void login(FileUtil.UserRecord user) throws Exception {
+    public void login(User user) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
@@ -130,7 +115,7 @@ public class HJTest1 {
             UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
             phone.setText(user.phone);
             UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
-            password.setText(user.password);
+            password.setText(user.pwd);
             UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
             logining.click();
             Thread.sleep(2000);
@@ -205,7 +190,7 @@ public class HJTest1 {
         qq_back.click();  //点击按键
 
     }
-    public void getSunshine() throws Exception {
+    public void getSunshine(User user) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
@@ -218,6 +203,7 @@ public class HJTest1 {
             if(end != null){
                 count_get_sun ++;
                 Log.i(TAG,"count_get_sun:"+count_get_sun);
+                sqlUtil.updateSuccessCount(user);
             }
         }
         mUIDevice.pressBack();

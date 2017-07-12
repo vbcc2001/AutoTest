@@ -11,31 +11,34 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:background="@drawable/border">
+
             <Button
                 android:id="@+id/runBtn"
                 android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:onClick="runMyUiautomator"
-                android:text="分享阳光任务"
-                />
+                android:text="分享阳光任务" />
+
             <TextView
                 android:id="@+id/task_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="已完成0个，待处理1000个!" />
         </LinearLayout>
-    <LinearLayout
+
+        <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:background="@drawable/border">
         <Button
             android:id="@+id/getRoot"
             android:layout_width="160dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:onClick="get_root"
             android:text="获取Root权限" />
         <TextView
