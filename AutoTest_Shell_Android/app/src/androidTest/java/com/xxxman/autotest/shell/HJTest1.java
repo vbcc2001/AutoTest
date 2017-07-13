@@ -12,9 +12,12 @@ import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.Direction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 
@@ -47,12 +50,15 @@ public class HJTest1 {
         if(!mUIDevice.isScreenOn()){  //唤醒屏幕
             mUIDevice.wakeUp();
         }
-        mUIDevice.pressHome();  //按home键
+        //mUIDevice.pressHome();  //按home键
     }
     @Test
     public void test_for(){
+
+
         List<User> list = sqlUtil.selectUser();
         for(User user:list) {
+            Log.d(TAG,user.pwd+"---");
             try {
                 //计数
                 sqlUtil.inserCount(user);
@@ -114,7 +120,8 @@ public class HJTest1 {
             login.click();
             UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
             phone.setText(user.phone);
-            UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
+            //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
+            UiObject password = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/pwd_et"));
             password.setText(user.pwd);
             UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
             logining.click();
@@ -127,12 +134,17 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
         my.click();
-        UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
-        my_page.click();
-        mUIDevice.swipe(100, 1676, 100, 600, 20);
+        //UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
+        //my_page.click();
+
+        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
+        home.scrollToEnd(10);
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
-        mUIDevice.swipe(100, 1676, 100, 600, 20);
+        UiObject2 set = mUIDevice.findObject(By.res("android:id/content")).getChildren().get(0).getChildren().get(1);
+        set.scroll(Direction.DOWN, 0.8f);
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
         UiObject quit = mUIDevice.findObject(new UiSelector().text("退出登录"));
         quit.click();
         UiObject quit_ok = mUIDevice.findObject(new UiSelector().text("退出"));
@@ -199,12 +211,13 @@ public class HJTest1 {
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
             get_.click();
-            UiObject2 end = get.getParent().findObject(By.text("已完成"));
-            if(end != null){
-                count_get_sun ++;
-                Log.i(TAG,"count_get_sun:"+count_get_sun);
-                sqlUtil.updateSuccessCount(user);
-            }
+            sqlUtil.updateSuccessCount(user);
+//            UiObject2 end = get.getParent().findObject(By.text("已完成"));
+//            if(end != null){
+//                count_get_sun ++;
+//                Log.i(TAG,"count_get_sun:"+count_get_sun);
+//                sqlUtil.updateSuccessCount(user);
+//            }
         }
         mUIDevice.pressBack();
     }

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 sqlUtil.createTableUser();
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-                List<User> list = FileUtil.ReadTxtFile(path+"/user_list.txt");
+                List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
                 Log.d(TAG,"user_list.txt中用户数量："+list.size());
                 sqlUtil.inserUser(list);
             } catch (IOException e) {
