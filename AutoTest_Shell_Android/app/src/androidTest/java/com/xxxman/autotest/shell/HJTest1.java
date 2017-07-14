@@ -19,7 +19,9 @@ import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
+import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +48,22 @@ public class HJTest1 {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
+        mUIDevice.registerWatcher("notifation", new UiWatcher() {
+
+            @Override
+            public boolean checkForCondition() {
+                // just press back
+                Log.d(TAG,":进入Watcher");
+                try {
+                    closeAd();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //mUIDevice.pressKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
+                return false;
+            }
+        });
+        //mUIDevice.waitForIdle(3000); //设置等待时间
         mContext = InstrumentationRegistry.getContext();
         if(!mUIDevice.isScreenOn()){  //唤醒屏幕
             mUIDevice.wakeUp();
@@ -142,6 +160,7 @@ public class HJTest1 {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         mContext.startActivity(intent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
+
     }
     //登录流程
     public void login(User user) throws Exception {
@@ -174,7 +193,7 @@ public class HJTest1 {
         //my_page.click();
 
         UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
-        home.scrollToEnd(10);
+        home.scrollToEnd(1);
         //mUIDevice.swipe(100, 1676, 100, 600, 20);
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
@@ -224,9 +243,7 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
-        share.
         share.click();
-
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 

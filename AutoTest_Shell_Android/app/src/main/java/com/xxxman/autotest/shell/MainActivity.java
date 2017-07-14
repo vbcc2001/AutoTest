@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runMyUiautomator(View v) {
-        if (sqlUtil.selectFailCount().size()>0) {
+        if (sqlUtil.selectTaskCount()>0 || sqlUtil.selectFailCount().size()>0) {
             new UiautomatorThread().start();
             Log.i(TAG, "runMyUiautomator: ");
         }else{
