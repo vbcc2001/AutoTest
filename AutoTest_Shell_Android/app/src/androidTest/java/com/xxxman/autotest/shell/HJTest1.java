@@ -171,8 +171,13 @@ public class HJTest1 {
         UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
         if(login==null){
             quit();
-        }else{
+            my = mUIDevice.findObject(new UiSelector().text("我的"));
+            my.click();
+            UiObject2 login1 = mUIDevice.findObject(By.text("使用手机号登录"));
             login.click();
+        }else {
+            login.click();
+        }
             UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
             phone.setText(user.phone);
             //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
@@ -180,8 +185,7 @@ public class HJTest1 {
             password.setText(user.pwd);
             UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
             logining.click();
-            Thread.sleep(2000);
-        }
+            //Thread.sleep(2000);
     }
     //退出流程
     public void quit() throws Exception {
@@ -204,7 +208,7 @@ public class HJTest1 {
         quit.click();
         UiObject quit_ok = mUIDevice.findObject(new UiSelector().text("退出"));
         quit_ok.click();  //点击按键
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
     }
     //关闭弹窗广告
     public void closeAd() throws Exception {
