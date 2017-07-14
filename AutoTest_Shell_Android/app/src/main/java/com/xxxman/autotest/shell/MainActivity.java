@@ -41,33 +41,34 @@ public class MainActivity extends AppCompatActivity {
         rootTextView = (TextView) findViewById(R.id.root_view);
         taskView =  (TextView) findViewById(R.id.task_view);
 
+        if (!sqlUtil.tabbleIsExist("count")){
+            sqlUtil.createTableCount();
+        }
         //读取txt文档
-        if (!sqlUtil.tabbleIsExist("user")){
+        if(sqlUtil.selectUserCount()==0){
             try {
-                sqlUtil.createTableUser();
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
                 List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
                 Log.d(TAG,"user_list.txt中用户数量："+list.size());
-                sqlUtil.inserUser(list);
+                sqlUtil.inserCount(list);
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
             }
         }
-        if (!sqlUtil.tabbleIsExist("count")){
-            sqlUtil.createTableCount();
-        }
 
         int user_count = 0;
         int task_count = 0;
+        int end_task_count = 0;
         //int end_count = 0;
         int success_count = 0;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         String dateString = formatter.format(new Date());
         user_count =sqlUtil.selectUserCount();
         task_count =sqlUtil.selectTaskCount();
+        end_task_count =sqlUtil.selectEndTaskCount();
         success_count =sqlUtil.selectSuccessCount();
-        taskView.setText(dateString+"\n任务数"+user_count+"，已处理"+task_count+"个，成功"+success_count+"个!" );
+        taskView.setText(dateString+":总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!" );
 
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
@@ -77,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runMyUiautomator(View v) {
-        if (sqlUtil.tabbleIsExist("user")) {
+        if (sqlUtil.selectFailCount().size()>0) {
             new UiautomatorThread().start();
             Log.i(TAG, "runMyUiautomator: ");
         }else{
-            Toast.makeText(getApplicationContext(), "无用户可进行测试！", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "无未完成任务可运行！", Toast.LENGTH_LONG).show();
         }
     }
 

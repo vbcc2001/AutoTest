@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -67,5 +68,30 @@ public class FileUtil {
             }
         }
         return list;
+    }
+    public static void writeTxtFile(List<User> list ,String path,String name) {
+        String filePath = path;
+        String fileName = name;
+        //生成文件夹之后，再生成文件，不然会出错
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(filePath +"/"+ fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            for(User user:list){
+                String content = user.phone+","+user.pwd+"\r\n";
+                raf.write(content.getBytes());
+            }
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

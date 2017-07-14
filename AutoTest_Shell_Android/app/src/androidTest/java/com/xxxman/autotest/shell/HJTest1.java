@@ -52,17 +52,27 @@ public class HJTest1 {
         }
         //mUIDevice.pressHome();  //按home键
     }
+    //@Test
+    public void test_test() {
+        List<User> list = sqlUtil.selectFailCount();
+        try {
+            getSunshine(list.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     @Test
     public void test_for(){
-
 
         List<User> list = sqlUtil.selectUser();
         for(User user:list) {
             Log.d(TAG,user.pwd+"---");
             try {
-                //计数
-                sqlUtil.inserCount(user);
+                //执行任务
+                sqlUtil.updateTaskCount(user);
                 test1(user) ;
+                //完成任务
                 sqlUtil.updateEndCount(user);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,6 +82,32 @@ public class HJTest1 {
                     e1.printStackTrace();
                 }
             }
+        }
+        list = sqlUtil.selectFailCount();
+        for(User user:list) {
+            Log.d(TAG,user.pwd+"---");
+            try {
+                //执行任务
+                sqlUtil.updateTaskCount(user);
+                test1(user) ;
+                //完成任务
+                sqlUtil.updateEndCount(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    reboot();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        String path = null;
+        try {
+            path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            list = sqlUtil.selectFailCount();
+            FileUtil.writeTxtFile(list,path,"fail_"+sqlUtil.dateString+".txt");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -186,7 +222,9 @@ public class HJTest1 {
     public void share() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
+        share.
         share.click();
 
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
@@ -212,12 +250,16 @@ public class HJTest1 {
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
             get_.click();
             sqlUtil.updateSuccessCount(user);
-//            UiObject2 end = get.getParent().findObject(By.text("已完成"));
-//            if(end != null){
-//                count_get_sun ++;
-//                Log.i(TAG,"count_get_sun:"+count_get_sun);
-//                sqlUtil.updateSuccessCount(user);
-//            }
+            Log.i(TAG,"count_get_sun:"+count_get_sun);
+        }else{
+            UiObject2 list = mUIDevice.findObject(By.res("com.huajiao:id/list_view"));
+            list.scroll(Direction.DOWN, 0.8f);
+            UiObject2 get1 = mUIDevice.findObject(By.text("分享直播(3/3)"));
+            UiObject2 end = get1.getParent().findObject(By.text("已完成"));
+            if(end != null){
+                sqlUtil.updateSuccessCount(user);
+                Log.i(TAG,"count_get_sun:"+count_get_sun);
+            }
         }
         mUIDevice.pressBack();
     }
