@@ -2,12 +2,15 @@ package com.xxxman.autotest.shell;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
         rootTextView = (TextView) findViewById(R.id.root_view);
         taskView =  (TextView) findViewById(R.id.task_view);
         registerView =  (TextView) findViewById(R.id.register_view);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
         if (!sqlUtil.tabbleIsExist("count")){
             sqlUtil.createTableCount();
         }
@@ -167,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,enctytCode);
                 Log.d(TAG,code);
                 Toast.makeText(getApplicationContext(), "code:"+code, Toast.LENGTH_LONG).show();
-                ImageView ivTwoCode= (ImageView) findViewById(R.id.iv);
+                ImageView ivTwoCode= (ImageView) findViewById(R.id.iv1);
                 Bitmap bitmap = ZXingUtils.createQRImage(sn, ivTwoCode.getWidth(), ivTwoCode.getHeight());
                 ivTwoCode.setImageBitmap(bitmap);
             } catch (Exception e) {
@@ -184,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
 //            //步骤3：提交
 //            editor.commit();
 //            Toast.makeText(getApplicationContext(), "口令设置成功", Toast.LENGTH_LONG).show();
-//            //步骤1：创建一个SharedPreferences接口对象
-//            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-//            //步骤2：获取文件中的值
-//            String value = read.getString("code", "");
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String value = read.getString("code", "");
 //            //Toast.makeText(getApplicationContext(), "口令为："+value, Toast.LENGTH_LONG).show();
 //            Toast.makeText(getApplicationContext(), "口令为："+SNUtil.getuniqueId(v.getContext()), Toast.LENGTH_LONG).show();
     }
