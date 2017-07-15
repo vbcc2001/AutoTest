@@ -121,33 +121,11 @@ public class MainActivity extends AppCompatActivity {
                     "0pKYeXoLkSdgWPxOL5tfuiSjewG06xMW+e2OQDvRFUhOgQM41eP8qF9KFaFduUzEiiQ5zYHUHHxC" +
                     "4sqrIHs1HzZJT6701bh4C3JYOAPo/j6qJw3nEtjb+Oo2AVqGcQr5PsGcH9bGoHSXYulrhyZCWQCq" +
                     "ioZotQIDAQAB";
-            String priKey = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDbOawumY+ZqZZyPOe+KKGF5e15\n" +
-                    "xEkJBeOfuuOrk5Cxwm8r6crTZICOlLLUYFfgk1UkosgL1cS0oewHqkYxcr4L2YdJZiGAXYnBerKU" +
-                    "Nc/EFlHf8kusk71rA3wmf0EswB5cKekZ+4afMf1FKKb365elEHCNuXLtgJtZkRj7mfXx0NCVc/hA" +
-                    "E7KHuMTSkph5eguRJ2BY/E4vm1+6JKN7AbTrExb57Y5AO9EVSE6BAzjV4/yoX0oVoV25TMSKJDnN" +
-                    "gdQcfELiyqsgezUfNklPrvTVuHgLclg4A+j+PqonDecS2Nv46jYBWoZxCvk+wZwf1sagdJdi6WuH" +
-                    "JkJZAKqKhmi1AgMBAAECggEBAJurS1nXz0GVS/CY0RKV9YSILeZefGI83VLKOerXIVMotxqerFkJ" +
-                    "r8QPUSE/vIcK99XJBXZp+IEvzdPvlGJ+kPcHI2r6a+WkBjLudqqJv5wFIWR9wECutD2uPtVzXYty" +
-                    "bNyTIiRCGGko7SjT4iSAFbGvh80Ll9GQlj+2qd/Xhu6LQWKj573rV5VhcEwDq6PAxWE+pGoYLn1b" +
-                    "ztHRFMeneR71maF1dl71f7OHwff/zIfk5Mu7n+dBxUwedOGUs3eAQNS36w+7/NtrSqHAmpiYj9Ck" +
-                    "IbguDq7ivQTM4Ar/SNwkz0q2RKwJ6hw4sxEcvLiEMbx4yg1vM6kJqh4KM7ICi8ECgYEA8SlWUKR8" +
-                    "rW4Hwx3i0a6QX1mpqTPYrbnKmTwCI967NxWVfVk7U/wzR00pr7zGz64hUnfvO+P4DdZnmve3yMok" +
-                    "iRnTeVEs2mvlcEyUe1WDOxudAIIlVHxQNCOw6Uac5qP0MHpWRHlSTjNEp/IOa5kPLvvhUYZ89dcQ" +
-                    "oYVhylUX+XECgYEA6LbOivFqgjHRldnJGXs3sVJUkHanuuaKVYa47O7qXK67bC8DFQyW6VQS0Vrm" +
-                    "DDN8d9+l0ZcS93mQOhot92KLVDxYHGY2m5Xk5oK6jqM7bbfzgXVa/k3VbZioaBjH5XFjEzDfiqZm" +
-                    "X7zcHGctZpKJJ5V3dmO9yTVLfj+9saFuYYUCgYEAywRUoJDIUKvXJv/KyWAeM9bkiAeYei91CejF" +
-                    "mHLRwj6OWTa8RiiC9pxT4piV+ZGKhcVnhVCVqvh6wa+WbRcXCL/QEkou6zV3skEVonpLfn/xfNMT" +
-                    "H/uC/VGqhccnINaXJBRo+T309tYcDxIr55KzgIcUmLASFFdXrdH+j/lwtFECgYAnr0T5nMG1Ahnj" +
-                    "nAgXOFP/ATM6j4F69eWRQDA492Uv+PwtLrcv173EfHnZCc9BNWZ8ar80RrcNTMWzotND5KIt8zxz" +
-                    "W1rknWMzjAeUW3G+/CeiZAjoZQ2IawgM+GzeS7/Bfgwg8M90dBh1H4M2graw8WQ15DxxG42MMgJ/" +
-                    "UDAqoQKBgQCOb2GyBjpLylRl+o8TEbIXzCE35n7QtyOOhl7XbvGPjpi8BLagvBh9f80m7ZN0bfum" +
-                    "1VBH6HjxCYS0zXnUnrqNHaGR4I2GZHafMkZ4YZPMxmz7K1YWBE0+Vyr0wIOkzdnzXzjmDlWjRdQU" +
-                    "fDLnED0zTJlv0Y8mHNs76XcWdqi1Rw==";
             RSAUtils.loadPublicKey(pubkey);
-            RSAUtils.loadPrivateKey(priKey);
             String enctytCode = null;
             try {
                 String sn_code = SNUtil.getuniqueId(v.getContext());
+                String sign = RSAUtils.sign(sn_code);
                 enctytCode = RSAUtils.encryptWithRSA(sn_code);
                 Log.d(TAG,sn_code);
                 Log.d(TAG,enctytCode);

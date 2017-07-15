@@ -7,6 +7,7 @@ package com.xxxman.autotest.shell;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
@@ -41,6 +42,8 @@ public class RSAUtils {
             Log.d(TAG,"Base64String="+priKey);
             Log.d(TAG,"---Public Key---\r\n"+kp.getPublic().toString());
             Log.d(TAG,"Base64String="+pubKey);
+            publicKey =(RSAPublicKey) kp.getPublic();
+            privateKey =(RSAPrivateKey) kp.getPrivate();
             return kp;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,37 +90,31 @@ public class RSAUtils {
         Log.d(TAG,"加密后长度="+output.length);
         return Base64.encodeToString(output, Base64.DEFAULT);
     }
+    //私钥解密
     public static String decryptWithRSA(String encryedData) throws Exception{
             // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
             cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] buffer = encryedData.getBytes("ISO-8859-1");
+            byte[] buffer = Base64.decode(encryedData, Base64.DEFAULT);
             byte[] output = cipher.doFinal(buffer);
             return new String(output);
     }
+    //签名
+    public static String sign(String data) throws Exception {
 
-    public void a(){
-        Signature Signer =Signature.getInstance("SHA1withRSA");
-
-        Signer.initSign(MyKey, new SecureRandom()); //Where do you get the key?
-
-        byte []Message = MyMessage(); //Initialize somehow
-
-        Signer.update(Message, 0, Message.length);
-
-        byte [] Signature = Sign.sign();
+        // 用私钥对信息生成数字签名
+        Signature signature = Signature.getInstance("MD5withRSA");
+        signature.initSign(privateKey);
+        signature.update(data.getBytes("utf-8"));
+        return Base64.encodeToString(signature.sign(),Base64.DEFAULT);
     }
+    //验证签名
+    public static boolean verify(String data,String sign) throws Exception {
 
-    /**
-     * 公钥解密过程
-     */
-//    public static String decryptWithRSA(String encryedData) throws Exception {
-//
-//        // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
-//        cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-//        cipher.init(Cipher.DECRYPT_MODE, publicKey);
-//        byte[] output = cipher.doFinal(Base64.decode(encryedData, Base64.DEFAULT));
-//        return new String(output);
-//    }
-    /**************************** RSA 公钥加密解密**************************************/
+        Signature signature = Signature.getInstance("MD5withRSA");
+        signature.initVerify(publicKey);
+        signature.update(data.getBytes("utf-8"));
+        // 验证签名是否正常
+        return signature.verify(Base64.decode(sign,Base64.DEFAULT));
+    }
 }
