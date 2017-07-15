@@ -50,6 +50,31 @@ public class SQLUtil {
         //执行SQL语句
         db.execSQL(stu_table);
     }
+    public  void createTableCode() {
+        //创建表SQL语句
+        String stu_table = "create table code(code String)";
+        //执行SQL语句
+        db.execSQL(stu_table);
+    }
+    public String selectCode(){
+
+        String sql = "select code from code ";
+        String code = "";
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            code = c.getString(c.getColumnIndex("code"));
+        }
+        Log.i(TAG, "code为:" + code);
+        return code;
+    }
+    public void inserCode(String code){
+        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
+        cv.put("code",code);
+        db.insert("code",null,cv);//执行插入操作
+    }
+    public void delCode(String code){
+        db.delete("code",null,null);
+    }
     public List<User> selectUser() {
         String sql = "select id,phone,pwd from count where task_count=0 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();

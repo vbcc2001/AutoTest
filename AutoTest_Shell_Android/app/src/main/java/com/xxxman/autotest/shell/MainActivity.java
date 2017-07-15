@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private static final String TAG = "MainActivity_HJ";
+    boolean is_code = false;
     Button runBtn;
     Button getRoot;
     TextView rootTextView;
@@ -43,23 +44,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         runBtn = (Button) findViewById(R.id.runBtn);
-        getRoot = (Button) findViewById(R.id.getRoot);
-
+        //getRoot = (Button) findViewById(R.id.getRoot);
         rootTextView = (TextView) findViewById(R.id.root_view);
+
         taskView =  (TextView) findViewById(R.id.task_view);
-        registerView =  (TextView) findViewById(R.id.register_view);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                MainActivity.this.startActivity(intent);
+                Log.d(TAG,"11111");
+                if(is_code) {
+                    Toast.makeText(getApplicationContext(), "已注册成功！", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, LoginActivity.class);
+                    MainActivity.this.startActivity(intent);
+                }
             }
         });
         if (!sqlUtil.tabbleIsExist("count")){
             sqlUtil.createTableCount();
+        }
+        if (!sqlUtil.tabbleIsExist("code")){
+            sqlUtil.createTableCode();
         }
         //读取txt文档
         if(sqlUtil.selectUserCount()==0){
@@ -92,15 +100,42 @@ public class MainActivity extends AppCompatActivity {
             rootTextView.setText("已经获取Root权限！" );
             rootTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
         }
-        registerView.setText("本机识别码为："+SNUtil.getuniqueId(registerView.getContext()));
+
+        String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
+                "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +
+                "3/JLrJO9awN8Jn9BLMAeXCnpGfuGnzH9RSim9+uXpRBwjbly7YCbWZEY+5n18dDQlXP4QBOyh7jE" +
+                "0pKYeXoLkSdgWPxOL5tfuiSjewG06xMW+e2OQDvRFUhOgQM41eP8qF9KFaFduUzEiiQ5zYHUHHxC" +
+                "4sqrIHs1HzZJT6701bh4C3JYOAPo/j6qJw3nEtjb+Oo2AVqGcQr5PsGcH9bGoHSXYulrhyZCWQCq" +
+                "ioZotQIDAQAB";
+        RSAUtils.loadPublicKey(pubkey);
+        String value = sqlUtil.selectCode();
+        String sn = SNUtil.getuniqueId(fab.getContext());
+        String enctytCode = null;
+        try {
+            enctytCode = RSAUtils.encryptWithRSA(sn);
+            String code = SNUtil.getMD5(enctytCode);
+            code= code.substring(0,12);
+            Log.d(TAG,code);
+            Log.d(TAG,value);
+            is_code = code.equals(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(is_code){
+            fab.hide();
+        }
     }
 
     public void runMyUiautomator(View v) {
-        if (sqlUtil.selectTaskCount()>0 || sqlUtil.selectFailCount().size()>0) {
-            new UiautomatorThread().start();
-            Log.i(TAG, "runMyUiautomator: ");
-        }else{
-            Toast.makeText(getApplicationContext(), "无未完成任务可运行！", Toast.LENGTH_LONG).show();
+        if(is_code){
+            if (sqlUtil.selectTaskCount()>0 || sqlUtil.selectFailCount().size()>0) {
+                new UiautomatorThread().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(getApplicationContext(), "无未完成任务可运行！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -130,79 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View v){
-            //Toast.makeText(getApplicationContext(), "口令为："+SNUtil.getuniqueId(v.getContext()), Toast.LENGTH_LONG).show();
-            //RSAUtils.generateRSAKeyPair(256);
 
-            String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
-                    "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +
-                    "3/JLrJO9awN8Jn9BLMAeXCnpGfuGnzH9RSim9+uXpRBwjbly7YCbWZEY+5n18dDQlXP4QBOyh7jE" +
-                    "0pKYeXoLkSdgWPxOL5tfuiSjewG06xMW+e2OQDvRFUhOgQM41eP8qF9KFaFduUzEiiQ5zYHUHHxC" +
-                    "4sqrIHs1HzZJT6701bh4C3JYOAPo/j6qJw3nEtjb+Oo2AVqGcQr5PsGcH9bGoHSXYulrhyZCWQCq" +
-                    "ioZotQIDAQAB";
-//            pubkey = "MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAN5Dx/LNVPg26z1+0uxi4t6i5yxsntzLs5yIlqV70Dwz\n" +
-//                    "AgMBAAE=";
-//            String priKey = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDbOawumY+ZqZZyPOe+KKGF5e15" +
-//                    "xEkJBeOfuuOrk5Cxwm8r6crTZICOlLLUYFfgk1UkosgL1cS0oewHqkYxcr4L2YdJZiGAXYnBerKU" +
-//                    "Nc/EFlHf8kusk71rA3wmf0EswB5cKekZ+4afMf1FKKb365elEHCNuXLtgJtZkRj7mfXx0NCVc/hA" +
-//                    "E7KHuMTSkph5eguRJ2BY/E4vm1+6JKN7AbTrExb57Y5AO9EVSE6BAzjV4/yoX0oVoV25TMSKJDnN" +
-//                    "gdQcfELiyqsgezUfNklPrvTVuHgLclg4A+j+PqonDecS2Nv46jYBWoZxCvk+wZwf1sagdJdi6WuH" +
-//                    "JkJZAKqKhmi1AgMBAAECggEBAJurS1nXz0GVS/CY0RKV9YSILeZefGI83VLKOerXIVMotxqerFkJ" +
-//                    "r8QPUSE/vIcK99XJBXZp+IEvzdPvlGJ+kPcHI2r6a+WkBjLudqqJv5wFIWR9wECutD2uPtVzXYty" +
-//                    "bNyTIiRCGGko7SjT4iSAFbGvh80Ll9GQlj+2qd/Xhu6LQWKj573rV5VhcEwDq6PAxWE+pGoYLn1b" +
-//                    "ztHRFMeneR71maF1dl71f7OHwff/zIfk5Mu7n+dBxUwedOGUs3eAQNS36w+7/NtrSqHAmpiYj9Ck" +
-//                    "IbguDq7ivQTM4Ar/SNwkz0q2RKwJ6hw4sxEcvLiEMbx4yg1vM6kJqh4KM7ICi8ECgYEA8SlWUKR8" +
-//                    "rW4Hwx3i0a6QX1mpqTPYrbnKmTwCI967NxWVfVk7U/wzR00pr7zGz64hUnfvO+P4DdZnmve3yMok" +
-//                    "iRnTeVEs2mvlcEyUe1WDOxudAIIlVHxQNCOw6Uac5qP0MHpWRHlSTjNEp/IOa5kPLvvhUYZ89dcQ" +
-//                    "oYVhylUX+XECgYEA6LbOivFqgjHRldnJGXs3sVJUkHanuuaKVYa47O7qXK67bC8DFQyW6VQS0Vrm" +
-//                    "DDN8d9+l0ZcS93mQOhot92KLVDxYHGY2m5Xk5oK6jqM7bbfzgXVa/k3VbZioaBjH5XFjEzDfiqZm" +
-//                    "X7zcHGctZpKJJ5V3dmO9yTVLfj+9saFuYYUCgYEAywRUoJDIUKvXJv/KyWAeM9bkiAeYei91CejF" +
-//                    "mHLRwj6OWTa8RiiC9pxT4piV+ZGKhcVnhVCVqvh6wa+WbRcXCL/QEkou6zV3skEVonpLfn/xfNMT" +
-//                    "H/uC/VGqhccnINaXJBRo+T309tYcDxIr55KzgIcUmLASFFdXrdH+j/lwtFECgYAnr0T5nMG1Ahnj" +
-//                    "nAgXOFP/ATM6j4F69eWRQDA492Uv+PwtLrcv173EfHnZCc9BNWZ8ar80RrcNTMWzotND5KIt8zxz" +
-//                    "W1rknWMzjAeUW3G+/CeiZAjoZQ2IawgM+GzeS7/Bfgwg8M90dBh1H4M2graw8WQ15DxxG42MMgJ/" +
-//                    "UDAqoQKBgQCOb2GyBjpLylRl+o8TEbIXzCE35n7QtyOOhl7XbvGPjpi8BLagvBh9f80m7ZN0bfum" +
-//                    "1VBH6HjxCYS0zXnUnrqNHaGR4I2GZHafMkZ4YZPMxmz7K1YWBE0+Vyr0wIOkzdnzXzjmDlWjRdQU" +
-//                    "fDLnED0zTJlv0Y8mHNs76XcWdqi1Rw==";
-//        priKey="MIHEAgEAMA0GCSqGSIb3DQEBAQUABIGvMIGsAgEAAiEA3kPH8s1U+DbrPX7S7GLi3qLnLGye3Muz\n" +
-//                "nIiWpXvQPDMCAwEAAQIgYPivltZQ+Q506dqYSbwHAIzo2hfJmPEEpeR6fGP0hekCEQD/0pRckoxl\n" +
-//                "7w5C/arAhF7/AhEA3ms+UZIYhhe5I4uGHJnWzQIRAJeweaBalT1r/nzihPkahGkCEQChObf4xSBF\n" +
-//                "w1iO7YqPnOxZAhEA3VAS/eWareiNrZxDE4CEKQ==";
-            RSAUtils.loadPublicKey(pubkey);
-//            RSAUtils.loadPrivateKey(priKey);
-            String enctytCode = null;
-            try {
-                String sn = SNUtil.getuniqueId(v.getContext());
-                //String sign = RSAUtils.sign(sn);
-                enctytCode = RSAUtils.encryptWithRSA(sn);
-                String code = SNUtil.getMD5(enctytCode);
-                //String code = RSAUtils.decryptWithRSA(enctytCode);
-                //Log.d(TAG,sign);
-                Log.d(TAG,enctytCode);
-                Log.d(TAG,code);
-                Toast.makeText(getApplicationContext(), "code:"+code, Toast.LENGTH_LONG).show();
-                ImageView ivTwoCode= (ImageView) findViewById(R.id.iv1);
-                Bitmap bitmap = ZXingUtils.createQRImage(sn, ivTwoCode.getWidth(), ivTwoCode.getHeight());
-                ivTwoCode.setImageBitmap(bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-//            //步骤1：获取输入值
-//            String code = "123";
-//            //步骤2-1：创建一个SharedPreferences.Editor接口对象，lock表示要写入的XML文件名，MODE_WORLD_WRITEABLE写操作
-//            SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
-//            //步骤2-2：将获取过来的值放入文件
-//            editor.putString("code", code);
-//            //步骤3：提交
-//            editor.commit();
-//            Toast.makeText(getApplicationContext(), "口令设置成功", Toast.LENGTH_LONG).show();
-            //步骤1：创建一个SharedPreferences接口对象
-            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-            //步骤2：获取文件中的值
-            String value = read.getString("code", "");
-//            //Toast.makeText(getApplicationContext(), "口令为："+value, Toast.LENGTH_LONG).show();
-//            Toast.makeText(getApplicationContext(), "口令为："+SNUtil.getuniqueId(v.getContext()), Toast.LENGTH_LONG).show();
     }
 
 }

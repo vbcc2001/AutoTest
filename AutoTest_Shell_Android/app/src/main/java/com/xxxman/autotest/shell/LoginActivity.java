@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -31,6 +32,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import junit.framework.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +67,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    ImageView ivTwoCode;
+    private TextView snView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +92,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
 
         String sn = SNUtil.getuniqueId(mEmailView.getContext());
-        mEmailView.setText(sn);
-        mPasswordView.setText("4b592e783869ee8ccdbd6e743aa82c4b");
 
+        snView = (TextView) findViewById(R.id.sn_view);
+        snView.setText(sn);
+
+        mEmailView.setText(sn);
+        //mPasswordView.setText("4b592e783869");
         mPasswordView.setFocusable(true);
-        //ImageView ivTwoCode= (ImageView) findViewById(R.id.iv1);
-        //Bitmap bitmap = ZXingUtils.createQRImage(sn, ivTwoCode.getWidth(), ivTwoCode.getHeight());
-        //ivTwoCode.setImageBitmap(bitmap);
+        ivTwoCode= (ImageView) findViewById(R.id.iv1);
+        Bitmap bitmap = ZXingUtils.createQRImage(sn, 256, 256);
+        ivTwoCode.setImageBitmap(bitmap);
     }
 
     private void populateAutoComplete() {
@@ -152,16 +160,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //String code = RSAUtils.decryptWithRSA(enctytCode);
             //Log.d(TAG,sign);
             Log.d(TAG,mPasswordView.getText().toString());
+            Log.d(TAG,mPasswordView.getText().toString());
+            code= code.substring(0,12);
             Log.d(TAG,code);
             if(code.equals(mPasswordView.getText().toString())){
-                //步骤2-1：创建一个SharedPreferences.Editor接口对象，lock表示要写入的XML文件名，MODE_WORLD_WRITEABLE写操作
-                SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
-                //步骤2-2：将获取过来的值放入文件
-                editor.putString("code", mPasswordView.getText().toString());
-                //步骤3：提交
-                editor.commit();
+                new SQLUtil().inserCode(mPasswordView.getText().toString());
                 Toast.makeText(getApplicationContext(), "注册成功！", Toast.LENGTH_LONG).show();
-                finish();
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, MainActivity.class);
+                LoginActivity.this.startActivity(intent);
             }else{
                 Toast.makeText(getApplicationContext(), "注册失败！请重现注册", Toast.LENGTH_LONG).show();
             }
