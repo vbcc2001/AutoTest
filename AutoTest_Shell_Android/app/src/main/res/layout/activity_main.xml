@@ -48,7 +48,25 @@
             android:textColor="@android:color/holo_red_dark"
             android:text="未获取Root权限!" />
 
-    </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/border">
+            <Button
+                android:id="@+id/register_btn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:onClick="register"
+                android:text="注册" />
+            <TextView
+                android:id="@+id/register_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="当前机器码：" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
