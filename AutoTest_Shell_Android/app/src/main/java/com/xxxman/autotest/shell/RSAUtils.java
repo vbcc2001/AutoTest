@@ -33,7 +33,10 @@ public class RSAUtils {
     public static KeyPair generateRSAKeyPair(int keyLength) {
         try
         {
+
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+            //KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", "BC");
+            //kpg.initialize(256);
             kpg.initialize(keyLength);
             KeyPair kp = kpg.genKeyPair();
             String priKey = Base64.encodeToString(kp.getPrivate().getEncoded(), Base64.DEFAULT);
@@ -83,7 +86,8 @@ public class RSAUtils {
     public static String encryptWithRSA(String plainData) throws Exception {
 
         // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
-        cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        //cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher = Cipher.getInstance("RSA/NONE/NoPadding");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] buffer = plainData.getBytes("utf-8");
         byte[] output = cipher.doFinal(buffer);
@@ -93,7 +97,9 @@ public class RSAUtils {
     //私钥解密
     public static String decryptWithRSA(String encryedData) throws Exception{
             // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
-            cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            //cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher = Cipher.getInstance("RSA/NONE/NoPadding");
+
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] buffer = Base64.decode(encryedData, Base64.DEFAULT);
             byte[] output = cipher.doFinal(buffer);

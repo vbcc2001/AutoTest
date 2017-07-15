@@ -75,7 +75,9 @@ public class SNUtil {
     private static String getString(byte[] b){
         StringBuffer sb = new StringBuffer();
         for(int i = 0; i < b.length; i ++){
-            sb.append(b[i]);
+            sb.append(Integer.toHexString(0xff & b[i]));
+            //sb.append(b[i]);
+            //571aba159ebcae2fd02257dd261f16d
         }
         return sb.toString();
     }
