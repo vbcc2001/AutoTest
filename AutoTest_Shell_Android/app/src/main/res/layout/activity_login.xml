@@ -37,16 +37,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:text="请将该码复制并发送给管理员，以获取验证码。"
+
+                    android:maxLines="1" />
+                <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="本机识别码"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="textEmailAddress"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:hint="当前注册码为："
                     android:maxLines="1" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -57,7 +61,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="输入注册码"
+                    android:hint="输入验证码"
 
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"

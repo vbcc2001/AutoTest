@@ -69,6 +69,52 @@ public class FileUtil {
         }
         return list;
     }
+    //读取文本文件中的内容
+    public static List<User> ReadTxtFile(String strFilePath,int number)
+    {
+        String path = strFilePath;
+        String content = ""; //文件内容字符串
+        List<User> list = new ArrayList<User>();
+        int count = 0;
+        //打开文件
+        File file = new File(path);
+        //如果path是传递过来的参数，可以做一个非目录的判断
+        if (file.isDirectory())
+        {
+            Log.d("TestFile", "The File doesn't not exist.");
+        }
+        else
+        {
+            try {
+                InputStream instream = new FileInputStream(file);
+                if (instream != null)
+                {
+                    InputStreamReader inputreader = new InputStreamReader(instream);
+                    BufferedReader buffreader = new BufferedReader(inputreader);
+                    String line;
+                    //分行读取
+                    while (( line = buffreader.readLine()) != null) {
+                        count++;
+                        if(count==number){
+                            String[] strArray = null;
+                            strArray = line.split(",");
+                            list.add(new User(0,strArray[0],strArray[1]));
+                        }
+                    }
+                    instream.close();
+                }
+            }
+            catch (java.io.FileNotFoundException e)
+            {
+                Log.d("TestFile", "The File doesn't not exist.");
+            }
+            catch (IOException e)
+            {
+                Log.d("TestFile", e.getMessage());
+            }
+        }
+        return list;
+    }
     public static void writeTxtFile(List<User> list ,String path,String name) {
         String filePath = path;
         String fileName = name;

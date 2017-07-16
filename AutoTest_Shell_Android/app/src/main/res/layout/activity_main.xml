@@ -17,6 +17,10 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        app:srcCompat="@android:drawable/ic_menu_manage"
+        app:rippleColor="#42c02e"
+        app:backgroundTint="#42c02e"
+        app:fabSize="mini"
+        android:background="#42c02e"/>
 
 </android.support.design.widget.CoordinatorLayout>

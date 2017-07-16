@@ -174,7 +174,7 @@ public class HJTest1 {
             my = mUIDevice.findObject(new UiSelector().text("我的"));
             my.click();
             UiObject2 login1 = mUIDevice.findObject(By.text("使用手机号登录"));
-            login.click();
+            login1.click();
         }else {
             login.click();
         }

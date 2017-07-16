@@ -101,6 +101,18 @@ public class SQLUtil {
             db.insert("count",null,cv);//执行插入操作
         }
     }
+    public void inserLoginCount(List<User> list){
+        ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
+        for(User user:list){
+            cv.put("phone",user.phone);
+            cv.put("pwd",user.pwd);
+            cv.put("day","login");
+            cv.put("task_count",0);
+            cv.put("end_count",0);
+            cv.put("success_count",0);
+            db.insert("count",null,cv);//执行插入操作
+        }
+    }
     public void updateTaskCount(User user){
         ContentValues cv = new ContentValues();
         cv.put("task_count", 1);
@@ -126,6 +138,20 @@ public class SQLUtil {
         }
         Log.i(TAG, "任务数为:" + sum);
         return sum;
+    }
+    public List<User> selectLoginCount() {
+        String sql = "select id,phone,pwd from count where  day = 'login' order by id desc LIMIT 1";
+        List<User> list = new ArrayList<User>();
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            User user = new User(0, null, null);
+            user.id = c.getInt(c.getColumnIndex("id"));
+            user.phone = c.getString(c.getColumnIndex("phone"));
+            user.pwd = c.getString(c.getColumnIndex("pwd"));
+            list.add(user);
+        }
+        Log.i(TAG, "登录用户为:" + list.size());
+        return list;
     }
     public int selectTaskCount(){
         String sql = "select count(1) as sum from count where task_count=0 and day = '"+dateString+"'";

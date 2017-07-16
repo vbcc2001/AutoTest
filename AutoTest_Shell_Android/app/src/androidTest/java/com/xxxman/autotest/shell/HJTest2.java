@@ -28,9 +28,11 @@ public class HJTest2 extends  HJTest1{
 
     @Test
     public void test_for(){
-        User user = new User(11,"123","123");
+        List<User> list = sqlUtil.selectLoginCount();
         try {
-            test2(user);
+            if(list.size()>0){
+                test2(list.get(0));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -15,7 +15,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView rootTextView;
     TextView taskView;
     TextView snView;
+    EditText numberEdit;
     SQLUtil sqlUtil = new SQLUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         rootTextView = (TextView) findViewById(R.id.root_view);
         taskView =(TextView) findViewById(R.id.task_view);
         snView =  (TextView) findViewById(R.id.sn_view);
-
+        numberEdit = (EditText) findViewById(R.id.number_edit);
+        numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +143,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
         }
     }
+    public void runLogin(View v) {
+        if(is_code){
+            String number_string = numberEdit.getText().toString().trim();
+            int number = Integer.parseInt(number_string);
+            String path = null;
+            try {
+                path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt",number);
+            Log.d(TAG,"登录人数：---"+list.size());
+            sqlUtil.inserLoginCount(list);
+            if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
+                new UiautomatorThread2().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(getApplicationContext(), "未找到该用户！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
 
     /**
      * 运行uiautomator是个费时的操作，不应该放在主线程，因此另起一个线程运行
@@ -149,6 +176,16 @@ public class MainActivity extends AppCompatActivity {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest1 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.e(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread2 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest2 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.e(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
