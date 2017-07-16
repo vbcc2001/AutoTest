@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" android:label="花椒助手(注册)">
+        <activity android:name=".LoginActivity" android:label="注册">
             <category android:name="android.intent.category.LAUNCHER"/>
         </activity>
     </application>

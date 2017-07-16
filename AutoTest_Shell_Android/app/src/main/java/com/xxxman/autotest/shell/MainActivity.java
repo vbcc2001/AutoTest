@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         task_count =sqlUtil.selectTaskCount();
         end_task_count =sqlUtil.selectEndTaskCount();
         success_count =sqlUtil.selectSuccessCount();
-        taskView.setText(dateString+":总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!" );
+        taskView.setText(dateString+"：总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!" );
 
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
