@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button getRoot;
     TextView rootTextView;
     TextView taskView;
-    TextView registerView;
+    TextView snView;
     SQLUtil sqlUtil = new SQLUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         runBtn = (Button) findViewById(R.id.runBtn);
-        //getRoot = (Button) findViewById(R.id.getRoot);
         rootTextView = (TextView) findViewById(R.id.root_view);
-
-        taskView =  (TextView) findViewById(R.id.task_view);
+        taskView =(TextView) findViewById(R.id.task_view);
+        snView =  (TextView) findViewById(R.id.sn_view);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
-            rootTextView.setText("已经获取Root权限！" );
+            rootTextView.setText("已经获取Root权限，" );
             rootTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
         }
 
@@ -123,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if(is_code){
             fab.hide();
+            snView.setText("程序注册成功！" );
+            snView.setTextColor(ContextCompat.getColor(this, R.color.green));
         }
     }
 

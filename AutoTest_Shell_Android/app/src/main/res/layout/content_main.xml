@@ -19,12 +19,14 @@
             android:layout_width="fill_parent"
             android:gravity="center"
             android:padding="10dp"
+            android:background="#C8C8C8"
             android:layout_height="40dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
-                android:text="分享阳光任务"/>
+                android:textStyle="bold"
+                android:text="1、分享阳光任务"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -44,24 +46,78 @@
                     android:lineSpacingExtra="10dp"
                     android:text="已完成0个，待处理1000个!" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right"
+                android:padding="10dp"
                 android:orientation="vertical">
                 <Button
                     android:id="@+id/runBtn"
-                    android:layout_width="60dp"
+                    android:layout_width="80dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:onClick="runMyUiautomator"
-                    android:text="开始" />
+                    android:background="@drawable/btn_selector"
+                    android:text="+开始" />
+                <!--android:background="#42c02e"-->
+            </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="#C8C8C8"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="2、自动登录账号"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/border"
+                android:padding="10dp"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:minWidth="180dp"
+                        android:layout_height="wrap_content"
+                        android:hint="输入顺序数"
+                        android:textSize="16sp"
+                        android:imeActionId="@+id/login"
+                        android:inputType="text" />
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/runBtn1"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:onClick="runMyUiautomator"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="+开始" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="1dp"
             android:background="@drawable/border">
 
         </LinearLayout>
@@ -77,13 +133,13 @@
                 android:layout_height="wrap_content"
                 android:text="程序状态：" />
             <TextView
-                android:id="@+id/sn_view"
+                android:id="@+id/root_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="未获取Root权限，"
                 android:textColor="@android:color/holo_red_dark" />
             <TextView
-                android:id="@+id/root_view"
+                android:id="@+id/sn_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="未注册程序"
