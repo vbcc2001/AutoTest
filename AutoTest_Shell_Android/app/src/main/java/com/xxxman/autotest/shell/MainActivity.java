@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         snView =  (TextView) findViewById(R.id.sn_view);
         numberEdit = (EditText) findViewById(R.id.number_edit);
         numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if(is_code){
-            fab.hide();
+            fab.setVisibility(View.GONE);
             snView.setText("程序注册成功！" );
             snView.setTextColor(ContextCompat.getColor(this, R.color.green));
         }
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest1 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
-            Log.e(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+            Log.e("CommandResult", "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
     }
     class UiautomatorThread2 extends Thread {
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest2 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
-            Log.e(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
     }
     // 获取ROOT权限

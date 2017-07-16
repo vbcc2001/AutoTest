@@ -127,30 +127,41 @@
             android:layout_height="fill_parent"
             android:gravity="bottom"
             android:padding="20dp"
+            android:orientation="vertical"
             android:background="@drawable/border">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="程序状态：" />
-            <TextView
-                android:id="@+id/root_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="未获取Root权限，"
-                android:textColor="@android:color/holo_red_dark" />
-            <TextView
-                android:id="@+id/sn_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="未注册程序"
-                android:textColor="@android:color/holo_red_dark" />
+            <Button
+                android:id="@+id/fab"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_selector"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="+注册" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/border">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="程序状态：" />
+                <TextView
+                    android:id="@+id/root_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未获取Root权限，"
+                    android:textColor="@android:color/holo_red_dark" />
+                <TextView
+                    android:id="@+id/sn_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未注册程序"
+                    android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>
