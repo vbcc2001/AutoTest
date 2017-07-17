@@ -251,8 +251,8 @@ public class HJTest1 {
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(1000);
-        mUIDevice.click(2,2);
+        Thread.sleep(2000);
+        mUIDevice.click(10,100);
 //        mUIDevice.click(840,1842);
         mUIDevice.click(560,1228);
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
