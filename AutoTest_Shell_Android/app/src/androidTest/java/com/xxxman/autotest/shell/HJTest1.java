@@ -240,6 +240,7 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
         //close.click();  //点击按键
+        Thread.sleep(1000);
         mUIDevice.click(990,1843);
     }
     //分享
@@ -249,7 +250,7 @@ public class HJTest1 {
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         mUIDevice.click(840,1843);
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
