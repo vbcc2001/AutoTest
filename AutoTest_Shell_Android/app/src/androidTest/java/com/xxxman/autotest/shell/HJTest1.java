@@ -241,8 +241,8 @@ public class HJTest1 {
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
         //close.click();  //点击按键
         Thread.sleep(1000);
-        //mUIDevice.click(990,1842);
-        mUIDevice.click(660,1228);
+        mUIDevice.click(990,1842);
+//        mUIDevice.click(660,1228);
     }
     //分享
     public void share() throws Exception {
@@ -253,8 +253,8 @@ public class HJTest1 {
         //share.click();
         Thread.sleep(2000);
         mUIDevice.click(2,2);
-        //mUIDevice.click(840,1842);
-        mUIDevice.click(560,1228);
+        mUIDevice.click(840,1842);
+//        mUIDevice.click(560,1228);
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 
@@ -274,8 +274,8 @@ public class HJTest1 {
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
         //sun.click();
         //Thread.sleep(2000);
-        //mUIDevice.click(976,390);
-        mUIDevice.click(651,268);
+        mUIDevice.click(976,390);
+//        mUIDevice.click(651,268);
         UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
