@@ -134,9 +134,9 @@ public class HJTest1 {
         int count_share = 0;
 
         boot();             //0.启动
-        closeAd();          //尝试关广告
+        //closeAd();          //尝试关广告
         login(user);            //1.登录
-        closeAd();         //尝试关广告
+        //closeAd();         //尝试关广告
         goGuangChang();         //3.进入广场
         goZhiBo();        //4.进入直播
         //5.分享3次
@@ -146,7 +146,7 @@ public class HJTest1 {
         }
         getSunshine(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
-        closeAd();          //尝试关广告
+        //closeAd();          //尝试关广告
         quit();         //8.退出
     }
     //启动流程
@@ -234,12 +234,15 @@ public class HJTest1 {
         UiObject zhibozhong = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/icon_view"));
         zhibozhong.click();
     }
-    //进入直播
+    //退出直播
     public void closeZhiBo() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
-        close.click();  //点击按键
+        //close.click();  //点击按键
+        Thread.sleep(1000);
+        //mUIDevice.click(990,1842);
+        mUIDevice.click(660,1228);
     }
     //分享
     public void share() throws Exception {
@@ -247,7 +250,11 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
-        share.click();
+        //share.click();
+        Thread.sleep(2000);
+        mUIDevice.click(2,2);
+        //mUIDevice.click(840,1842);
+        mUIDevice.click(560,1228);
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 
@@ -265,7 +272,10 @@ public class HJTest1 {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
-        sun.click();
+        //sun.click();
+        //Thread.sleep(2000);
+        //mUIDevice.click(976,390);
+        mUIDevice.click(651,268);
         UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
