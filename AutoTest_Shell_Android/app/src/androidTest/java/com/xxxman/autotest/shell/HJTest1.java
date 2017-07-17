@@ -42,8 +42,8 @@ public class HJTest1 {
     int log_count = 0;
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
-//    boolean is4X=false;
-    boolean is4X=true;
+    boolean is4X=false;
+//    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -255,8 +255,9 @@ public class HJTest1 {
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         mUIDevice.click(2,2);
+        Thread.sleep(1000);
         if(is4X){
             mUIDevice.click(840,1842);
         }else{
