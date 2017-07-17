@@ -133,7 +133,7 @@ public class HJTest1 {
 
         int count_share = 0;
 
-        boot();             //0.启动
+        //boot();             //0.启动
         //closeAd();          //尝试关广告
         login(user);            //1.登录
         //closeAd();         //尝试关广告
@@ -197,7 +197,7 @@ public class HJTest1 {
         //my_page.click();
 
         UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
-        home.scrollToEnd(1);
+        home.flingForward();
         //mUIDevice.swipe(100, 1676, 100, 600, 20);
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
@@ -241,8 +241,8 @@ public class HJTest1 {
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
         //close.click();  //点击按键
         Thread.sleep(1000);
-        mUIDevice.click(990,1842);
-//        mUIDevice.click(660,1228);
+//        mUIDevice.click(990,1842);
+        mUIDevice.click(660,1228);
     }
     //分享
     public void share() throws Exception {
@@ -251,10 +251,10 @@ public class HJTest1 {
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         mUIDevice.click(2,2);
-        mUIDevice.click(840,1842);
-//        mUIDevice.click(560,1228);
+//        mUIDevice.click(840,1842);
+        mUIDevice.click(560,1228);
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 
@@ -274,8 +274,8 @@ public class HJTest1 {
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
         //sun.click();
         //Thread.sleep(2000);
-        mUIDevice.click(976,390);
-//        mUIDevice.click(651,268);
+//        mUIDevice.click(976,390);
+        mUIDevice.click(651,268);
         UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
