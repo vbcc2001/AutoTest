@@ -42,7 +42,8 @@ public class HJTest1 {
     int log_count = 0;
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
-
+    boolean is4X=false;
+//    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -241,8 +242,11 @@ public class HJTest1 {
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
         //close.click();  //点击按键
         Thread.sleep(1000);
-//        mUIDevice.click(990,1842);
-        mUIDevice.click(660,1228);
+        if(is4X){
+            mUIDevice.click(990,1842);
+        }else{
+            mUIDevice.click(660,1228);
+        }
     }
     //分享
     public void share() throws Exception {
@@ -252,9 +256,12 @@ public class HJTest1 {
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
         Thread.sleep(2000);
-        mUIDevice.click(10,100);
-//        mUIDevice.click(840,1842);
-        mUIDevice.click(560,1228);
+        mUIDevice.click(2,2);
+        if(is4X){
+            mUIDevice.click(840,1842);
+        }else{
+            mUIDevice.click(560,1228);
+        }
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 
@@ -273,9 +280,12 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
         //sun.click();
-        //Thread.sleep(2000);
-//        mUIDevice.click(976,390);
-        mUIDevice.click(651,268);
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(976,390);
+        }else{
+            mUIDevice.click(651,268);
+        }
         UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
