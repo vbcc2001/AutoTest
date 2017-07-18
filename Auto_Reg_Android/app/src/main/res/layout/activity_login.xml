@@ -31,10 +31,9 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="识别码"
+                    android:hint="注册码"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -51,9 +50,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@android:color/holo_red_dark"
-                android:text="注册码为:" />
-            <TextView
+                android:hint="验证密码为："
+                android:textColor="@android:color/holo_red_dark" />
+            <EditText
                 android:id="@+id/sn_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

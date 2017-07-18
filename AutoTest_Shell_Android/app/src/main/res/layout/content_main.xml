@@ -60,7 +60,7 @@
                     android:layout_height="match_parent"
                     android:onClick="runMyUiautomator"
                     android:background="@drawable/btn_selector"
-                    android:text="+开始" />
+                    android:text="开始" />
                 <!--android:background="#42c02e"-->
             </LinearLayout>
             </LinearLayout>
@@ -112,7 +112,7 @@
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="+开始" />
+                    android:text="开始" />
             </LinearLayout>
         </LinearLayout>
 
@@ -132,7 +132,7 @@
 
             <Button
                 android:id="@+id/fab"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/btn_selector"
