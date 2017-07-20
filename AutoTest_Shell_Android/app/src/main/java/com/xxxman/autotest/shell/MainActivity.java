@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     TextView taskView;
     TextView snView;
     EditText numberEdit;
+    EditText numberEdit1;
     SQLUtil sqlUtil = new SQLUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         snView =  (TextView) findViewById(R.id.sn_view);
         numberEdit = (EditText) findViewById(R.id.number_edit);
         numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        numberEdit1 = (EditText) findViewById(R.id.number_edit1);
+        numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +169,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
         }
     }
+    public void runHongbao(View v) {
+        if(is_code){
+            String number_string = numberEdit1.getText().toString().trim();
+            int number = Integer.parseInt(number_string);
+            String path = null;
+            try {
+                path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt",number);
+            Log.d(TAG,"登录人数：---"+list.size());
+            sqlUtil.inserLoginCount(list);
+            if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
+                new UiautomatorThread3().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(getApplicationContext(), "未找到该用户！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
 
     /**
      * 运行uiautomator是个费时的操作，不应该放在主线程，因此另起一个线程运行
@@ -186,6 +212,16 @@ public class MainActivity extends AppCompatActivity {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest2 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread3 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest3 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }

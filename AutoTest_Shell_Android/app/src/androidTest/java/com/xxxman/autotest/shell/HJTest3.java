@@ -6,10 +6,12 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.Direction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
@@ -28,7 +30,8 @@ public class HJTest3{
     String APP = "com.huajiao";
     int log_count = 0;
     private Context mContext = null;
-
+    int count_get_hongbao = 0;
+    SQLUtil sqlUtil = new SQLUtil();
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -56,21 +59,30 @@ public class HJTest3{
     public void test_for(){
 
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
-//        mContext.startActivity(myIntent);
-//        mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
+        mContext.startActivity(myIntent);
+        mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
 
-            for(int i =0 ;i < 10 ;i++){
-
-                try {
-                UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
-                new_list.click();
-                find_money();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    reboot();
+        List<User> list = sqlUtil.selectLoginCount();
+        try {
+            if(list.size()>0) {
+                login(list.get(0));
+                for (int i = 0; i < 25; i++) {
+                    try {
+                        find_money();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        reboot();
+                    }
+                    if (count_get_hongbao>=8){
+                        break;
+                    }
                 }
+                quit();
             }
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            reboot();
+        }
     }
     public void reboot() {
         Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(APP);
@@ -88,12 +100,60 @@ public class HJTest3{
             close.click();
         }
     }
+    //登录流程
+    public void login(User user) throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
+        my.click();
+        UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+        if(login==null){
+            quit();
+            my = mUIDevice.findObject(new UiSelector().text("我的"));
+            my.click();
+            UiObject2 login1 = mUIDevice.findObject(By.text("使用手机号登录"));
+            login1.click();
+        }else {
+            login.click();
+        }
+        UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
+        phone.setText(user.phone);
+        //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
+        UiObject password = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/pwd_et"));
+        password.setText(user.pwd);
+        UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
+        logining.click();
+        //Thread.sleep(2000);
+    }
+    //退出流程
+    public void quit() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
+        my.click();
+        //UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
+        //my_page.click();
 
+        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
+        home.scrollToEnd(1);
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
+        UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
+        setting.click();
+        UiObject2 set = mUIDevice.findObject(By.res("android:id/content")).getChildren().get(0).getChildren().get(1);
+        set.scroll(Direction.DOWN, 0.8f);
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
+        UiObject quit = mUIDevice.findObject(new UiSelector().text("退出登录"));
+        quit.click();
+        UiObject quit_ok = mUIDevice.findObject(new UiSelector().text("退出"));
+        quit_ok.click();  //点击按键
+        //Thread.sleep(1000);
+    }
     public void find_money() throws Exception {
 
 
+        UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
+        new_list.click();
         for(int i =0 ;i < 10 ;i++){
-
             UiObject2 money = mUIDevice.findObject(By.res("com.huajiao:id/hongbao"));
             if(money!=null){
                 Log.d(TAG,"youhongbao");
@@ -106,6 +166,7 @@ public class HJTest3{
                     UiObject2 gongxi = mUIDevice.findObject(By.text("恭喜发财"));
                     //情况1：成功
                     if(gongxi!=null){
+                        count_get_hongbao++;
                         mUIDevice.click(990,1843);
                         mUIDevice.click(990,1843);
                         break;

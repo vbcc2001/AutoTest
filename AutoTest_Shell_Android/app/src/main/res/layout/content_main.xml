@@ -115,7 +115,57 @@
                     android:text="开始" />
             </LinearLayout>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="#C8C8C8"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="3、自动抢红包"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/number_edit1"
+                    android:layout_width="match_parent"
+                    android:minWidth="180dp"
+                    android:layout_height="wrap_content"
+                    android:hint="输入账户列编号"
+                    android:textSize="14sp"
+                    android:digits="1234567890"
+                    android:imeActionId="@+id/login"
+                    android:inputType="text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/runBtn2"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:onClick="runHongbao"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开始" />
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="1dp"
