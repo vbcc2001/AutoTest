@@ -8,14 +8,28 @@
 <body style = "text-align:center;width:100%;height:100%;">
   <div  style="margin:0 auto;width:600px; height:400px" >
           <br><br><br><br><br><br><br><br>
-    <form action="getCode" method="get">
-      注册码: <input size = "40" type="text" name="sn" style="height:30px;font-size:18px" />
+    <form action="/action/lfs/action/FunctionAction" method="post" >
+      注册码: <input size = "40" type="text" name="jsonContent" style="height:30px;font-size:18px" value='{"function":"F100001","user":{"id":"1","session":"123"},"content":{"code":"123"}}'/>
       <br><br>
        &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp
-       <input type="submit" value="注册" style="width:100px;height:40px"  />
+       <input type="submit" value="注册" style="width:100px;height:40px" id = "btn"/>
         <br><br>
       验证码: <input size = "40"   type="text" name="code" id = "code" style="height:30px;font-size:18px"/>
 </form> 
   </div>
+<script>
+       document.getElementById("btn").onclick({
+       alert('hello');
+       }
+     );
+    //var btn=document.getElementById('btn');
+   function do1(){
+     document.getElementById("btn").click(
+       alert('hello');
+     );
+    //alert('hello');
+    //var value='{"function":"F100001","user":{"id":"1","session":"123"},"content":{"code":"123"}}';
+    }
+</script>
 </body>
 </html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PUBLIC>
+<config>
+	<function-path>com.xxx.lfs.function</function-path>
+	<ignore-login-function>000001,000002,000003,000004,000005,000006,000007</ignore-login-function>
+</config>

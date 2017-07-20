@@ -82,7 +82,7 @@
 		<!-- 默认的虚拟主机配置 -->
 		<host>
 			<!-- 配置默认的应用 webapp's ROOT -->
-			<web-app id="/" root-directory="${app.home}/WebRoot" >
+			<web-app id="/" root-directory="${app.home}/webapp" >
 				<jsp>
 					<ignore-el-exception>true</ignore-el-exception>
 				</jsp>
