@@ -8,6 +8,9 @@ public class User {
         this.pwd = pwd;
     }
     public int id;
+    public int number =0;
+    public int dou = 0;
+    public int hongbao = 0;
     public String phone;
     public String pwd;
 }

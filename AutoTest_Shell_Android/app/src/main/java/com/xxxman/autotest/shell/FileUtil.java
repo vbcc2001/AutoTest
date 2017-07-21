@@ -50,10 +50,14 @@ public class FileUtil {
                     BufferedReader buffreader = new BufferedReader(inputreader);
                     String line;
                     //分行读取
+                    int i = 1;
                     while (( line = buffreader.readLine()) != null) {
                         String[] strArray = null;
                         strArray = line.split(",");
-                        list.add(new User(0,strArray[0],strArray[1]));
+                        User user = new User(0,strArray[0],strArray[1]);
+                        user.number = i;
+                        list.add(user);
+                        i++;
                     }
                     instream.close();
                 }
@@ -98,7 +102,9 @@ public class FileUtil {
                         if(count==number){
                             String[] strArray = null;
                             strArray = line.split(",");
-                            list.add(new User(0,strArray[0],strArray[1]));
+                            User user = new User(0,strArray[0],strArray[1]);
+                            user.number = number;
+                            list.add(user);
                         }
                     }
                     instream.close();
@@ -135,6 +141,29 @@ public class FileUtil {
                 String content = user.phone+","+user.pwd+"\r\n";
                 raf.write(content.getBytes());
             }
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void writeHongbao(User user,String path,String name) {
+        String filePath = path;
+        String fileName = name;
+        //生成文件夹之后，再生成文件，不然会出错
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(filePath +"/"+ fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            String content = user.number+","+user.phone+","+user.pwd+","+user.hongbao+","+user.dou+"\r\n";
+            raf.write(content.getBytes());
             raf.close();
         } catch (Exception e) {
             e.printStackTrace();

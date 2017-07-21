@@ -46,7 +46,7 @@ public class SQLUtil {
     public  void createTableCount() {
         //创建表SQL语句
         String stu_table = "create table count(id integer primary key autoincrement," +
-                "phone string,pwd String,day String, task_count int,end_count int,success_count int)";
+                "phone string,pwd String,day String, task_count int,end_count int,success_count int,hongbao int,hongbao_task_count int DEFAULT 0, number int DEFAULT 0)";
         //执行SQL语句
         db.execSQL(stu_table);
     }
@@ -98,6 +98,8 @@ public class SQLUtil {
             cv.put("task_count",0);
             cv.put("end_count",0);
             cv.put("success_count",0);
+            cv.put("hongbao",0);
+            cv.put("number",user.number);
             db.insert("count",null,cv);//执行插入操作
         }
     }
@@ -110,6 +112,8 @@ public class SQLUtil {
             cv.put("task_count",0);
             cv.put("end_count",0);
             cv.put("success_count",0);
+            cv.put("hongbao",0);
+            cv.put("number",user.number);
             db.insert("count",null,cv);//执行插入操作
         }
     }
@@ -163,6 +167,16 @@ public class SQLUtil {
         Log.i(TAG, "执行任务数为:" + sum);
         return sum;
     }
+    public int selectHongbaoTaskCount(){
+        String sql = "select count(1) as sum from count where hongbao_task_count=0 and day = '"+dateString+"'";
+        int sum = 0;
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            sum = c.getInt(c.getColumnIndex("sum"));
+        }
+        Log.i(TAG, "执行任务数为:" + sum);
+        return sum;
+    }
     public int selectEndTaskCount(){
         String sql = "select count(1) as sum from count where task_count=1 and day = '"+dateString+"'";
         int sum = 0;
@@ -175,6 +189,16 @@ public class SQLUtil {
     }
     public int selectSuccessCount(){
         String sql = "select count(1) as sum from count where success_count=1 and day = '"+dateString+"'";
+        int sum = 0;
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            sum = c.getInt(c.getColumnIndex("sum"));
+        }
+        Log.i(TAG, "成功任务数为:" + sum);
+        return sum;
+    }
+    public int selectHongbaoSuccessCount(){
+        String sql = "select count(1) as sum from count where hongbao>=4 and hongbao_task_count =1 and day = '"+dateString+"'";
         int sum = 0;
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -197,4 +221,53 @@ public class SQLUtil {
         Log.i(TAG, "失败任务数为:" + list.size());
         return list;
     }
+    public List<User> selectHongbaoFailUser(){
+        String sql = "select id,phone,pwd,number from count where hongbao<4 and hongbao_task_count =1 and day = '"+dateString+"'";
+        List<User> list = new ArrayList<User>();
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            User user = new User(0, null, null);
+            user.id = c.getInt(c.getColumnIndex("id"));
+            user.phone = c.getString(c.getColumnIndex("phone"));
+            user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.number = c.getInt(c.getColumnIndex("number"));
+            list.add(user);
+        }
+        Log.i(TAG, "红包失败任务数为:" + list.size());
+        return list;
+    }
+    public List<User> selectHongbaoUser(){
+        String sql = "select id,phone,pwd,number  from count where  hongbao_task_count =0 and day = '"+dateString+"'";
+        List<User> list = new ArrayList<User>();
+        Cursor c = db.rawQuery(sql, null);
+        while (c.moveToNext()) {
+            User user = new User(0, null, null);
+            user.id = c.getInt(c.getColumnIndex("id"));
+            user.phone = c.getString(c.getColumnIndex("phone"));
+            user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.number = c.getInt(c.getColumnIndex("number"));
+            list.add(user);
+        }
+        Log.i(TAG, "红包任务数为:" + list.size());
+        return list;
+    }
+
+    public int updateHongbaoCount(User user){
+        String sql = "select hongbao  from count where id = "+user.id;
+        int hongbao = 0;
+        Cursor c = db.rawQuery(sql, null);
+        if (c.moveToNext()) {
+            hongbao=c.getInt(c.getColumnIndex("hongbao"))+1;
+        }
+        ContentValues cv = new ContentValues();
+        cv.put("hongbao", hongbao);
+        db.update("count", cv, "id = ?", new String[] { ""+user.id });
+        return hongbao;
+    }
+    public void updateHongbaoTaskCount(User user){
+        ContentValues cv = new ContentValues();
+        cv.put("hongbao_task_count", 1);
+        db.update("count", cv, "id = ?", new String[] { ""+user.id });
+    }
+
 }

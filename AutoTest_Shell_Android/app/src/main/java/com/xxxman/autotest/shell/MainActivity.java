@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button getRoot;
     TextView rootTextView;
     TextView taskView;
+    TextView hongbaoView;
     TextView snView;
     EditText numberEdit;
     EditText numberEdit1;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         runBtn = (Button) findViewById(R.id.runBtn);
         rootTextView = (TextView) findViewById(R.id.root_view);
         taskView =(TextView) findViewById(R.id.task_view);
+        hongbaoView =(TextView) findViewById(R.id.hongbao_view);
         snView =  (TextView) findViewById(R.id.sn_view);
         numberEdit = (EditText) findViewById(R.id.number_edit);
         numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
@@ -100,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
         end_task_count =sqlUtil.selectEndTaskCount();
         success_count =sqlUtil.selectSuccessCount();
         taskView.setText(dateString+"：总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!" );
-
+        task_count = sqlUtil.selectHongbaoTaskCount();
+        end_task_count = user_count-task_count;
+        success_count = sqlUtil.selectHongbaoSuccessCount();
+        hongbaoView.setText(dateString+"：总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!");
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
             rootTextView.setText("已经获取Root权限，" );
@@ -171,6 +176,18 @@ public class MainActivity extends AppCompatActivity {
     }
     public void runHongbao(View v) {
         if(is_code){
+            if (sqlUtil.selectHongbaoUser().size() >0 || sqlUtil.selectHongbaoFailUser().size()>0) {
+                new UiautomatorThread3().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(getApplicationContext(), "无未完成任务可运行！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void runHongbao2(View v) {
+        if(is_code){
             String number_string = numberEdit1.getText().toString().trim();
             int number = Integer.parseInt(number_string);
             String path = null;
@@ -183,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG,"登录人数：---"+list.size());
             sqlUtil.inserLoginCount(list);
             if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
-                new UiautomatorThread3().start();
+                new UiautomatorThread4().start();
                 Log.i(TAG, "runMyUiautomator: ");
             }else{
                 Toast.makeText(getApplicationContext(), "未找到该用户！", Toast.LENGTH_LONG).show();
@@ -222,6 +239,16 @@ public class MainActivity extends AppCompatActivity {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest3 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread4 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest4 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }

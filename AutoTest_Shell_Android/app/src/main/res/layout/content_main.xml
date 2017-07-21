@@ -134,6 +134,58 @@
             android:background="@drawable/border"
             android:padding="10dp"
             android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/hongbao_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.84"
+                    android:lineSpacingExtra="10dp"
+                    android:text="已完成0个，待处理1000个!" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/runBtn3"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:onClick="runHongbao"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开始" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="#C8C8C8"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="4、自动抢红包(1)"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:weightSum="1">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -159,13 +211,16 @@
                     android:id="@+id/runBtn2"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
-                    android:onClick="runHongbao"
+                    android:onClick="runHongbao2"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:text="开始" />
             </LinearLayout>
         </LinearLayout>
+
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="1dp"

@@ -11,7 +11,6 @@ import android.support.test.uiautomator.Direction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
-import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
@@ -25,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
-public class HJTest3{
+public class HJTest4 {
 
     private UiDevice mUIDevice = null;
     String TAG = "HJTest3";
@@ -58,44 +57,21 @@ public class HJTest3{
         }
     }
     @Test
-    public void test(){
+    public void test_for(){
+
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
 
 
-        String path = null;
+        List<User> list = sqlUtil.selectLoginCount();
         try {
-            path = Environment.getExternalStorageDirectory().getCanonicalPath();
-            List<User> list = sqlUtil.selectHongbaoUser();
-            for(User user:list) {
-                //执行任务
-                sqlUtil.updateHongbaoTaskCount(user);
-                Log.d(TAG, user.pwd + "---");
-                test_for(user);
-                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
-                //完成任务
-            }
-            list = sqlUtil.selectHongbaoFailUser();
-            for(User user:list) {
-                test_for(user);
-                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    //@Test
-    public void test_for(User user){
-
-        //List<User> list = sqlUtil.selectLoginCount();
-        try {
+            User user = list.get(0);
             if(user!=null) {
                 login(user);
                 for (int i = 0; i < 25; i++) {
                     try {
-                        find_money(user);
+                        find_money(list.get(0));
                     } catch (Exception e) {
                         e.printStackTrace();
                         reboot();
@@ -169,7 +145,6 @@ public class HJTest3{
             Log.d(TAG,dou.getText()+"---------");
             user.dou = Integer.valueOf(dou.getText());
         }
-
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
         UiObject2 set = mUIDevice.findObject(By.res("android:id/content")).getChildren().get(0).getChildren().get(1);
