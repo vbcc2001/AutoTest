@@ -178,7 +178,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="4、自动抢红包(1)"/>
+                android:text="4、自动抢红包(指定账户)"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"

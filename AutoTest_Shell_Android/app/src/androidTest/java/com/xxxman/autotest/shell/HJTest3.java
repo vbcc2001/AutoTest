@@ -27,11 +27,11 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class HJTest3{
 
-    private UiDevice mUIDevice = null;
+    UiDevice mUIDevice = null;
     String TAG = "HJTest3";
     String APP = "com.huajiao";
     int log_count = 0;
-    private Context mContext = null;
+    Context mContext = null;
     int count_get_hongbao = 0;
     SQLUtil sqlUtil = new SQLUtil();
     @Before
@@ -93,9 +93,17 @@ public class HJTest3{
         try {
             if(user!=null) {
                 login(user);
-                for (int i = 0; i < 25; i++) {
+                for (int i = 0; i < 6; i++) {
                     try {
-                        find_money(user);
+                        if (i==0 || i==3){
+                            find_money(user,"最新");
+                        }
+                        if (i==1 || i==4){
+                            find_money(user,"附近");
+                        }
+                        if (i==2 || i==5){
+                            find_money(user,"深圳");
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         reboot();
@@ -181,10 +189,11 @@ public class HJTest3{
         quit_ok.click();  //点击按键
         //Thread.sleep(1000);
     }
-    public void find_money(User user) throws Exception {
+    public void find_money(User user,String menu) throws Exception {
 
 
-        UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
+        //UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
+        UiObject new_list = mUIDevice.findObject(new UiSelector().text(menu));
         new_list.click();
         for(int i =0 ;i < 25 ;i++){
             if(i>0){
