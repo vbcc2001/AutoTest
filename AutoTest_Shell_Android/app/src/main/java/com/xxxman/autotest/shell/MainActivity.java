@@ -177,8 +177,19 @@ public class MainActivity extends AppCompatActivity {
     public void runHongbao(View v) {
         if(is_code){
             if (sqlUtil.selectHongbaoUser().size() >0 || sqlUtil.selectHongbaoFailUser().size()>0) {
-                new UiautomatorThread3().start();
+                UiautomatorThread3 thread3 = new UiautomatorThread3();
                 Log.i(TAG, "runMyUiautomator: ");
+                try {
+                    Thread.sleep(10000);
+                    Log.i(TAG, "runMyUiautomator: 10s----");
+                    thread3.suspend();
+                    Thread.sleep(10000);
+                    Log.i(TAG, "runMyUiautomator: 20s----");
+                    thread3.resume();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }else{
                 Toast.makeText(getApplicationContext(), "无未完成任务可运行！", Toast.LENGTH_LONG).show();
             }
@@ -233,15 +244,20 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
     }
-    class UiautomatorThread3 extends Thread {
+    class UiautomatorThread3 extends BaseThread {
+
+        public UiautomatorThread3() {
+            super("HJTest3", false);
+        }
         @Override
-        public void run() {
-            super.run();
+        public void process() {
+            //super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest3 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
+
     }
     class UiautomatorThread4 extends Thread {
         @Override
