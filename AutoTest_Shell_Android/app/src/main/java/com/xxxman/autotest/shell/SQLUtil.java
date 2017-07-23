@@ -46,7 +46,8 @@ public class SQLUtil {
     public  void createTableCount() {
         //创建表SQL语句
         String stu_table = "create table count(id integer primary key autoincrement," +
-                "phone string,pwd String,day String, task_count int,end_count int,success_count int,hongbao int,hongbao_task_count int DEFAULT 0, number int DEFAULT 0)";
+                "phone string,pwd String,day String, task_count int,end_count int,success_count " +
+                "int,hongbao int,hongbao_task_count int DEFAULT 0, number int DEFAULT 0)";
         //执行SQL语句
         db.execSQL(stu_table);
     }
@@ -222,7 +223,7 @@ public class SQLUtil {
         return list;
     }
     public List<User> selectHongbaoFailUser(){
-        String sql = "select id,phone,pwd,number from count where hongbao<4 and hongbao_task_count =1 and day = '"+dateString+"'";
+        String sql = "select id,phone,pwd,number,hongbao from count where hongbao<4 and hongbao_task_count =1 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -231,13 +232,14 @@ public class SQLUtil {
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
             user.number = c.getInt(c.getColumnIndex("number"));
+            user.hongbao = c.getInt(c.getColumnIndex("hongbao"));
             list.add(user);
         }
         Log.i(TAG, "红包失败任务数为:" + list.size());
         return list;
     }
     public List<User> selectHongbaoUser(){
-        String sql = "select id,phone,pwd,number  from count where  hongbao_task_count =0 and day = '"+dateString+"'";
+        String sql = "select id,phone,pwd,number,hongbao  from count where  hongbao_task_count =0 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -246,6 +248,7 @@ public class SQLUtil {
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
             user.number = c.getInt(c.getColumnIndex("number"));
+            user.hongbao = c.getInt(c.getColumnIndex("hongbao"));
             list.add(user);
         }
         Log.i(TAG, "红包任务数为:" + list.size());

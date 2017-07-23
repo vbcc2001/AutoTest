@@ -16,7 +16,9 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -163,6 +165,31 @@ public class FileUtil {
             RandomAccessFile raf = new RandomAccessFile(file, "rwd");
             raf.seek(file.length());
             String content = user.number+","+user.phone+","+user.pwd+","+user.hongbao+","+user.dou+"\r\n";
+            raf.write(content.getBytes());
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void writehengxian(int count ,String path,String name) {
+        String filePath = path;
+        String fileName = name;
+        //生成文件夹之后，再生成文件，不然会出错
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(filePath +"/"+ fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+            String dateString = formatter.format(new Date());
+            String content = "---"+dateString+"开始("+count+")---"+"\r\n";
             raf.write(content.getBytes());
             raf.close();
         } catch (Exception e) {

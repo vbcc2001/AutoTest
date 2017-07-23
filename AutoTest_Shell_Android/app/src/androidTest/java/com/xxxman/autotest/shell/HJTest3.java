@@ -68,6 +68,7 @@ public class HJTest3{
         try {
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
             List<User> list = sqlUtil.selectHongbaoUser();
+            FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
             for(User user:list) {
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
@@ -77,6 +78,7 @@ public class HJTest3{
                 //完成任务
             }
             list = sqlUtil.selectHongbaoFailUser();
+            FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
             for(User user:list) {
                 test_for(user);
                 FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
@@ -92,23 +94,37 @@ public class HJTest3{
         //List<User> list = sqlUtil.selectLoginCount();
         try {
             if(user!=null) {
+                count_get_hongbao = 0 ;
                 login(user);
                 for (int i = 0; i < 6; i++) {
                     try {
-                        if (i==0 || i==3){
+                        if (i==0 || i==2 || i==4){
                             find_money(user,"最新");
                         }
-                        if (i==1 || i==4){
-                            find_money(user,"附近");
-                        }
-                        if (i==2 || i==5){
-                            find_money(user,"深圳");
+                        if (i==1 || i==3 || i==5){
+
+                            UiObject2 city = mUIDevice.findObject(By.text("深圳"));
+                            if (city!=null){
+                                find_money(user,"深圳");
+                            }
+                            city = mUIDevice.findObject(By.text("北京"));
+                            if (city!=null){
+                                find_money(user,"北京");
+                            }
+                            city = mUIDevice.findObject(By.text("上海"));
+                            if (city!=null){
+                                find_money(user,"上海");
+                            }
+                            city = mUIDevice.findObject(By.text("广州"));
+                            if (city!=null){
+                                find_money(user,"广州");
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         reboot();
                     }
-                    if (count_get_hongbao>=6){
+                    if (count_get_hongbao>=3){
                         break;
                     }
                 }
@@ -195,7 +211,7 @@ public class HJTest3{
         //UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
         UiObject new_list = mUIDevice.findObject(new UiSelector().text(menu));
         new_list.click();
-        for(int i =0 ;i < 25 ;i++){
+        for(int i =0 ;i < 15 ;i++){
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
                 list.swipeUp(50);
@@ -208,9 +224,9 @@ public class HJTest3{
                 money.click();
                 Thread.sleep(1000);
                 share();
-                for(int j =0 ;j < 25 ;j++){
+                for(int j =0 ;j < 30 ;j++){
                     mUIDevice.click(954,1367);
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
                     //情况1：成功
                     if(kaihongbao!=null){
@@ -241,17 +257,17 @@ public class HJTest3{
                                     break;
                                 }else{
                                     //情况4：未完成
-                                    UiObject2 hongdou100 = mUIDevice.findObject(By.text("100豆红包等你来抢"));
+                                    UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
                                     if(hongdou100!=null){
                                         mUIDevice.click(990,1770);
-                                        for(int jj =0 ;jj < 5 ;jj++) {
-                                            Thread.sleep(200);
-                                        }
                                     }else{
                                         //没红包
-                                        mUIDevice.click(990,1843);
-                                        mUIDevice.click(990,1843);
-                                        break;
+                                        //if(j>2){
+                                            mUIDevice.click(990,1843);
+                                            mUIDevice.click(990,1843);
+                                            break;
+                                        //}
+
                                     }
                                 }
                             }

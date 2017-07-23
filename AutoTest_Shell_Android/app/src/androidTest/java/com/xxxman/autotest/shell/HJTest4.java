@@ -63,16 +63,28 @@ public class HJTest4 extends HJTest3{
             if(list.size()>0) {
                 User user = list.get(0);
                 login(user);
-                for (int i = 0; i < 25; i++) {
+                for (int i = 0; i < 6; i++) {
                     try {
-                        if (i==0 || i==3){
+                        if (i==0 || i==2 || i==4){
                             find_money(user,"最新");
                         }
-                        if (i==1 || i==4){
-                            find_money(user,"附近");
-                        }
-                        if (i==2 || i==5){
-                            find_money(user,"深圳");
+                        if (i==1 || i==3 || i==5){
+                            UiObject2 city = mUIDevice.findObject(By.text("深圳"));
+                            if (city!=null){
+                                find_money(user,"深圳");
+                            }
+                            city = mUIDevice.findObject(By.text("北京"));
+                            if (city!=null){
+                                find_money(user,"北京");
+                            }
+                            city = mUIDevice.findObject(By.text("上海"));
+                            if (city!=null){
+                                find_money(user,"上海");
+                            }
+                            city = mUIDevice.findObject(By.text("广州"));
+                            if (city!=null){
+                                find_money(user,"广州");
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
