@@ -77,11 +77,14 @@ public class HJTest3{
                 FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 //完成任务
             }
-            list = sqlUtil.selectHongbaoFailUser();
-            FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
-            for(User user:list) {
-                test_for(user);
-                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
+
+            for(int i = 0 ;i<100;i++){
+                list = sqlUtil.selectHongbaoFailUser();
+                FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
+                for(User user:list) {
+                    test_for(user);
+                    FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -199,7 +199,7 @@ public class SQLUtil {
         return sum;
     }
     public int selectHongbaoSuccessCount(){
-        String sql = "select count(1) as sum from count where hongbao>=4 and hongbao_task_count =1 and day = '"+dateString+"'";
+        String sql = "select count(1) as sum from count where hongbao>=6 and hongbao_task_count =1 and day = '"+dateString+"'";
         int sum = 0;
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -223,7 +223,7 @@ public class SQLUtil {
         return list;
     }
     public List<User> selectHongbaoFailUser(){
-        String sql = "select id,phone,pwd,number,hongbao from count where hongbao<4 and hongbao_task_count =1 and day = '"+dateString+"'";
+        String sql = "select id,phone,pwd,number,hongbao from count where hongbao<6 and hongbao_task_count =1 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
