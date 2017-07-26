@@ -34,6 +34,9 @@ public class HJTest3{
     Context mContext = null;
     int count_get_hongbao = 0;
     SQLUtil sqlUtil = new SQLUtil();
+    boolean is4X=false;
+    //    boolean is4X=true;
+
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -228,46 +231,80 @@ public class HJTest3{
                 Thread.sleep(1000);
                 share();
                 for(int j =0 ;j < 30 ;j++){
-                    mUIDevice.click(954,1367);
+                    if(is4X){
+                        mUIDevice.click(954,1367);
+                    }else{
+                        mUIDevice.click(640,910);
+                    }
                     Thread.sleep(1000);
                     UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
                     //情况1：成功
                     if(kaihongbao!=null){
                         count_get_hongbao++;
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
-                        mUIDevice.click(990,1843);
-                        mUIDevice.click(990,1843);
+                        if(is4X){
+                            mUIDevice.click(990,1843);
+                            mUIDevice.click(990,1843);
+                        }else{
+                            mUIDevice.click(660,1228);
+                            mUIDevice.click(660,1228);
+                        }
+
                         break;
                     }else{
                         //情况2：失败
                         UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
                         if(wuyuan!=null){
-                            mUIDevice.click(990,1843);
-                            mUIDevice.click(990,1843);
+                            if(is4X){
+                                mUIDevice.click(990,1843);
+                                mUIDevice.click(990,1843);
+                            }else{
+                                mUIDevice.click(660,1228);
+                                mUIDevice.click(660,1228);
+                            }
                             break;
                         }else{
                             //情况3：失败
                             UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
                             if(meiyou!=null){
-                                mUIDevice.click(990,1843);
-                                mUIDevice.click(990,1843);
+                                if(is4X){
+                                    mUIDevice.click(990,1843);
+                                    mUIDevice.click(990,1843);
+                                }else{
+                                    mUIDevice.click(660,1228);
+                                    mUIDevice.click(660,1228);
+                                }
                                 break;
                             }else{
                                 UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
                                 if(yunqicha!=null){
-                                    mUIDevice.click(990,1843);
-                                    mUIDevice.click(990,1843);
+                                    if(is4X){
+                                        mUIDevice.click(990,1843);
+                                        mUIDevice.click(990,1843);
+                                    }else{
+                                        mUIDevice.click(660,1228);
+                                        mUIDevice.click(660,1228);
+                                    }
                                     break;
                                 }else{
                                     //情况4：未完成
                                     UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
                                     if(hongdou100!=null){
-                                        mUIDevice.click(990,1770);
+                                        if(is4X){
+                                            mUIDevice.click(990,1770);
+                                        }else{
+                                            mUIDevice.click(660,1180);
+                                        }
                                     }else{
                                         //没红包
                                         //if(j>2){
-                                            mUIDevice.click(990,1843);
-                                            mUIDevice.click(990,1843);
+                                            if(is4X){
+                                                mUIDevice.click(990,1843);
+                                                mUIDevice.click(990,1843);
+                                            }else{
+                                                mUIDevice.click(660,1228);
+                                                mUIDevice.click(660,1228);
+                                            }
                                             break;
                                         //}
 
@@ -287,7 +324,11 @@ public class HJTest3{
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
         Thread.sleep(2000);
-        mUIDevice.click(840,1843);
+        if(is4X){
+            mUIDevice.click(840,1842);
+        }else{
+            mUIDevice.click(560,1228);
+        }
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 

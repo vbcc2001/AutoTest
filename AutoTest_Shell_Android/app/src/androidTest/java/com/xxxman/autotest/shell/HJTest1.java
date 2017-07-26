@@ -42,7 +42,8 @@ public class HJTest1 {
     int log_count = 0;
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
-
+    boolean is4X=false;
+    //    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -133,10 +134,10 @@ public class HJTest1 {
 
         int count_share = 0;
 
-        boot();             //0.启动
-        closeAd();          //尝试关广告
+        //boot();             //0.启动
+        //closeAd();          //尝试关广告
         login(user);            //1.登录
-        closeAd();         //尝试关广告
+        //closeAd();         //尝试关广告
         goGuangChang();         //3.进入广场
         goZhiBo();        //4.进入直播
         //5.分享3次
@@ -146,7 +147,7 @@ public class HJTest1 {
         }
         getSunshine(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
-        closeAd();          //尝试关广告
+        //closeAd();          //尝试关广告
         quit();         //8.退出
     }
     //启动流程
@@ -178,14 +179,14 @@ public class HJTest1 {
         }else {
             login.click();
         }
-            UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
-            phone.setText(user.phone);
-            //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
-            UiObject password = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/pwd_et"));
-            password.setText(user.pwd);
-            UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
-            logining.click();
-            //Thread.sleep(2000);
+        UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
+        phone.setText(user.phone);
+        //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
+        UiObject password = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/pwd_et"));
+        password.setText(user.pwd);
+        UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
+        logining.click();
+        //Thread.sleep(2000);
     }
     //退出流程
     public void quit() throws Exception {
@@ -197,7 +198,7 @@ public class HJTest1 {
         //my_page.click();
 
         UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
-        home.scrollToEnd(1);
+        home.flingForward();
         //mUIDevice.swipe(100, 1676, 100, 600, 20);
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
@@ -234,14 +235,18 @@ public class HJTest1 {
         UiObject zhibozhong = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/icon_view"));
         zhibozhong.click();
     }
-    //关闭直播
+    //退出直播
     public void closeZhiBo() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
         //close.click();  //点击按键
         Thread.sleep(1000);
-        mUIDevice.click(990,1843);
+        if(is4X){
+            mUIDevice.click(990,1842);
+        }else{
+            mUIDevice.click(660,1228);
+        }
     }
     //分享
     public void share() throws Exception {
@@ -250,8 +255,14 @@ public class HJTest1 {
 
         UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(2000);
-        mUIDevice.click(840,1843);
+        Thread.sleep(1000);
+        mUIDevice.click(2,2);
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(840,1842);
+        }else{
+            mUIDevice.click(560,1228);
+        }
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
 
@@ -270,7 +281,12 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
         //sun.click();
-        mUIDevice.click(977,390);
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(976,390);
+        }else{
+            mUIDevice.click(651,268);
+        }
         UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
