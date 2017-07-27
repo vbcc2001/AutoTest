@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 授予应用程序访问系统开机事件的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -26,6 +28,25 @@
         <activity android:name=".LoginActivity" android:label="注册">
             <category android:name="android.intent.category.LAUNCHER"/>
         </activity>
+        <service
+            android:name=".MyService"
+            android:exported="true"
+            android:process=":MyCorn" >
+            <intent-filter>
+                <action android:name="com.xxxman.autotest.shell.myservice" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".MyBroadCastReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="com.xxxman.autotest.shell.MyBroadCastReceiver"/>
+            </intent-filter>
+        </receiver>
+        <!--&lt;!&ndash; 定义一个BroadcastReceiver，监听系统开机广播 &ndash;&gt;-->
+        <!--<receiver android:name=".MyBroadCastReceiver">-->
+            <!--　　<intent-filter >-->
+            <!--　　　　<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            <!--　　</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 

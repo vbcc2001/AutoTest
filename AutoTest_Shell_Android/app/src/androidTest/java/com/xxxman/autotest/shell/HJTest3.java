@@ -66,16 +66,24 @@ public class HJTest3{
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
 
-
         String path = null;
         try {
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
             List<User> list = sqlUtil.selectHongbaoUser();
             FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
+            //提醒
+            Intent intent = new Intent();
+            intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+            intent.putExtra("name", "抢红包任务开启");
+            mContext.sendBroadcast(intent);
+            int num =0;
             for(User user:list) {
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
                 Log.d(TAG, user.pwd + "---");
+                num++;
+                intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第1次循环）");
+                mContext.sendBroadcast(intent);
                 test_for(user);
                 FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 //完成任务
@@ -84,7 +92,11 @@ public class HJTest3{
             for(int i = 0 ;i<100;i++){
                 list = sqlUtil.selectHongbaoFailUser();
                 FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
+                num = 0;
                 for(User user:list) {
+                    num++;
+                    intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
+                    mContext.sendBroadcast(intent);
                     test_for(user);
                     FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 }
