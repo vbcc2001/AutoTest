@@ -38,15 +38,13 @@ public class HJTest5 {
     SQLUtil2 sqlUtil2 = new SQLUtil2();
     boolean is4X=true;
     Order order = new Order();
-    Intent intent = new Intent();
     String path = null;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+    int sum_dou = 0;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
-
-        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
 
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
         mUIDevice.registerWatcher("notifation", new UiWatcher() {
@@ -77,21 +75,41 @@ public class HJTest5 {
         try {
 
             order = sqlUtil2.selectOrder();
+
             if (order.id>0){
-                List<User> list = sqlUtil2.selectHongbaopUser(0);
+
+                List<User> list = sqlUtil2.selectDouUser(order.id);
                 path = Environment.getExternalStorageDirectory().getCanonicalPath();
                 String dateString = formatter.format(new Date());
                 FileUtil.writehengxian(list.size(),path,"dou_"+dateString+".txt");
                 int i = 0;
+                sum_dou = sqlUtil2.selectSendDou(order.id);
                 for(User user:list) {
+                    Intent intent = new Intent();
+                    intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+                    intent.putExtra("name", "送豆任务开启("+i+"／"+list.size()+"个)，任务编号"
+                            +order.id+",每个账户送豆数("+user.send_dou+"/"+order.per_dou+"),总送豆数("+sum_dou+"/"+order.max_dou+")");
+                    mContext.sendBroadcast(intent);
+                    if(sum_dou>=order.max_dou){
+                        Log.d(TAG, "送豆数"+sum_dou+"超过总送豆数"+order.max_dou);
+                        break;
+                    }
                     i++;
-                    intent.putExtra("name", "送豆任务开启("+i+"／"+list.size()+"个)，任务编号"+order.id+",每个账户送豆数"+order.per_dou+",总送豆数"+order.max_dou);
                     //执行任务
                     test_for(user);
                 }
             }else{
+                Intent intent = new Intent();
+                intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
                 intent.putExtra("name", "送豆任务编号错误："+order.id);
+                mContext.sendBroadcast(intent);
             }
+            Intent intent = new Intent();
+            intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+            intent.putExtra("name", "送豆任务完成，总送豆数为："+sum_dou);
+            mContext.sendBroadcast(intent);
+            Log.d(TAG, "送豆任务完成，总送豆数为："+sum_dou);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,7 +121,7 @@ public class HJTest5 {
         try {
             if(user!=null) {
                 login(user);
-                songHongbao("66224999",user);
+                songHongbao(""+order.huajiao_id,user);
                 quit(user);
             }
         } catch (Exception e) {
@@ -208,7 +226,7 @@ public class HJTest5 {
             //
         }
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         if(is4X){
             mUIDevice.click(540,1840);
         }else{
@@ -218,11 +236,14 @@ public class HJTest5 {
         UiObject doushu = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/tv_text_num"));
         user.dou = Integer.valueOf(doushu.getText());
         for(int i=0;i<order.per_dou;i++){
+            if(sum_dou>=order.max_dou){
+                break;
+            }
             if (user.send_dou>=order.per_dou){
                 break;
             }
             int dou =1;
-            if((user.send_dou+2)<=order.per_dou){
+            if((user.send_dou+2)<=order.per_dou && sum_dou +2 < order.max_dou){
                 Random random=new Random();// 定义随机类
                 dou=random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
             }
@@ -233,10 +254,14 @@ public class HJTest5 {
             UiObject2 send = mUIDevice.findObject(By.text("发送"));
             send.click();
             user.send_dou = user.send_dou+dou;
+            sum_dou = sum_dou+user.send_dou;
             sqlUtil2.updateDou(user);
             Thread.sleep(5000);
         }
+        Intent intent = new Intent();
+        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
         intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+user.send_dou+"个，剩余"+(user.dou-user.send_dou)+"个");
+        mContext.sendBroadcast(intent);
         String dateString = formatter.format(new Date());
         FileUtil.writeDou(user,path,"dou_"+dateString+".txt");
         mUIDevice.pressBack();

@@ -228,8 +228,11 @@ public class MainActivity extends AppCompatActivity {
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
                 List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
                 SQLUtil2 sqlUtil2 = new SQLUtil2();
-                if (!sqlUtil2.tabbleIsExist("hongbao")){
-                    sqlUtil2.createTableHongbao();
+                if (!sqlUtil2.tabbleIsExist("dou")){
+                    sqlUtil2.createTableDou();
+                }
+                if (!sqlUtil2.tabbleIsExist("order1")){
+                    sqlUtil2.createTableOrder();
                 }
                 EditText idEdit = (EditText) findViewById(R.id.idEdit);
                 EditText huajiaoEdit = (EditText) findViewById(R.id.huajiaoEdit);
@@ -251,16 +254,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }else{
                     sqlUtil2.inserOrder(order);
-                    List<User> list2 = sqlUtil2.selectHongbaopUser(task_id);
+                    List<User> list2 = sqlUtil2.selectDouUser(task_id);
                     if(list2.size()==0){
-                        sqlUtil2.inserHongbao(list,order);
+                        sqlUtil2.inserDou(list,order);
                     }else{
                         list =list2;
                     }
                 }
                 if (list.size()>0 ) {
                     if (huajiao_id>0  && per_dou>0 && max_dou>0){
-                        new UiautomatorThread5().start();
+                        UiautomatorThread5 thread5 = new UiautomatorThread5();
                         Log.i(TAG, "runMyUiautomator5: ");
                     }else{
                         Toast.makeText(getApplicationContext(), "任务数据输入错误!", Toast.LENGTH_LONG).show();
@@ -325,10 +328,13 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
     }
-    class UiautomatorThread5 extends Thread {
+    class UiautomatorThread5 extends BaseThread {
+        public UiautomatorThread5() {
+            super("HJTest5", false);
+        }
         @Override
-        public void run() {
-            super.run();
+        public void process() {
+            //super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest5 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
