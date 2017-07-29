@@ -21,7 +21,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @RunWith(AndroidJUnit4.class)
 public class HJTest5 {
@@ -35,11 +38,16 @@ public class HJTest5 {
     SQLUtil2 sqlUtil2 = new SQLUtil2();
     boolean is4X=true;
     Order order = new Order();
-
+    Intent intent = new Intent();
+    String path = null;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+
+        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
         mUIDevice.registerWatcher("notifation", new UiWatcher() {
 
@@ -58,6 +66,7 @@ public class HJTest5 {
         if(!mUIDevice.isScreenOn()){  //唤醒屏幕
             mUIDevice.wakeUp();
         }
+
     }
     @Test
     public void test(){
@@ -65,19 +74,23 @@ public class HJTest5 {
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
 
-
-        String path = null;
         try {
-            path = Environment.getExternalStorageDirectory().getCanonicalPath();
+
             order = sqlUtil2.selectOrder();
             if (order.id>0){
                 List<User> list = sqlUtil2.selectHongbaopUser(0);
+                path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                String dateString = formatter.format(new Date());
+                FileUtil.writehengxian(list.size(),path,"dou_"+dateString+".txt");
+                int i = 0;
                 for(User user:list) {
+                    i++;
+                    intent.putExtra("name", "送豆任务开启("+i+"／"+list.size()+"个)，任务编号"+order.id+",每个账户送豆数"+order.per_dou+",总送豆数"+order.max_dou);
                     //执行任务
                     test_for(user);
                 }
             }else{
-
+                intent.putExtra("name", "送豆任务编号错误："+order.id);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -204,19 +217,28 @@ public class HJTest5 {
 
         UiObject doushu = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/tv_text_num"));
         user.dou = Integer.valueOf(doushu.getText());
-        for(int i=0;i<2;i++){
-            UiObject2 liwu = mUIDevice.findObject(By.text("1豆"));
-            if(liwu==null){
-                liwu = mUIDevice.findObject(By.text("2豆"));
-                i++;
+        for(int i=0;i<order.per_dou;i++){
+            if (user.send_dou>=order.per_dou){
+                break;
             }
+            int dou =1;
+            if((user.send_dou+2)<=order.per_dou){
+                Random random=new Random();// 定义随机类
+                dou=random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
+            }
+            UiObject2 liwu = mUIDevice.findObject(By.text(dou+"豆"));
             if(!liwu.getParent().isSelected()){
                 liwu.click();
             }
             UiObject2 send = mUIDevice.findObject(By.text("发送"));
             send.click();
+            user.send_dou = user.send_dou+dou;
+            sqlUtil2.updateDou(user);
             Thread.sleep(5000);
         }
+        intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+user.send_dou+"个，剩余"+(user.dou-user.send_dou)+"个");
+        String dateString = formatter.format(new Date());
+        FileUtil.writeDou(user,path,"dou_"+dateString+".txt");
         mUIDevice.pressBack();
         mUIDevice.pressBack();
         mUIDevice.pressBack();

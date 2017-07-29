@@ -46,7 +46,7 @@ public class SQLUtil2    {
         //创建表SQL语句
         String stu_table = "create table hongbao(id integer primary key autoincrement," +
                 "number int DEFAULT 0,phone string,pwd String,day String," +
-                "order_id int,huajiao_id String,per_dou int,max_dou int,before_dou int DEFAULT 0,end_dou int DEFAULT 0 )";
+                "order_id int,huajiao_id String,per_dou int,max_dou int,send_dou int DEFAULT 0,before_dou int DEFAULT 0,end_dou int DEFAULT 0 )";
         //执行SQL语句
         db.execSQL(stu_table);
     }
@@ -112,10 +112,16 @@ public class SQLUtil2    {
             user.number = c.getInt(c.getColumnIndex("number"));
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.send_dou = c.getInt(c.getColumnIndex("send_dou"));
             list.add(user);
         }
         Log.i(TAG, "任务数为:" + list.size());
         return list;
+    }
+    public void updateDou(User user){
+        ContentValues cv = new ContentValues();
+        cv.put("send_dou", user.send_dou);
+        db.update("hongbao", cv, "id = ?", new String[] { ""+user.id });
     }
 
 }
