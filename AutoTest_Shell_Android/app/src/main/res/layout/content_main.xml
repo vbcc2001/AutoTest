@@ -240,7 +240,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="70dp"
+            android:layout_height="180dp"
             android:background="@drawable/border"
             android:padding="10dp"
             android:weightSum="1">
@@ -248,16 +248,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <EditText
-                    android:id="@+id/huajiao_id_edit"
-                    android:layout_width="match_parent"
-                    android:minWidth="180dp"
-                    android:layout_height="wrap_content"
-                    android:hint="输入花椒号"
-                    android:textSize="14sp"
-                    android:digits="1234567890"
-                    android:imeActionId="@+id/login"
-                    android:inputType="text" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/idEdit"
+                        android:layout_width="match_parent"
+                        android:minWidth="180dp"
+                        android:layout_height="40dp"
+                        android:hint="任务编号"
+                        android:textSize="14sp"
+                        android:digits="1234567890"
+                        android:imeActionId="@+id/login"
+                        android:text="0"
+                        android:inputType="text" />
+                    <EditText
+                        android:id="@+id/huajiaoEdit"
+                        android:layout_width="match_parent"
+                        android:minWidth="180dp"
+                        android:layout_height="40dp"
+                        android:hint="花椒号"
+                        android:textSize="14sp"
+                        android:digits="1234567890"
+                        android:imeActionId="@+id/login"
+                        android:text="0"
+                        android:inputType="text" />
+                    <EditText
+                        android:id="@+id/perDouEdit"
+                        android:layout_width="match_parent"
+                        android:minWidth="180dp"
+                        android:layout_height="40dp"
+                        android:hint="每个账号豆数量"
+                        android:textSize="14sp"
+                        android:digits="1234567890"
+                        android:imeActionId="@+id/login"
+                        android:text="0"
+                        android:inputType="text" />
+                    <EditText
+                        android:id="@+id/maxDouEdit"
+                        android:layout_width="match_parent"
+                        android:minWidth="180dp"
+                        android:layout_height="40dp"
+                        android:hint="总花椒豆数量"
+                        android:textSize="14sp"
+                        android:digits="1234567890"
+                        android:imeActionId="@+id/login"
+                        android:text="0"
+                        android:inputType="text" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -268,7 +307,7 @@
                 <Button
                     android:id="@+id/runBtn5"
                     android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:onClick="songHongbao"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"

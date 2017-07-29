@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -221,6 +222,61 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void songHongbao(View v) {
+        if(is_code){
+            try {
+                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
+                SQLUtil2 sqlUtil2 = new SQLUtil2();
+                if (!sqlUtil2.tabbleIsExist("hongbao")){
+                    sqlUtil2.createTableHongbao();
+                }
+                EditText idEdit = (EditText) findViewById(R.id.idEdit);
+                EditText huajiaoEdit = (EditText) findViewById(R.id.huajiaoEdit);
+                EditText perDouEdit = (EditText) findViewById(R.id.perDouEdit);
+                EditText maxDouEdit = (EditText) findViewById(R.id.maxDouEdit);
+
+                int task_id = Integer.parseInt(idEdit.getText().toString().trim());
+                int huajiao_id = Integer.parseInt(huajiaoEdit.getText().toString().trim());
+                int per_dou = Integer.parseInt(perDouEdit.getText().toString().trim());
+                int max_dou = Integer.parseInt(maxDouEdit.getText().toString().trim());
+
+                Order order = new Order(task_id,huajiao_id,per_dou,max_dou);
+
+                if(task_id<=0){
+                    //SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+                    //order.id = Integer.parseInt(formatter.format(new Date()));
+                    //sqlUtil2.inserHongbao(list,order);
+                    Toast.makeText(getApplicationContext(), "任务编号错误!", Toast.LENGTH_LONG).show();
+                    return;
+                }else{
+                    sqlUtil2.inserOrder(order);
+                    List<User> list2 = sqlUtil2.selectHongbaopUser(task_id);
+                    if(list2.size()==0){
+                        sqlUtil2.inserHongbao(list,order);
+                    }else{
+                        list =list2;
+                    }
+                }
+                if (list.size()>0 ) {
+                    if (huajiao_id>0  && per_dou>0 && max_dou>0){
+                        new UiautomatorThread5().start();
+                        Log.i(TAG, "runMyUiautomator5: ");
+                    }else{
+                        Toast.makeText(getApplicationContext(), "任务数据输入错误!", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "未找到该用户！", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
     /**
      * 运行uiautomator是个费时的操作，不应该放在主线程，因此另起一个线程运行
      */
@@ -265,6 +321,16 @@ public class MainActivity extends AppCompatActivity {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest4 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread5 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest5 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }

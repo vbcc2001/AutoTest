@@ -32,9 +32,9 @@ public class HJTest5 {
     int log_count = 0;
     Context mContext = null;
     int count_get_hongbao = 0;
-    SQLUtil sqlUtil = new SQLUtil();
+    SQLUtil2 sqlUtil2 = new SQLUtil2();
     boolean is4X=true;
-    //    boolean is4X=true;
+    Order order = new Order();
 
     @Before
     public void setUp() throws RemoteException {
@@ -69,10 +69,15 @@ public class HJTest5 {
         String path = null;
         try {
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
-            List<User> list = sqlUtil.selectHongbaoFailUser();
-            for(User user:list) {
-                //执行任务
-                test_for(user);
+            order = sqlUtil2.selectOrder();
+            if (order.id>0){
+                List<User> list = sqlUtil2.selectHongbaopUser(0);
+                for(User user:list) {
+                    //执行任务
+                    test_for(user);
+                }
+            }else{
+
             }
         } catch (IOException e) {
             e.printStackTrace();
