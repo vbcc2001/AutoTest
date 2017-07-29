@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 //继承BroadcastReceiver
 public class MyBroadCastReceiver extends BroadcastReceiver{
     //只需重写OnReceiver方法
@@ -23,6 +26,25 @@ public class MyBroadCastReceiver extends BroadcastReceiver{
 
     }
     public void toast(Context context,String info){
-        Toast.makeText(context, info, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, info, Toast.LENGTH_LONG);
+        showMyToast(toast, 9*1000);
     }
+
+    public void showMyToast(final Toast toast, final int cnt) {
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.show();
+            }
+        }, 0, 3500);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.cancel();
+                timer.cancel();
+            }
+        }, cnt );
+    }
+
 }

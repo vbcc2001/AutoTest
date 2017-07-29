@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     TextView snView;
     EditText numberEdit;
     EditText numberEdit1;
+    EditText idEdit ;
+    EditText huajiaoEdit ;
+    EditText perDouEdit ;
+    EditText maxDouEdit ;
     SQLUtil sqlUtil = new SQLUtil();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         numberEdit1 = (EditText) findViewById(R.id.number_edit1);
         numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        idEdit = (EditText) findViewById(R.id.idEdit);
+        idEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        huajiaoEdit = (EditText) findViewById(R.id.huajiaoEdit);
+        huajiaoEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        perDouEdit = (EditText) findViewById(R.id.perDouEdit);
+        perDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        maxDouEdit = (EditText) findViewById(R.id.maxDouEdit);
+        maxDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+
         Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void songHongbao(View v) {
+    public void songDou(View v) {
         if(is_code){
             try {
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
@@ -234,15 +247,31 @@ public class MainActivity extends AppCompatActivity {
                 if (!sqlUtil2.tabbleIsExist("order1")){
                     sqlUtil2.createTableOrder();
                 }
-                EditText idEdit = (EditText) findViewById(R.id.idEdit);
-                EditText huajiaoEdit = (EditText) findViewById(R.id.huajiaoEdit);
-                EditText perDouEdit = (EditText) findViewById(R.id.perDouEdit);
-                EditText maxDouEdit = (EditText) findViewById(R.id.maxDouEdit);
+                String task_id_string = idEdit.getText().toString().trim();
+                String huajiao_id_string = huajiaoEdit.getText().toString().trim();
+                String per_dou_string = perDouEdit.getText().toString().trim();
+                String max_dou_string = maxDouEdit.getText().toString().trim();
+                if(task_id_string.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "没输入任务编号!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(huajiao_id_string.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "没输入花椒号!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(per_dou_string.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "没输入每个账号送豆数!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(max_dou_string.trim().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "没输入总送豆数!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                int task_id = Integer.parseInt(idEdit.getText().toString().trim());
-                int huajiao_id = Integer.parseInt(huajiaoEdit.getText().toString().trim());
-                int per_dou = Integer.parseInt(perDouEdit.getText().toString().trim());
-                int max_dou = Integer.parseInt(maxDouEdit.getText().toString().trim());
+                int task_id = Integer.parseInt(task_id_string);
+                int huajiao_id = Integer.parseInt(huajiao_id_string);
+                int per_dou = Integer.parseInt(per_dou_string);
+                int max_dou = Integer.parseInt(max_dou_string);
 
                 Order order = new Order(task_id,huajiao_id,per_dou,max_dou);
 
@@ -254,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }else{
                     sqlUtil2.inserOrder(order);
-                    List<User> list2 = sqlUtil2.selectDouUser(task_id);
+                    List<User> list2 = sqlUtil2.selectDouUser(order);
                     if(list2.size()==0){
                         sqlUtil2.inserDou(list,order);
                     }else{
@@ -276,6 +305,40 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(getApplicationContext(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
             }
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void getBefore(View v) {
+        if(is_code){
+            SQLUtil2 sqlUtil2 = new SQLUtil2();
+            Order order = sqlUtil2.selectOrder();
+            idEdit.setText(""+order.id);
+            huajiaoEdit.setText(""+order.huajiao_id);
+            perDouEdit.setText(""+order.per_dou);
+            maxDouEdit.setText(""+order.max_dou);
+            TextView douView =(TextView) findViewById(R.id.dou_view);
+            int sum = sqlUtil2.selectSendDou(order.id);
+            int user_sum = sqlUtil2.selectDouUser(order).size();
+            if(user_sum==0){
+                douView.setTextColor(ContextCompat.getColor(this, R.color.green));
+            }else{
+                douView.setTextColor(ContextCompat.getColor(this, R.color.red));
+            }
+            douView.setText("上次：已送"+sum+"个，还剩"+(order.max_dou-sum)+"个（"+user_sum+"个账户未送完）");
+        }else {
+            Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void setNull(View v) {
+        if(is_code){
+            idEdit.setText("");
+            huajiaoEdit.setText("");
+            perDouEdit.setText("");
+            maxDouEdit.setText("");
+            TextView douView =(TextView) findViewById(R.id.dou_view);
+            douView.setText("");
         }else {
             Toast.makeText(getApplicationContext(), "请先注册！", Toast.LENGTH_LONG).show();
         }

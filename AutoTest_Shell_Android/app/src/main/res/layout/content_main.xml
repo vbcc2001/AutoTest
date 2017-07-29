@@ -236,13 +236,14 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="5、送红包"/>
+                android:text="5、送礼物"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="180dp"
-            android:background="@drawable/border"
-            android:padding="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:weightSum="1">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -261,7 +262,6 @@
                         android:textSize="14sp"
                         android:digits="1234567890"
                         android:imeActionId="@+id/login"
-                        android:text="0"
                         android:inputType="text" />
                     <EditText
                         android:id="@+id/huajiaoEdit"
@@ -272,29 +272,26 @@
                         android:textSize="14sp"
                         android:digits="1234567890"
                         android:imeActionId="@+id/login"
-                        android:text="0"
                         android:inputType="text" />
                     <EditText
                         android:id="@+id/perDouEdit"
                         android:layout_width="match_parent"
                         android:minWidth="180dp"
                         android:layout_height="40dp"
-                        android:hint="每个账号豆数量"
+                        android:hint="每个账号送豆数"
                         android:textSize="14sp"
                         android:digits="1234567890"
                         android:imeActionId="@+id/login"
-                        android:text="0"
                         android:inputType="text" />
                     <EditText
                         android:id="@+id/maxDouEdit"
                         android:layout_width="match_parent"
                         android:minWidth="180dp"
                         android:layout_height="40dp"
-                        android:hint="总花椒豆数量"
+                        android:hint="总送豆数"
                         android:textSize="14sp"
                         android:digits="1234567890"
                         android:imeActionId="@+id/login"
-                        android:text="0"
                         android:inputType="text" />
                 </LinearLayout>
             </LinearLayout>
@@ -308,12 +305,46 @@
                     android:id="@+id/runBtn5"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:onClick="songHongbao"
+                    android:onClick="songDou"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="开始" />
+                    android:text="开始/继续" />
+                <Button
+                    android:id="@+id/runBtn6"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="getBefore"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="上次信息" />
+                <Button
+                    android:id="@+id/runBtn7"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="setNull"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="清空信息" />
             </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/dou_view"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="0.84"
+                android:lineSpacingExtra="10dp"
+                android:text="" />
         </LinearLayout>
 
 

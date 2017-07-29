@@ -105,8 +105,9 @@ public class SQLUtil2    {
             db.insert("dou",null,cv);//执行插入操作
         }
     }
-    public List<User> selectDouUser(int order_id) {
-        String sql = "select id,number,phone,pwd,send_dou from dou where order_id="+order_id;
+    public List<User> selectDouUser(Order order) {
+        String sql = "select id,number,phone,pwd,send_dou from dou where order_id="+order.id
+                        +" and send_dou < "+order.per_dou;
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -117,6 +118,7 @@ public class SQLUtil2    {
             user.pwd = c.getString(c.getColumnIndex("pwd"));
             user.send_dou = c.getInt(c.getColumnIndex("send_dou"));
             list.add(user);
+            Log.i(TAG, "账户为:" + user.id+","+ user.number+","+ user.phone+","+ user.pwd+","+ user.send_dou);
         }
         Log.i(TAG, "任务数为:" + list.size());
         return list;

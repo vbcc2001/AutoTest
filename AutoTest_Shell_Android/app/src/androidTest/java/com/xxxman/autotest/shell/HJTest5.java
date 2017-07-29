@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
+import android.text.LoginFilter;
 import android.util.Log;
 
 import org.junit.Before;
@@ -41,6 +42,8 @@ public class HJTest5 {
     String path = null;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
     int sum_dou = 0;
+    //记录以前送的豆
+    int before_send_dou = 0 ;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -78,13 +81,14 @@ public class HJTest5 {
 
             if (order.id>0){
 
-                List<User> list = sqlUtil2.selectDouUser(order.id);
+                List<User> list = sqlUtil2.selectDouUser(order);
                 path = Environment.getExternalStorageDirectory().getCanonicalPath();
                 String dateString = formatter.format(new Date());
                 FileUtil.writehengxian(list.size(),path,"dou_"+dateString+".txt");
                 int i = 0;
                 sum_dou = sqlUtil2.selectSendDou(order.id);
                 for(User user:list) {
+                    before_send_dou = user.send_dou;
                     Intent intent = new Intent();
                     intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
                     intent.putExtra("name", "送豆任务开启("+i+"／"+list.size()+"个)，任务编号"
@@ -113,7 +117,7 @@ public class HJTest5 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        mUIDevice.pressHome();  //按home键
     }
 
     public void test_for(User user){
@@ -123,6 +127,17 @@ public class HJTest5 {
                 login(user);
                 songHongbao(""+order.huajiao_id,user);
                 quit(user);
+                //修正送豆
+                if((user.dou-user.last_dou)>=0 && (user.send_dou-before_send_dou)>=0){
+                    if((user.dou-user.last_dou)!=(user.send_dou-before_send_dou)){
+                        user.send_dou = user.dou-user.last_dou+before_send_dou;
+                    }
+                    sqlUtil2.updateDou(user);
+                    String dateString = formatter.format(new Date());
+                    user.send_dou = user.send_dou-before_send_dou;
+                    FileUtil.writeDou(user,order,path,"dou_"+dateString+".txt");
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,7 +200,7 @@ public class HJTest5 {
         UiObject2 dou = mUIDevice.findObject(By.res("com.huajiao:id/hjd_num_tv"));
         if (dou != null){
             Log.d(TAG,dou.getText()+"---------");
-            user.dou = Integer.valueOf(dou.getText());
+            user.last_dou = Integer.valueOf(dou.getText());
         }
 
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
@@ -235,36 +250,81 @@ public class HJTest5 {
 
         UiObject doushu = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/tv_text_num"));
         user.dou = Integer.valueOf(doushu.getText());
-        for(int i=0;i<order.per_dou;i++){
-            if(sum_dou>=order.max_dou){
-                break;
+        if(user.dou>0){
+            for(int i=0;i<order.per_dou;i++){
+                if(sum_dou>=order.max_dou){
+                    break;
+                }
+                if (user.send_dou>=order.per_dou){
+                    break;
+                }
+                int dou =1;
+                if((user.send_dou+2)<=order.per_dou && sum_dou +2 < order.max_dou){
+                    Random random=new Random();// 定义随机类
+                    dou=random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
+                }
+                UiObject2 liwu = mUIDevice.findObject(By.text(dou+"豆"));
+                if(!liwu.getParent().isSelected()){
+                    liwu.click();
+                }
+                UiObject2 send = mUIDevice.findObject(By.text("发送"));
+                send.click();
+                Log.d(TAG,"---用户已送豆"+user.send_dou);
+                user.send_dou = user.send_dou+dou;
+                Log.d(TAG,"---现在用户送豆"+user.send_dou);
+                sum_dou = sum_dou+dou;
+                Log.d(TAG,"---现在总送豆"+user.send_dou);
+                UiObject2 yuerbuzu = mUIDevice.findObject(By.text("余额不足"));
+                if(yuerbuzu!=null){
+                    UiObject2 quxiao = mUIDevice.findObject(By.text("取消"));
+                    quxiao.click();
+                    break;
+                }
+                sqlUtil2.updateDou(user);
+                if(user.send_dou+3<=order.per_dou && sum_dou+3<=order.max_dou){
+                    //UiObject2 send2 = mUIDevice.findObject(By.text("连发"));
+                    Log.d(TAG,"---账户送豆差"+(order.per_dou-user.send_dou));
+                    Log.d(TAG,"---总数送豆差"+(order.max_dou-sum_dou));
+                    int cha = order.per_dou-user.send_dou;
+                    if(cha > order.max_dou-sum_dou){
+                        cha =order.max_dou-sum_dou;
+                    }
+                    for(int j=0 ;j<cha ;j++){
+                        //send2.click();
+                        if(is4X){
+                            mUIDevice.click(990,1843);
+                        }else{
+                            mUIDevice.click(660,1228);
+                        }
+                        if(dou==2){
+                            j++;
+                        }
+                        user.send_dou = user.send_dou+dou;
+                        Log.d(TAG,"---连发用户送豆"+user.send_dou);
+                        sum_dou = sum_dou+dou;
+                        Log.d(TAG,"---连发总送豆"+user.send_dou);
+                        Thread.sleep(1000);
+                    }
+                }
+                Log.d(TAG,"---最后总送豆"+user.send_dou);
+                sqlUtil2.updateDou(user);
+                Thread.sleep(5000);
             }
-            if (user.send_dou>=order.per_dou){
-                break;
-            }
-            int dou =1;
-            if((user.send_dou+2)<=order.per_dou && sum_dou +2 < order.max_dou){
-                Random random=new Random();// 定义随机类
-                dou=random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
-            }
-            UiObject2 liwu = mUIDevice.findObject(By.text(dou+"豆"));
-            if(!liwu.getParent().isSelected()){
-                liwu.click();
-            }
-            UiObject2 send = mUIDevice.findObject(By.text("发送"));
-            send.click();
-            user.send_dou = user.send_dou+dou;
-            sum_dou = sum_dou+user.send_dou;
-            sqlUtil2.updateDou(user);
-            Thread.sleep(5000);
         }
         Intent intent = new Intent();
         intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
-        intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+user.send_dou+"个，剩余"+(user.dou-user.send_dou)+"个");
+        intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+(user.send_dou-before_send_dou)+"个，剩余"+(user.dou-user.send_dou)+"个");
         mContext.sendBroadcast(intent);
-        String dateString = formatter.format(new Date());
-        FileUtil.writeDou(user,path,"dou_"+dateString+".txt");
-        mUIDevice.pressBack();
+        //关闭直播
+        if(is4X){
+            mUIDevice.click(30,70);
+            mUIDevice.click(30,70);
+            mUIDevice.click(990,1843);
+        }else{
+            mUIDevice.click(30,70);
+            mUIDevice.click(30,70);
+            mUIDevice.click(660,1228);
+        }
         mUIDevice.pressBack();
         mUIDevice.pressBack();
         mUIDevice.pressBack();

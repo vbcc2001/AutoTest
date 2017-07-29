@@ -196,7 +196,7 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
-    public static void writeDou(User user,String path,String name) {
+    public static void writeDou(User user,Order order,String path,String name) {
         String filePath = path;
         String fileName = name;
         //生成文件夹之后，再生成文件，不然会出错
@@ -212,7 +212,7 @@ public class FileUtil {
             }
             RandomAccessFile raf = new RandomAccessFile(file, "rwd");
             raf.seek(file.length());
-            String content = user.number+","+user.phone+","+user.pwd+","+user.send_dou+","+(user.dou-user.send_dou)+"\r\n";
+            String content = order.id+","+user.number+","+user.phone+","+user.pwd+","+user.dou+","+user.send_dou+","+user.last_dou+"\r\n";
             raf.write(content.getBytes());
             raf.close();
         } catch (Exception e) {
