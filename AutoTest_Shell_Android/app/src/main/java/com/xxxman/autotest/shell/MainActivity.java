@@ -2,6 +2,7 @@ package com.xxxman.autotest.shell;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,11 +12,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,10 +56,27 @@ public class MainActivity extends AppCompatActivity {
     EditText perDouEdit ;
     EditText maxDouEdit ;
     SQLUtil sqlUtil = new SQLUtil();
+    TabLayout mTablayout;
+    ViewPager mViewPager;
+    TabTitlePager mTabTitleAdapter;
+    String[] titleArr = new String[]{"阳光","红包","礼物"};
+    //String[] titleArr = new String[]{"礼物"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTablayout = (TabLayout) findViewById(R.id.tabLayout);
+        //mTablayout.addTab(mTablayout.newTab().setText("阳光"));
+        //mTablayout.addTab(mTablayout.newTab().setText("红包"));
+        //mTablayout.addTab(mTablayout.newTab().setText("礼物"));
+        mTablayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mTablayout.setTabMode(TabLayout.MODE_FIXED);
+
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mTabTitleAdapter = new TabTitlePager(getSupportFragmentManager());
+        mViewPager.setAdapter(mTabTitleAdapter);
+        mTablayout.setupWithViewPager(mViewPager);
 
         runBtn = (Button) findViewById(R.id.runBtn);
         rootTextView = (TextView) findViewById(R.id.root_view);
@@ -420,4 +445,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public class TabTitlePager extends FragmentPagerAdapter {
+
+        private LayoutInflater mInflater;
+
+        public TabTitlePager(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            PageFragment fragment = new PageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", ""+position);
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titleArr[position];
+        }
+
+        public View getTabView(int position){
+            mInflater = LayoutInflater.from(MainActivity.this);
+            View view = mInflater.inflate(R.layout.content_main, null);
+            if (position==1){
+                view = mInflater.inflate(R.layout.content_hongbao, null);
+            }
+            //TextView textView = (TextView) view.findViewById(R.id.title_tv);
+            //ImageView img = (ImageView) view.findViewById(R.id.img);
+            //img.setImageResource(R.mipmap.ic_launcher);
+            //textView.setText(titleArr[position]);
+            return  view;
+        }
+
+    }
 }
