@@ -90,7 +90,7 @@ public class HJTest4 extends HJTest3{
                         e.printStackTrace();
                         reboot();
                     }
-                    if (count_get_hongbao>=6){
+                    if (count_get_hongbao>=3){
                         break;
                     }
                 }
