@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,10 @@ import java.util.List;
 
 public class GiftFragment extends Fragment {
 
+
+    Button runBtn5;
+    Button runBtn6;
+    Button runBtn7;
     EditText idEdit ;
     EditText huajiaoEdit ;
     EditText perDouEdit ;
@@ -44,6 +49,10 @@ public class GiftFragment extends Fragment {
     @Override
     public void onViewCreated(View view,Bundle bundle){
 
+
+        runBtn5 = (Button) view.findViewById(R.id.runBtn5);
+        runBtn6 = (Button) view.findViewById(R.id.runBtn6);
+        runBtn7 = (Button) view.findViewById(R.id.runBtn7);
         idEdit = (EditText) view.findViewById(R.id.idEdit);
         idEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         huajiaoEdit = (EditText) view.findViewById(R.id.huajiaoEdit);
@@ -54,6 +63,27 @@ public class GiftFragment extends Fragment {
         maxDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         douView =(TextView) view.findViewById(R.id.dou_view);
 
+        //绑定运行按钮
+        runBtn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                songDou (view);
+            }
+        });
+        //绑定运行按钮
+        runBtn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getBefore(view);
+            }
+        });
+        //绑定运行按钮
+        runBtn7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNull(view);
+            }
+        });
         //判断是否注册
         String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
                 "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +

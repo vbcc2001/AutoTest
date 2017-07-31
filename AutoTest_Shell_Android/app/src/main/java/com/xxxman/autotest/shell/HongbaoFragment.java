@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import java.util.List;
 
 public class HongbaoFragment extends Fragment {
 
+    Button runBtn2;
+    Button runBtn3;
     TextView hongbaoView;
     EditText numberEdit1;
     SQLUtil sqlUtil = new SQLUtil();
@@ -44,9 +47,26 @@ public class HongbaoFragment extends Fragment {
     @Override
     public void onViewCreated(View view,Bundle bundle){
 
+        runBtn2 = (Button) view.findViewById(R.id.runBtn2);
+        runBtn3 = (Button) view.findViewById(R.id.runBtn3);
         numberEdit1 = (EditText) view.findViewById(R.id.number_edit1);
         numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         hongbaoView =(TextView)  view.findViewById(R.id.hongbao_view);
+
+        //绑定运行按钮
+        runBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runHongbao (view);
+            }
+        });
+        //绑定运行按钮
+        runBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runHongbao2(view);
+            }
+        });
 
         int user_count = 0;
         int task_count = 0;

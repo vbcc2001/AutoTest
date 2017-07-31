@@ -60,10 +60,9 @@
                 android:padding="10dp"
                 android:orientation="vertical">
                 <Button
-                    android:id="@+id/runBtn3"
+                    android:id="@+id/runBtn2"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
-                    android:onClick="runHongbao"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -112,10 +111,9 @@
                 android:padding="10dp"
                 android:orientation="vertical">
                 <Button
-                    android:id="@+id/runBtn2"
+                    android:id="@+id/runBtn3"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
-                    android:onClick="runHongbao2"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"

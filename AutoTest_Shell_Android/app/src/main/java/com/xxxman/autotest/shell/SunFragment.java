@@ -27,6 +27,7 @@ import java.util.List;
 public class SunFragment extends Fragment {
 
     Button runBtn;
+    Button runBtn1;
     TextView rootTextView;
     TextView taskView;
     TextView snView;
@@ -49,6 +50,7 @@ public class SunFragment extends Fragment {
     public void onViewCreated(View view,Bundle bundle){
 
         runBtn = (Button) view.findViewById(R.id.runBtn);
+        runBtn1 = (Button) view.findViewById(R.id.runBtn1);
         rootTextView = (TextView)  view.findViewById(R.id.root_view);
         taskView =(TextView)  view.findViewById(R.id.task_view);
         snView =  (TextView)  view.findViewById(R.id.sn_view);
@@ -68,6 +70,20 @@ public class SunFragment extends Fragment {
                     intent.setClass(SunFragment.this.getActivity(), LoginActivity.class);
                     SunFragment.this.getActivity().startActivity(intent);
                 }
+            }
+        });
+        //绑定运行按钮
+        runBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runMyUiautomator(view);
+            }
+        });
+        //绑定运行按钮
+        runBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                runLogin(view);
             }
         });
         //创建表
