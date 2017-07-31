@@ -17,7 +17,6 @@ public class PageFragment extends Fragment {
 
     public static PageFragment newInstance(int page) {
         Bundle args = new Bundle();
-
         args.putInt(ARGS_PAGE, page);
         PageFragment fragment = new PageFragment();
         fragment.setArguments(args);
@@ -32,9 +31,17 @@ public class PageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.page_fragment,container,false);
-        TextView textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText("第"+mPage+"页");
+        View view = null;
+        if(mPage==0){
+            view = inflater.inflate(R.layout.content_main,container,false);
+        }
+        if(mPage==1){
+            view = inflater.inflate(R.layout.content_hongbao,container,false);
+        }
+        if(mPage==2){
+            view = inflater.inflate(R.layout.content_liwu,container,false);
+        }
         return view;
+
     }
 }
