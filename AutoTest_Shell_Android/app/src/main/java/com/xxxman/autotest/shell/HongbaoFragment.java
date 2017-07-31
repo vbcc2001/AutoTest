@@ -29,7 +29,7 @@ public class HongbaoFragment extends Fragment {
     Button runBtn3;
     TextView hongbaoView;
     EditText numberEdit1;
-    SQLUtil sqlUtil = new SQLUtil();
+    SQLUtil1 sqlUtil = new SQLUtil1();
 
     private static final String TAG = HongbaoFragment.class.getName();
     boolean is_code = false;
@@ -67,6 +67,23 @@ public class HongbaoFragment extends Fragment {
                 runHongbao2(view);
             }
         });
+
+        //创建表
+        if (!sqlUtil.tabbleIsExist("hongbao")){
+            sqlUtil.createTableCount();
+        }
+        //读取txt文档，插入到表
+        if(sqlUtil.selectUserCount()==0){
+            try {
+                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt");
+                Log.d(TAG,"user_list.txt中用户数量："+list.size());
+                sqlUtil.inserCount(list);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this.getActivity(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+            }
+        }
 
         int user_count = 0;
         int task_count = 0;
@@ -135,7 +152,7 @@ public class HongbaoFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt",number);
+            List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt",number);
             Log.d(TAG,"登录人数：---"+list.size());
             sqlUtil.inserLoginCount(list);
             if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
