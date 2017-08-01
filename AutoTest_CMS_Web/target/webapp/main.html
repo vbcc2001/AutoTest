@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html style="width: 100%; height: 100%;overflow:hidden">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>花椒助手</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="plugins/dhtmlxSuite_v51_std/codebase/fonts/font_awesome/cssfont-awesome.min.css" rel="stylesheet">  -->
+  <link rel="stylesheet" type="text/css" href="plugins/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css"/>
+	<link rel="stylesheet" type="text/css" href="plugins/dhtmlxSuite_v51_std/codebase/dhtmlx.css"/>
+
+	<!-- <script src="plugins/bootstrap/js/bootstrap.min.js"></script> -->
+	<script src="sea.js"></script>
+	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="plugins/dhtmlxSuite_v51_std/codebase/dhtmlx.js"></script>
+	<script >
+	seajs.config({
+	alias: {
+		"user_choose":"js/common/user_choose.js"
+	}});
+	</script>
+	<script>
+		$(function(){
+				seajs.use(["main"], function (dhx) {
+						dhx.init("123","123");
+						window._dhx = dhx;
+				});
+		});
+	</script>
+</head>
+<body style="width: 100%;height: 100%">
+<div id="menu_tree" style="width: 100%; height: 100%"></div>
+<div id="tab_bar" style="width: 100%; height: 100%"></div>
+</body>
+</html>
