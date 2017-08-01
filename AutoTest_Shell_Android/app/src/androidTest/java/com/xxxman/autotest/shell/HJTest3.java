@@ -33,9 +33,9 @@ public class HJTest3{
     int log_count = 0;
     Context mContext = null;
     int count_get_hongbao = 0;
-    SQLUtil sqlUtil = new SQLUtil();
-    boolean is4X=false;
-    //    boolean is4X=true;
+    SQLUtil1 sqlUtil = new SQLUtil1();
+//    boolean is4X=false;
+    boolean is4X=true;
 
     @Before
     public void setUp() throws RemoteException {
