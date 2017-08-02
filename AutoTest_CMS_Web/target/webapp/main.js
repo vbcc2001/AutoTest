@@ -57,7 +57,7 @@ define(function(require, exports, module) {
 	function createTree(){
 		var item = [
         {id: 1, text: "阳光", open: 1, items: [
-            {id: 101, text: "阳光详情",url:"www.baidu.com"},
+            {id: 101, text: "阳光详情",userdata: {url: "html/sun/main.html"}},
             {id: 102, text: "其他"}
 				]},
 				{id: 2, text: "红包", open: 1, items: [
@@ -105,7 +105,8 @@ define(function(require, exports, module) {
 				myTabbar.tabs(id).setActive();
 			}else{
 				myTabbar.addTab(id, name, "120px",null,true);
-				myTabbar.tabs(id).attachURL(url);
+				myTabbar.tabs(id).attachURL(url,true);
+				//myTabbar.tabs("a1").attachURL("../common/test_page_1.html", true);
 			}	
 		}
 	}
