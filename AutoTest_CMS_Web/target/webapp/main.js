@@ -2,16 +2,19 @@ define(function(require, exports, module) {
 	// ********************************************************************************************************************************************
 	// 变量区                **************************************************************************************************************************
 	//*********************************************************************************************************************************************
-	var myTabbar = null;
+
+	var dhxLayout =null;
 	var tree = null;
+	var myTabbar = null;
 	// ********************************************************************************************************************************************
 	// 对外方法            **************************************************************************************************************************
 	//*********************************************************************************************************************************************
 	/**-------------------------------------form表单初始化------------------------------------*/
-	exports.init = function(user_name,my_page_id) {
-		createMainWindow(user_name);//创建主窗口
-		//createTabbar();//创建标签
-		//createTree(my_page_id);//创建目录
+	exports.init = function() {
+	
+		createMainWindow("测试");//创建主窗口
+		createTree();//创建目录
+		createTabbar();//创建标签
 
 	};
 	exports.addTabbar = function(id,name,url) {
@@ -27,7 +30,7 @@ define(function(require, exports, module) {
 	//*********************************************************************************************************************************************
 	/**-------------------------------------创建主窗口---------------------------------------*/
 	function createMainWindow(user_name){
-		var dhxLayout=new dhtmlXLayoutObject(document.body,"2U");
+		dhxLayout=new dhtmlXLayoutObject(document.body,"2U");
 		var str  ="<div style='float: left;' >当前：<span style='color: #4B08D2;' >"+user_name+"</span></div>"
 					+"<div  style='float:right; '>"+
 							"<a id='user_quit' href='javascript:void();'>" +
@@ -43,28 +46,53 @@ define(function(require, exports, module) {
 	            callback:function(result){ if(result){ window.location.href='/admin/action/web/action/LoginAction?function=Quit'; }}
 	        });
 		});
-		dhxLayout.cells("b").setText("主窗口");
+
 		dhxLayout.cells("a").setWidth("200");
-		dhxLayout.cells("a").attachObject("menu_tree");
-		dhxLayout.cells("b").attachObject("tab_bar");
+		//dhxLayout.cells("a").attachObject("menu_tree");
+		//dhxLayout.cells("b").attachObject("tab_bar");
+		dhxLayout.cells("b").setText("主窗口");
 		dhxLayout.cells("b").hideHeader();
 	};
 	/**-------------------------------------创建目录树---------------------------------------*/
-	function createTree(my_page_id){
-		tree = new dhtmlXTreeObject("menu_tree", "100%", "100%", 0);
-		tree.setSkin('dhx_skyblue');
-		tree.setImagePath("/admin/front/dhtmlxSuite_4/codebase/imgs/dhxtree_skyblue/");
-		tree.enableHighlighting(true);
-		tree.loadJSON("/admin/action/web/action/MainAction?function=getMenu");
-		tree.setOnClickHandler(open_url);
-		tree.setOnLoadingEnd(function(){  tree.selectItem(my_page_id,true,false);  });
+	function createTree(){
+		var item = [
+        {id: 1, text: "阳光", open: 1, items: [
+            {id: 101, text: "阳光详情",url:"www.baidu.com"},
+            {id: 102, text: "其他"}
+				]},
+				{id: 2, text: "红包", open: 1, items: [
+            {id: 201, text: "红包详情"},
+            {id: 202, text: "其他"}
+				]},
+				{id: 3, text: "礼物", open: 1, items: [
+            {id: 301, text: "礼物详情"},
+            {id: 302, text: "其他"}
+        ]}
+		];
+		tree = dhxLayout.cells("a").attachTreeView({
+			//parent:         "a",  // id/object, container for treeview
+			//skin:           "dhx_terrace",  // string, optional, treeview's skin
+			iconset:        "font_awesome", // string, optional, sets the font-awesome icons
+			multiselect:    true,           // boolean, optional, enables multiselect
+			//checkboxes:     true,           // boolean, optional, enables checkboxes
+			dnd:            true,           // boolean, optional, enables drag-and-drop
+			context_menu:   true,           // boolean, optional, enables context menu
+			//json:           "filename.json",// string, optional, json file with struct
+			items:          item,             // array, optional, array with tree struct
+			onload:         function(){}    // callable, optional, callback for load
+		});
+		tree.attachEvent("onClick", open_url);
 	};
 	/**------------------------------------创建导航标签-------------------------------------*/
 	function createTabbar () {	
-		myTabbar = new dhtmlXTabBar("tab_bar");
+		myTabbar = dhxLayout.cells("b").attachTabbar({
+				align: "left",
+				mode: "top"
+		});
 		myTabbar.enableTabCloseButton(true);
 		myTabbar.enableAutoReSize(true);
 	};	
+  /**------------------------------------目录内容的点击处理-------------------------------------*/
 	function open_url(item_id){
 		var url = tree.getUserData(item_id,"url");
 		var id= "tab_"+item_id;
