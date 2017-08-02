@@ -12,22 +12,15 @@
   <link rel="stylesheet" type="text/css" href="plugins/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="plugins/dhtmlxSuite_v51_std/codebase/dhtmlx.css"/>
 
-	<!-- <script src="plugins/bootstrap/js/bootstrap.min.js"></script> -->
+
 	<script src="sea.js"></script>
+	<script src="config.js"></script>
 	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="plugins/bootstrap/js/bootstrap.min.js"></script> 
 	<script src="plugins/dhtmlxSuite_v51_std/codebase/dhtmlx.js"></script>
-	<script >
-	seajs.config({
-	alias: {
-		"user_choose":"js/common/user_choose.js"
-	}});
-	</script>
 	<script>
 		$(function(){
-				seajs.use(["main"], function (dhx) {
-						dhx.init();
-						window._dhx = dhx;
-				});
+				seajs.use(["main"], function (dhx) { dhx.init();});
 		});
 	</script>
 </head>

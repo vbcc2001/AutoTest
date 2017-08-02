@@ -106,6 +106,7 @@ define(function(require, exports, module) {
 			}else{
 				myTabbar.addTab(id, name, "120px",null,true);
 				myTabbar.tabs(id).attachURL(url,true);
+				//myTabbar.tabs(id).attachURL(url,false);
 				//myTabbar.tabs("a1").attachURL("../common/test_page_1.html", true);
 			}	
 		}
