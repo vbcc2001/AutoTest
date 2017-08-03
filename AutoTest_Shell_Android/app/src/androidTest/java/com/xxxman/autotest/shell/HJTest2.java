@@ -40,9 +40,9 @@ public class HJTest2 extends  HJTest1{
     public void test2(User user) throws Exception {
 
         boot();             //0.启动
-        closeAd();          //尝试关广告
+        //closeAd();          //尝试关广告
         login(user);            //1.登录
-        closeAd();         //尝试关广告
+        //closeAd();         //尝试关广告
     }
 }
 

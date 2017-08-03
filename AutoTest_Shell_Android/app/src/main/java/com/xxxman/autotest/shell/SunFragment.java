@@ -28,10 +28,12 @@ public class SunFragment extends Fragment {
 
     Button runBtn;
     Button runBtn1;
+    Button runBtn2;
     TextView rootTextView;
     TextView taskView;
     TextView snView;
     EditText numberEdit;
+    EditText numberEditNext;
     SQLUtil sqlUtil = new SQLUtil();
 
     private static final String TAG = SunFragment.class.getName();
@@ -51,11 +53,13 @@ public class SunFragment extends Fragment {
 
         runBtn = (Button) view.findViewById(R.id.runBtn);
         runBtn1 = (Button) view.findViewById(R.id.runBtn1);
+        runBtn2 = (Button) view.findViewById(R.id.runBtn2);
         rootTextView = (TextView)  view.findViewById(R.id.root_view);
         taskView =(TextView)  view.findViewById(R.id.task_view);
         snView =  (TextView)  view.findViewById(R.id.sn_view);
         numberEdit = (EditText)  view.findViewById(R.id.number_edit);
         numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        numberEditNext = (EditText)  view.findViewById(R.id.number_edit_next);
 
         //注册程序
         Button fab = (Button) view.findViewById(R.id.fab);
@@ -84,6 +88,13 @@ public class SunFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 runLogin(view);
+            }
+        });
+        //绑定运行按钮
+        runBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextLogin(view);
             }
         });
         //创建表
@@ -118,6 +129,12 @@ public class SunFragment extends Fragment {
         success_count =sqlUtil.selectSuccessCount();
         taskView.setText(dateString+"：总任务数"+user_count+"\n待处理数"+task_count+"，已处理"+end_task_count+"个，成功"+success_count+"个!" );
 
+        //上一次登录信息
+        List<User> list_login = sqlUtil.selectLoginCount();
+        if(list_login.size()>0) {
+            numberEditNext.setText(""+list_login.get(0).number);
+        }
+
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
             rootTextView.setText("已经获取Root权限，" );
@@ -141,6 +158,7 @@ public class SunFragment extends Fragment {
             Log.d(TAG,code);
             Log.d(TAG,value);
             is_code = code.equals(value);
+            //is_code = code.equals("94e433225479");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -173,6 +191,29 @@ public class SunFragment extends Fragment {
                 e.printStackTrace();
             }
             List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt",number);
+            Log.d(TAG,"登录人数：---"+list.size());
+            sqlUtil.inserLoginCount(list);
+            if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
+                new UiautomatorThread2().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(this.getActivity(), "未找到该用户！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void nextLogin(View v) {
+        if(is_code){
+            String number_string = numberEditNext.getText().toString().trim();
+            int number = Integer.parseInt(number_string);
+            String path = null;
+            try {
+                path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt",number+1);
             Log.d(TAG,"登录人数：---"+list.size());
             sqlUtil.inserLoginCount(list);
             if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {

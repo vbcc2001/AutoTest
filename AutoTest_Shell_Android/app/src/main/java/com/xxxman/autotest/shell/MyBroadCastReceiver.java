@@ -7,6 +7,9 @@ package com.xxxman.autotest.shell;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -27,7 +30,12 @@ public class MyBroadCastReceiver extends BroadcastReceiver{
     }
     public void toast(Context context,String info){
         Toast toast = Toast.makeText(context, info, Toast.LENGTH_LONG);
-        showMyToast(toast, 9*1000);
+        LinearLayout layout = (LinearLayout) toast.getView();
+        layout.setBackgroundColor(Color.parseColor("#000000"));
+        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.RED);
+        v.setTextSize(16);
+        showMyToast(toast, 9000);
     }
 
     public void showMyToast(final Toast toast, final int cnt) {

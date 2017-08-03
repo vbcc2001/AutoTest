@@ -77,7 +77,7 @@ public class SQLUtil {
         db.delete("code",null,null);
     }
     public List<User> selectUser() {
-        String sql = "select id,phone,pwd from count where task_count=0 and day = '"+dateString+"'";
+        String sql = "select id,number,phone,pwd from count where task_count=0 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -85,6 +85,7 @@ public class SQLUtil {
             user.id = c.getInt(c.getColumnIndex("id"));
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.number = c.getInt(c.getColumnIndex("number"));
             list.add(user);
         }
         Log.i(TAG, "任务数为:" + list.size());
@@ -145,7 +146,7 @@ public class SQLUtil {
         return sum;
     }
     public List<User> selectLoginCount() {
-        String sql = "select id,phone,pwd from count where  day = 'login' order by id desc LIMIT 1";
+        String sql = "select id,number,phone,pwd from count where  day = 'login' order by id desc LIMIT 1";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -153,6 +154,7 @@ public class SQLUtil {
             user.id = c.getInt(c.getColumnIndex("id"));
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.number = c.getInt(c.getColumnIndex("number"));
             list.add(user);
         }
         Log.i(TAG, "登录用户为:" + list.size());
@@ -209,7 +211,7 @@ public class SQLUtil {
         return sum;
     }
     public List<User> selectFailCount(){
-        String sql = "select id,phone,pwd  from count where task_count=1 and  success_count=0 and day = '"+dateString+"'";
+        String sql = "select id,number,phone,pwd  from count where task_count=1 and  success_count=0 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -217,6 +219,7 @@ public class SQLUtil {
             user.id = c.getInt(c.getColumnIndex("id"));
             user.phone = c.getString(c.getColumnIndex("phone"));
             user.pwd = c.getString(c.getColumnIndex("pwd"));
+            user.number = c.getInt(c.getColumnIndex("number"));
             list.add(user);
         }
         Log.i(TAG, "失败任务数为:" + list.size());
