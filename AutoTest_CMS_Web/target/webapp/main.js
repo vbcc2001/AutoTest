@@ -58,7 +58,7 @@ define(function(require, exports, module) {
 		var item = [
         {id: 1, text: "阳光", open: 1, items: [
             {id: 101, text: "阳光详情",userdata: {url: "html/sun/main.html"}},
-            {id: 102, text: "其他"}
+            {id: 102, text: "其他",userdata: {url: "html/sun/main.html"}}
 				]},
 				{id: 2, text: "红包", open: 1, items: [
             {id: 201, text: "红包详情"},
