@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
+import com.xxx.web.http.listener.AWSConfig;
 
 /** 添加  */
 public class F100001 extends BaseFunction   {
@@ -28,8 +29,7 @@ public class F100001 extends BaseFunction   {
 		Type type = new TypeToken<Map<String, Object>>() {}.getType();
 		Map<String, Object> map = gson.fromJson(sun, type);
 
-		initAmazonDynamoDB();
-		DynamoDB dynamo = new DynamoDB(dynamoDB);
+		DynamoDB dynamo = AWSConfig.getDynamoDB();
 		Table table = dynamo.getTable("sun");
 
 		Item item = new Item()
