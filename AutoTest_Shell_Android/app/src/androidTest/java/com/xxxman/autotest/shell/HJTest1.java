@@ -179,6 +179,11 @@ public class HJTest1 {
         }else {
             login.click();
         }
+        //提醒
+        Intent intent = new Intent();
+        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+        intent.putExtra("name", "当前正在登录第 "+user.number+" 个账户");
+        mContext.sendBroadcast(intent);
         UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
         phone.setText(user.phone);
         //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));

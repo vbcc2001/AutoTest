@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d(TAG,code);
             if(code.equals(mPasswordView.getText().toString())){
                 new SQLUtil().inserCode(mPasswordView.getText().toString());
+                Log.d(TAG,"注册码为："+mPasswordView.getText().toString());
                 Toast.makeText(getApplicationContext(), "注册成功！", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, MainActivity.class);

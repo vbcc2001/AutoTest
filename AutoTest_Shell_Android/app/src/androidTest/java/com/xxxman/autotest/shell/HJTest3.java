@@ -119,7 +119,7 @@ public class HJTest3{
                         if (i==0 || i==2 || i==4){
                             find_money(user,"最新");
                         }
-                        if (i==1 || i==3 || i==5){
+                        if (i==5){
 
                             UiObject2 city = mUIDevice.findObject(By.text("深圳"));
                             if (city!=null){
@@ -185,6 +185,11 @@ public class HJTest3{
         }else {
             login.click();
         }
+        //提醒
+        Intent intent = new Intent();
+        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+        intent.putExtra("name", "当前正在登录第 "+user.number+" 个账户");
+        mContext.sendBroadcast(intent);
         UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入您的手机号"));
         phone.setText(user.phone);
         //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
@@ -229,7 +234,7 @@ public class HJTest3{
         //UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
         UiObject new_list = mUIDevice.findObject(new UiSelector().text(menu));
         new_list.click();
-        for(int i =0 ;i < 15 ;i++){
+        for(int i =0 ;i < 18 ;i++){
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
                 list.swipeUp(50);
