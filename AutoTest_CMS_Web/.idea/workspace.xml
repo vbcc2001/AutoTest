@@ -72,24 +72,24 @@
       <file leaf-file-name="mac.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/target/mac.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="190" lean-forward="false" selection-start-line="0" selection-start-column="190" selection-end-line="0" selection-end-column="190" />
+            <state relative-caret-position="15">
+              <caret line="1" column="190" lean-forward="false" selection-start-line="1" selection-start-column="190" selection-end-line="1" selection-end-column="190" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="resin-mac.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/target/resin-mac.xml">
+      <file leaf-file-name="mac-stop.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/target/mac-stop.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="111" lean-forward="false" selection-start-line="5" selection-start-column="111" selection-end-line="5" selection-end-column="111" />
+            <state relative-caret-position="15">
+              <caret line="1" column="537" lean-forward="false" selection-start-line="1" selection-start-column="537" selection-end-line="1" selection-end-column="537" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="F100001.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="F100001.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/xxx/lfs/function/F100001.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
@@ -148,6 +148,8 @@
         <option value="$PROJECT_DIR$/target/webapp/test.html" />
         <option value="$PROJECT_DIR$/AutoTest_CMS_Web.iml" />
         <option value="$PROJECT_DIR$/target/.gitignore" />
+        <option value="$PROJECT_DIR$/target/mac.sh" />
+        <option value="$PROJECT_DIR$/target/mac-stop.sh" />
       </list>
     </option>
   </component>
@@ -335,7 +337,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Bash.mac.sh">
     <configuration default="false" name="resinctl" type="BatchConfigurationType" factoryName="Batch" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="WORKING_DIRECTORY" value="A:\AutoTest\AutoTest_CMS_Web\target" />
@@ -357,6 +359,17 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="AutoTest_CMS_Web" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="mac.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="bash" />
+      <option name="INTERPRETER_PATH" value="/usr/bin/env" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/target" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/target/mac.sh" />
+      <option name="PARAMETERS" value="" />
       <module name="AutoTest_CMS_Web" />
       <envs />
       <method />
@@ -442,6 +455,17 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
       <module name="" />
       <envs />
       <method />
@@ -575,13 +599,15 @@
       <listeners />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Batch.resinctl" />
       <item index="1" class="java.lang.String" itemvalue="Application.F100001" />
+      <item index="2" class="java.lang.String" itemvalue="Bash.mac.sh" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.F100001" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Bash.mac.sh" />
+        <item index="1" class="java.lang.String" itemvalue="Application.F100001" />
       </list>
     </recent_temporary>
   </component>
@@ -609,13 +635,13 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287868" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287868" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35120925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35104093" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -708,25 +734,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/mac-stop.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="537" lean-forward="false" selection-start-line="0" selection-start-column="537" selection-end-line="0" selection-end-column="537" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/resin.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
           <caret line="24" column="12" lean-forward="false" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/mac.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="190" lean-forward="false" selection-start-line="0" selection-start-column="190" selection-end-line="0" selection-end-column="190" />
           <folding />
         </state>
       </provider>
@@ -968,6 +979,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="49" lean-forward="false" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/mac.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="190" lean-forward="false" selection-start-line="1" selection-start-column="190" selection-end-line="1" selection-end-column="190" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/mac-stop.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="537" lean-forward="false" selection-start-line="1" selection-start-column="537" selection-end-line="1" selection-end-column="537" />
           <folding />
         </state>
       </provider>
