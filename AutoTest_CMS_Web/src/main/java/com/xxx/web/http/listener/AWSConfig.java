@@ -6,6 +6,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.xxx.lfs.function.BaseFunction;
 import org.apache.log4j.Logger;
@@ -17,7 +18,7 @@ public class AWSConfig {
 
     protected static AmazonDynamoDBClient dynamoDBClient;
     protected Logger logger = Logger.getLogger(this.getClass());
-    protected void loadConfig() {
+    public void loadConfig() {
         AWSCredentials credentials = null;
         String path = BaseFunction.class.getResource("/credentials").getPath();
         logger.info("认证信息配置路径为："+path);
@@ -36,5 +37,8 @@ public class AWSConfig {
     }
     public static DynamoDB getDynamoDB(){
         return new DynamoDB(dynamoDBClient);
+    }
+    public static DynamoDBMapper getDynamoDBMapper(){
+        return new DynamoDBMapper(dynamoDBClient);
     }
 }

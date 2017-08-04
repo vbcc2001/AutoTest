@@ -33,7 +33,7 @@ public class F100001 extends BaseFunction   {
 		Table table = dynamo.getTable("sun");
 
 		Item item = new Item()
-				.withPrimaryKey("编号", 123)
+				.withPrimaryKey("编号", 1234)
 				.with("序号",map.get("序号"))
 				.with("用户名",map.get("用户名"))
 				.with("密码",map.get("密码"))
@@ -43,6 +43,7 @@ public class F100001 extends BaseFunction   {
 		table.putItem(item);
 	}
 	public static void main(String arg[] ) throws Exception{
+		new AWSConfig().loadConfig();
 		F100001 f = new F100001();
 		f.insert("{\"序号\":3,\"用户名\":\"18926085629\",\"密码\":\"123456\",\"日期\":312,\"是否成功\":true,\"阳光数\":30}");
 	}
