@@ -89,12 +89,12 @@
 				</jsp>
 			</web-app>
 			<!-- web-app-deploy expand-directory="${app.home}/WebRoot/" archive-directory="${app.home}/target/" versioning="true" /-->
-			<access-log path="${app.home}/logs/${app.name}_access.log" archive-format="${app.name}_access.log.%Y-%m-%d" 
-				rollover-size="10mb" rollover-period="1D" format='%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"' />
-			<stdout-log path="${app.home}/logs/${app.name}_stdout.log" archive-format="${app.name}_stdout.log.%Y-%m-%d" 
-				rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />
-			<stderr-log  path="${app.home}/logs/${app.name}_stderr.log"  archive-format="${app.name}_stderr.log.%Y-%m-%d" 
-				rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />			
+			<!--<access-log path="${app.home}/logs/${app.name}_access.log" archive-format="${app.name}_access.log.%Y-%m-%d" -->
+				<!--rollover-size="10mb" rollover-period="1D" format='%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"' />-->
+			<!--<stdout-log path="${app.home}/logs/${app.name}_stdout.log" archive-format="${app.name}_stdout.log.%Y-%m-%d" -->
+				<!--rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />-->
+			<!--<stderr-log  path="${app.home}/logs/${app.name}_stderr.log"  archive-format="${app.name}_stderr.log.%Y-%m-%d" -->
+				<!--rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />			-->
 		</host>
 	</cluster>
 </resin>
