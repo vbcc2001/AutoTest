@@ -1,38 +1,49 @@
 package com.xxx.lfs.function;
 
-import java.util.Properties;
+import java.lang.reflect.Type;
+import java.util.Map;
+
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.xxx.lfs.object.Lfs_post;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
-import com.xxx.web.http.listener.Configure;
 
 /** 添加  */
 public class F100001 extends BaseFunction   {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
-		
-		String object = requestParameter.getContent().get("object");
-		String topic = requestParameter.getContent().get("topic");
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		Lfs_post post = (Lfs_post) gson.fromJson(object, new TypeToken<Lfs_post>() {}.getType());    
-		Properties props= new Properties();
-		props.put("bootstrap.servers", "localhost:9092");
-		props.put("acks", "all");
-		props.put("retries", 0);
-		props.put("batch.size", 16384);
-		props.put("linger.ms", 1);
-		props.put("buffer.memory", 33554432);
-		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+		String sun = requestParameter.getContent().get("sun");
+		insert(sun);
 		return response;
 	}
+	private void insert(String sun) throws Exception {
+
+		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+		Type type = new TypeToken<Map<String, Object>>() {}.getType();
+		Map<String, Object> map = gson.fromJson(sun, type);
+
+		initAmazonDynamoDB();
+		DynamoDB dynamo = new DynamoDB(dynamoDB);
+		Table table = dynamo.getTable("sun");
+
+		Item item = new Item()
+				.withPrimaryKey("编号", 123)
+				.with("序号",map.get("序号"))
+				.with("用户名",map.get("用户名"))
+				.with("密码",map.get("密码"))
+				.with("日期",map.get("日期"))
+				.with("是否成功",map.get("是否成功"))
+				.with("阳光数",map.get("阳光数"));
+		table.putItem(item);
+	}
 	public static void main(String arg[] ) throws Exception{
-		Configure c = new Configure()  ;
-		c.loadConfig();
+		F100001 f = new F100001();
+		f.insert("{\"序号\":3,\"用户名\":\"18926085629\",\"密码\":\"123456\",\"日期\":312,\"是否成功\":true,\"阳光数\":30}");
 	}
 }
