@@ -157,7 +157,10 @@ public class SunFragment extends Fragment {
             code= code.substring(0,12);
             Log.d(TAG,code);
             Log.d(TAG,value);
-            is_code = code.equals(value);
+            is_code = ("@"+code).equals(value);
+            if(value.length()==12){
+                is_code = code.equals(value);
+            }
             //is_code = code.equals("94e433225479");
         } catch (Exception e) {
             e.printStackTrace();

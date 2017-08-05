@@ -64,13 +64,15 @@ public class SQLUtil {
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
             code = c.getString(c.getColumnIndex("code"));
+            Log.i(TAG, "查询code为:" + code);
         }
         Log.i(TAG, "code为:" + code);
         return code;
     }
     public void inserCode(String code){
         ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
-        cv.put("code",code);
+        cv.put("code","@"+code);
+        Log.i(TAG, "插入code为:" + code);
         db.insert("code",null,cv);//执行插入操作
     }
     public void delCode(String code){
