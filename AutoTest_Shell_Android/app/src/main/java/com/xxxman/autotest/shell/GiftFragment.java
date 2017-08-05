@@ -101,7 +101,10 @@ public class GiftFragment extends Fragment {
             code= code.substring(0,12);
             Log.d(TAG,code);
             Log.d(TAG,value);
-            is_code = code.equals(value);
+            is_code = ("@"+code).equals(value);
+            if(value.length()==12){
+                is_code = code.equals(value);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
