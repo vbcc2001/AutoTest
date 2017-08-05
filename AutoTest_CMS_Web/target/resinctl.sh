@@ -1,7 +1,7 @@
 #!/bin/sh
 ulimit -n 357353
-PROJECT_PATH=/srv/LFS/LFS_Web_Java
-APP_NAME=LFS_Web_Java
+PROJECT_PATH=/srv/AutoTest/AutoTest_CMS_Web/
+APP_NAME=AutoTest_CMS_Web
 APP_HOME=$PROJECT_PATH/target/webapp
 JAVA_HOME=$PROJECT_PATH/target/jdk1.8.0_121/jre
 JAVA=$JAVA_HOME/bin/java
