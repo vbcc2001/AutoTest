@@ -1,0 +1,100 @@
+<!DOCTYPE PUBLIC> 
+<resin xmlns="http://caucho.com/ns/resin" xmlns:resin="http://caucho.com/ns/resin/core">
+	<!--*************************** 加载resin/lib下的所有.jar文件 *************************** -->
+	<class-loader>
+		<tree-loader path="${resin.home}/lib" />
+		<tree-loader path="${resin.root}/lib" />
+	</class-loader>
+	<!--*************************** JDK日志接口的配置 *************************** -->
+	<log name="" level="info" path="stdout:" timestamp="[%Y/%m/%d %H:%M:%S.%s] {%{thread}} " />
+	<!-- 日志信息的级别：'info' 生产环境 'fine' 开发环境 'finer' 调试环境 -->
+	<logger name="com.caucho" level="info" />
+	<logger name="com.caucho.java" level="config" />
+	<logger name="com.caucho.loader" level="config" />
+	<!--*** resin检查系统配置及java、jsp、resin.conf等文件的时间间隔（热部署，生产设置长一点，如600秒） *** -->
+	<dependency-check-interval>6s</dependency-check-interval>
+	<!--************ 选择编译器 可以为 "javac", "eclipse" or "internal" *********** -->
+	<javac compiler="internal" args="-source 1.8" />
+	<!--******************* 集群设置 ****************** -->
+	<cluster id="${app.name}">
+		<!-- 设置集群上下文的根, 相对于server.root -->
+		<root-directory>.</root-directory>
+		<server-default>
+			<!-- HTTP服务的端口 -->
+			<http address="*" port="3000" />
+			<!-- - JVM参数设置 -->
+			<jvm-arg>-Xmx256m</jvm-arg>
+			<jvm-arg>-Xss1m</jvm-arg>
+			<jvm-arg>-Xdebug</jvm-arg>
+			<jvm-arg>-Dcom.sun.management.jmxremote</jvm-arg>
+			<!-- 监控进程的配置 -->
+			<watchdog-jvm-arg>-Dcom.sun.management.jmxremote</watchdog-jvm-arg>
+			<watchdog-port>6601</watchdog-port>
+			<!-- 强制resin强制重起时的最小空闲内存 -->
+			<memory-free-min>1M</memory-free-min>
+			<!-- 最大线程数量. -->
+			<thread-max>256</thread-max>
+			<!-- socket等待时间，调优时用 -->
+			<socket-timeout>65s</socket-timeout>
+			<!-- http请求保持连接配置，调优时用 -->
+			<keepalive-max>128</keepalive-max>
+			<keepalive-timeout>15s</keepalive-timeout>
+		</server-default>
+		<!-- 定义服务器对集群的配置 -->
+		<server id="${app.name}" address="127.0.0.1" port="6810" />
+		<!--配置独立服务器或者群集的持久化存储，专业版的功能 -->
+		<resin:if test="${resin.professional}">
+			<persistent-store type="cluster">
+				<init path="session" />
+			</persistent-store>
+		</resin:if>
+		<!-- 缓存启用 (专业版的功能) -->
+		<resin:if test="${resin.professional}">
+			<cache path="cache/${app.name}" memory-size="64M">
+				<!-- Vary header rewriting for IE -->
+				<rewrite-vary-as-private />
+			</cache>
+		</resin:if>
+		<!--web应用的默认行为 -->
+		<web-app-default>
+			<prologue>
+				<allow-servlet-el />
+			</prologue>
+			<!-- 设置缓存页、静态也的延时值 -->
+			<cache-mapping url-pattern="/" expires="5s" />
+			<cache-mapping url-pattern="*.gif" expires="60s" />
+			<cache-mapping url-pattern="*.jpg" expires="60s" />
+			<cache-mapping url-pattern="*.png" expires="60s" />
+			<!-- 安全原因, 默认禁用了会话的URLs -->
+			<session-config>
+				<enable-url-rewriting>false</enable-url-rewriting>
+			</session-config>
+			<!-- 安全原因, 在cookies中设置HttpOnly标志 -->
+			<!-- <cookie-http-only /> -->
+			<!--一些JSP包有不正确的 .tld文件。可以把validate-taglib-schema设置成false,可以继续正常工作 -->
+			<jsp>
+				<validate-taglib-schema>true</validate-taglib-schema>
+				<fast-jstl>true</fast-jstl>
+			</jsp>
+		</web-app-default>
+		<!-- 加载默认web-app行为配置 -->
+		<resin:import path="${resin.home}/conf/app-default.xml"/>
+		<!-- 默认的虚拟主机配置 -->
+		<host>
+			<!-- 配置默认的应用 webapp's ROOT -->
+			<web-app id="/" root-directory="${app.home}/webapp" >
+				<jsp>
+					<ignore-el-exception>true</ignore-el-exception>
+				</jsp>
+			</web-app>
+			<!-- web-app-deploy expand-directory="${app.home}/WebRoot/" archive-directory="${app.home}/target/" versioning="true" /-->
+			<access-log path="${app.home}/logs/${app.name}_access.log" archive-format="${app.name}_access.log.%Y-%m-%d"
+				rollover-size="10mb" rollover-period="1D" format='%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"' />
+			<stdout-log path="${app.home}/logs/${app.name}_stdout.log" archive-format="${app.name}_stdout.log.%Y-%m-%d"
+				rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />
+			<stderr-log  path="${app.home}/logs/${app.name}_stderr.log"  archive-format="${app.name}_stderr.log.%Y-%m-%d"
+				rollover-size="10mb" rollover-period="1D" timestamp="[%Y.%m.%d %H:%M:%S.%s]"  />
+		</host>
+	</cluster>
+</resin>
+

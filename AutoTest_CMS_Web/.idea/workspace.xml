@@ -26,8 +26,18 @@
       <file leaf-file-name="resin.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/target/resin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="95" selection-end-column="96" />
+            <state relative-caret-position="1343">
+              <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resin-liunx.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/target/resin-liunx.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="23" column="40" lean-forward="false" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -43,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="resinctl.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="resinctl.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/target/resinctl.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
@@ -53,21 +63,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dep.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/target/dep.sh">
+      <file leaf-file-name="resin-mac.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/target/resin-mac.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="47" lean-forward="false" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
+            <state relative-caret-position="569">
+              <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="96" selection-end-column="115" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Encoding.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/xxx/web/http/filter/Encoding.java">
+      <file leaf-file-name="dep.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/target/dep.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -151,6 +161,7 @@
         <option value="$PROJECT_DIR$/target/dep.sh" />
         <option value="$PROJECT_DIR$/target/resin.xml" />
         <option value="$PROJECT_DIR$/target/resinctl.sh" />
+        <option value="$PROJECT_DIR$/target/resin-liunx.xml" />
       </list>
     </option>
   </component>
@@ -333,6 +344,7 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="A:\AutoTest\AutoTest_CMS_Web\target" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="A:\AutoTest\AutoTest_CMS_Web\lib" />
       <recent name="A:\AutoTest\AutoTest_CMS_Web\target\webapp\WEB-INF\lib" />
@@ -757,20 +769,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/target/webapp/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AutoTest_CMS_Web.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/xxx/lfs/action/FunctionAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -864,14 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="21" lean-forward="false" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/resin-mac.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="96" selection-end-column="115" />
           <folding />
         </state>
       </provider>
@@ -1054,15 +1044,7 @@
     <entry file="file://$PROJECT_DIR$/target/dep.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="47" lean-forward="false" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/resin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="95" selection-end-column="96" />
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -1071,6 +1053,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/resin-mac.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="91" column="0" lean-forward="false" selection-start-line="91" selection-start-column="0" selection-end-line="96" selection-end-column="115" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/xxx/web/http/filter/Encoding.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/resin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1343">
+          <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/resin-liunx.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="40" lean-forward="false" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
           <folding />
         </state>
       </provider>
