@@ -5,12 +5,12 @@
                    缺省数据源必须使用default属性进行说明。
     注意：系统中的所有数据源都使用C3P0实现，另外每一个datasource都必须要指定id。
 -->
-<datasources default="iss">
-	<datasource id="iss" >
+<datasources default="huajiao">
+	<datasource id="huajiao" >
 		<property name="driver-name">com.mysql.jdbc.Driver</property>
-		<property name="url">jdbc:mysql://115.159.149.15:3306/iss</property> 
-		<property name="user">root</property>
-		<property name="password">iss@20152015</property>
+		<property name="url">jdbc:mysql://45.32.59.220:3306/huajiao</property>
+		<property name="user">huajiao</property>
+		<property name="password">huajiao</property>
 		<property name="initialPoolSize">1</property>
 		<property name="minPoolSize">1</property>
 		<property name="maxPoolSize">20</property>
@@ -18,5 +18,7 @@
 		<property name="maxStatements">100</property>
 		<property name="idleConnectionTestPeriod">3000</property>
 		<property name="acquireIncrement">2</property>
+		<property name="useUnicode">yes</property>
+		<property name="characterEncoding">UTF-8</property>
 	</datasource>
 </datasources>
