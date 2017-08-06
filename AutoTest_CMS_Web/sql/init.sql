@@ -33,3 +33,19 @@ DROP TABLE IF EXISTS t_sun;
     sun int(10) DEFAULT NULL COMMENT '阳光数',
     PRIMARY KEY (id)
   );
+  DROP TABLE IF EXISTS t_count;
+    CREATE TABLE t_count (
+      id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
+      phone varchar(20)  NULL  COMMENT '手机编号',
+      account varchar(20) UNIQUE NULL COMMENT '账号',
+      pwd varchar(100) DEFAULT NULL COMMENT '登录密码',
+      sun_update_time  timestamp  NULL   COMMENT '阳光更新时间',
+      dou_update_time  timestamp  NULL   COMMENT '太阳更新时间',
+      state varchar(100) DEFAULT NULL COMMENT '账号状态',
+      sun int(10) DEFAULT NULL COMMENT '阳光数',
+      dou int(10) DEFAULT NULL COMMENT '豆数',
+      PRIMARY KEY (id)
+    );
+
+
+select  * from t_count;
