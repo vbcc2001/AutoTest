@@ -68,14 +68,14 @@ define(function(require, exports, module) {
             {id: 1, text: "阳光/红包", open: 1, items: [
                 {id: 101, text: "汇总",userdata: {url: "html/count/main.html"}},
                 {id: 102, text: "详情",userdata: {url: "html/count/details.html"}}
-            ]},
-            {id: 2, text: "礼物", open: 1, items: [
-                {id: 201, text: "送豆详情"},
-                {id: 202, text: "送阳光详情"}
-            ]},
-            {id: 3, text: "注册信息", open: 1, items: [
-                {id: 301, text: "注册信息"},
-                {id: 302, text: "其他"}
+//            ]},
+//            {id: 2, text: "礼物", open: 1, items: [
+//                {id: 201, text: "送豆详情"},
+//                {id: 202, text: "送阳光详情"}
+//            ]},
+//            {id: 3, text: "注册信息", open: 1, items: [
+//                {id: 301, text: "注册信息"},
+//                {id: 302, text: "其他"}
             ]}
 		];
 		tree = dhxLayout.cells("a").attachTreeView({
