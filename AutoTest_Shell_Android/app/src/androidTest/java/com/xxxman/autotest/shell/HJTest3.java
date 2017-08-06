@@ -22,7 +22,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class HJTest3{
@@ -65,7 +67,13 @@ public class HJTest3{
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
-
+        MyConnection my  = new MyConnection();
+        String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+        Map<String,String> parms = new HashMap<>();
+        String phone = sqlUtil.selectCode();
+        if (phone.length()==13){
+            phone = phone.substring(1);
+        }
         String path = null;
         try {
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
@@ -87,6 +95,12 @@ public class HJTest3{
                 test_for(user);
                 FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 //完成任务
+                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+
+                parms.put("jsonContent",context);
+                String rs = my.getContextByHttp(url,parms);
+                Log.d(TAG,"http请求结果"+rs);
             }
 
             for(int i = 0 ;i<100;i++){

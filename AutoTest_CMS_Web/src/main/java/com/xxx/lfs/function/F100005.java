@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /** 添加  */
-public class F100004 extends BaseFunction   {
+public class F100005 extends BaseFunction   {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
@@ -32,17 +32,17 @@ public class F100004 extends BaseFunction   {
 			arg[1]=para.get("account");
 			arg[2]=para.get("pwd");
 			arg[3]=para.get("state");
-			arg[4]=para.get("sun");
-			String sql="INSERT INTO t_count(phone,account,pwd,state,sun,sun_update_time) VALUES (?,?,?,?,?,now())";
+			arg[4]=para.get("dou");
+			String sql="INSERT INTO t_count(phone,account,pwd,state,dou,dou_update_time) VALUES (?,?,?,?,?,now())";
 			return getNewJdbcTemplate().update(sql,arg);
 		}else{
 			Object arg[] = new Object[5];
 			arg[0]=para.get("phone");
 			arg[1]=para.get("pwd");
 			arg[2]=para.get("state");
-			arg[3]=para.get("sun");
+			arg[3]=para.get("dou");
 			arg[4]=id;
-			String sql="update t_count set phone= ? ,pwd= ? ,state= ? ,sun= ? ,sun_update_time=now() where id=?";
+			String sql="update t_count set phone= ? ,pwd= ? ,state= ? ,dou= ? ,dou_update_time=now() where id=?";
 			return getNewJdbcTemplate().update(sql,arg);
 		}
 	}
@@ -55,8 +55,8 @@ public class F100004 extends BaseFunction   {
 	}
 	public static void main(String arg[] ) throws Exception{
 		new DBConfigure().loadConfig();
-		F100004 f = new F100004();
-		int i= f.insert("{\"phone\":\"x-001\",\"account\":\"18926085628\",\"pwd\":\"123456\",\"state\":\"1\",\"sun\":30}");
+		F100005 f = new F100005();
+		int i= f.insert("{\"phone\":\"x-001\",\"account\":\"18926085628\",\"pwd\":\"123456\",\"state\":\"1\",\"dou\":30}");
 		System.out.print(i);
 	}
 }
