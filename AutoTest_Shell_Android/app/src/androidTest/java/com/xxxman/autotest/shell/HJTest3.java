@@ -113,6 +113,13 @@ public class HJTest3{
                     mContext.sendBroadcast(intent);
                     test_for(user);
                     FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
+                    //完成任务
+                    String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+                    String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+
+                    parms.put("jsonContent",context);
+                    String rs = my.getContextByHttp(url,parms);
+                    Log.d(TAG,"http请求结果"+rs);
                 }
             }
         } catch (IOException e) {

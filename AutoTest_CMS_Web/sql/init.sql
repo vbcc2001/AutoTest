@@ -49,4 +49,7 @@ DROP TABLE IF EXISTS t_sun;
 
 
 
-select  * from t_count;
+select  * from t_count ;
+
+--delete from  t_count;
+--commit;
