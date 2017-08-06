@@ -28,7 +28,7 @@ public class FunctionAction extends BaseAction {
 	private Logger logger = Logger.getLogger(this.getClass());
 	private ResponseParameter responseParameter = new ResponseParameter();
 	public ActionResult doDefault() {
-		if (this.isPostBack()) {
+//		if (this.isPostBack()) {
 			String jsonContent = "";
 			try {
 				getRequest().setCharacterEncoding("UTF-8");
@@ -67,18 +67,16 @@ public class FunctionAction extends BaseAction {
 				responseParameter.setErrorInfo("参数解析错误");
 				sendHttpResponse(responseParameter);
 			}	
-		} else { //get请求
-			responseParameter.setErrorNo("-1");
-			responseParameter.setErrorInfo("暂不提供get方式的请求");
-			sendHttpResponse(responseParameter);
-		}
+//		} else { //get请求
+//			responseParameter.setErrorNo("-1");
+//			responseParameter.setErrorInfo("暂不提供get方式的请求");
+//			sendHttpResponse(responseParameter);
+//		}
 		return null;
 	}
 	/**
 	 * 返回处理
-	 * @param response
-	 * @param request
-	 * @param response2
+	 * @param responseParameter
 	 */
 	private void sendHttpResponse(ResponseParameter responseParameter) {
 		logger.info("httpRequest请求处理后返回的信息为："+responseParameter);

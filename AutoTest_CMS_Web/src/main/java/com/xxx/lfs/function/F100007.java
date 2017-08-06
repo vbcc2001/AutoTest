@@ -13,7 +13,6 @@ public class F100007 extends BaseFunction   {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
-		String phone = requestParameter.getContent().get("phone");
 		List<DataRow> list = query();
 		response.setList(list);
 		return response;
