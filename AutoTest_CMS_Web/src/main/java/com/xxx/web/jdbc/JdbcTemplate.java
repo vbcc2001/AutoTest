@@ -1,5 +1,7 @@
 package com.xxx.web.jdbc;
 
+import com.xxx.web.function.DataRow;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,14 +16,13 @@ public class JdbcTemplate {
     private String name = null;
     /**
      * 根据datasource.xml文件中配置的数据源名称，构造数据操作对象
-     * @param id 数据源的name
+     * @param name 数据源的name
      */
     public JdbcTemplate(String name){
     	this.name = name;
     }
     /**
      * 根据默认数据源名称，构造数据操作对象
-     * @param id 数据源的name
      */
     public JdbcTemplate(){
     }    

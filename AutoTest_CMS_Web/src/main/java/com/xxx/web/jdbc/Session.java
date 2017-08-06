@@ -3,6 +3,7 @@ package com.xxx.web.jdbc;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xxx.web.function.DataRow;
 import org.apache.log4j.Logger;
 
 import java.sql.Blob;
@@ -45,7 +46,7 @@ public class Session
      * @return
      * @throws SQLException 
      */
-    public void insert(String tableName, DataRow data,String primaryKey ,String sequencesName) throws SQLException{
+    public void insert(String tableName, DataRow data, String primaryKey , String sequencesName) throws SQLException{
         StringBuffer sqlBuffer = new StringBuffer();
         sqlBuffer.append("insert into " + tableName + "( "+primaryKey+", ");
         String interrogationStr = "";

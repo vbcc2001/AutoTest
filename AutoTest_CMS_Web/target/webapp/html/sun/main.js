@@ -17,15 +17,17 @@ define(function(require, exports, module) {
 		myToolbar.addSeparator("sep4", 12);
 		myGrid = new dhtmlXGridObject('gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("Sales,Book Title,Author,Price,In Store,Shipping,Bestseller,Date of Publication");
-		myGrid.setColumnIds("sales,title,author,price,store,shipping,seller,date");
-		myGrid.setInitWidths("80,150,50%,20%,80,80,80,100");
-		myGrid.setColAlign("right,left,left,right,center,left,center,center");
-		myGrid.setColTypes("dyn,ed,txt,price,ch,coro,ch,ro");
-		myGrid.setColSorting("int,str,str,int,str,str,str,date");
+		myGrid.setHeader("编号,机器编号,账号数,阳光数,花椒豆数");
+		myGrid.setColumnIds("id,phone,count,sun,dou");
+		myGrid.setInitWidths("220,220,220,220,220");
+		myGrid.setColAlign("left,left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,int,int");
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
-		myGrid.load("html/sun/data.xml");
+		var url = "/action/lfs/action/FunctionAction?jsonContent="+'{"function":"F100005","user":{"id":"1","session":"123"},"content":{}';
+		myGrid.load(url);
+
 	};
 	// ********************************************************************************************************************************************
 	// 内部方法            **************************************************************************************************************************
