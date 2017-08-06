@@ -11,11 +11,15 @@ define(function(require, exports, module) {
 	//*********************************************************************************************************************************************
 	/**-------------------------------------form表单初始化------------------------------------*/
 	exports.init = function() {
-	
-		createMainWindow("测试");//创建主窗口
-		createTree();//创建目录
-		createTabbar();//创建标签
 
+	    _is_login = Cookies.get('_is_login');
+        if(_is_login){
+            createMainWindow("花椒");//创建主窗口
+            createTree();//创建目录
+            createTabbar();//创建标签
+        }else{
+            window.location.href="/html/login/login.html";
+        }
 	};
 	exports.addTabbar = function(id,name,url) {
 		if(myTabbar.tabs(id)){
@@ -43,7 +47,12 @@ define(function(require, exports, module) {
 	            title:"警告！",
 	            type:"confirm-warning",
 	            text:"确定要退出当前系统？",
-	            callback:function(result){ if(result){ window.location.href='/admin/action/web/action/LoginAction?function=Quit'; }}
+	            callback:function(result){ if(result){
+	                //window.location.href='/admin/action/web/action/LoginAction?function=Quit';
+	                _is_login = false;
+	                Cookies.remove('_is_login');
+	                window.location.href='/';
+	                }}
 	        });
 		});
 
@@ -56,18 +65,18 @@ define(function(require, exports, module) {
 	/**-------------------------------------创建目录树---------------------------------------*/
 	function createTree(){
 		var item = [
-        {id: 1, text: "阳光/红包", open: 1, items: [
-            {id: 101, text: "汇总",userdata: {url: "html/sun/main.html"}},
-            {id: 102, text: "详情",userdata: {url: "html/sun/main.html"}}
-				]},
-				{id: 2, text: "红包", open: 1, items: [
-            {id: 201, text: "红包详情"},
-            {id: 202, text: "其他"}
-				]},
-				{id: 3, text: "礼物", open: 1, items: [
-            {id: 301, text: "礼物详情"},
-            {id: 302, text: "其他"}
-        ]}
+            {id: 1, text: "阳光/红包", open: 1, items: [
+                {id: 101, text: "汇总",userdata: {url: "html/count/main.html"}},
+                {id: 102, text: "详情",userdata: {url: "html/count/details.html"}}
+            ]},
+            {id: 2, text: "礼物", open: 1, items: [
+                {id: 201, text: "送豆详情"},
+                {id: 202, text: "送阳光详情"}
+            ]},
+            {id: 3, text: "注册信息", open: 1, items: [
+                {id: 301, text: "注册信息"},
+                {id: 302, text: "其他"}
+            ]}
 		];
 		tree = dhxLayout.cells("a").attachTreeView({
 			//parent:         "a",  // id/object, container for treeview

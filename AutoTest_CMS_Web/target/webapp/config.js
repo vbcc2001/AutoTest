@@ -5,6 +5,7 @@ var _footerPage = {"pageCode": "/include/footer", "jsonParam":{},"isLoad":false,
 var _loginFlag = "0"; // 0不检测登陆 1检测登陆
 var _curruct_path =  window.location.pathname.substring(window.location.pathname.indexOf('/web/html')+9,window.location.pathname.lastIndexOf('.html'));
 var _defaultPage = {"pageCode":_curruct_path, "jsonParam":{},"isLoad":false,"loadType":"1"}; //通用js
+var _is_login = false;
 //var _hmt = _hmt || [];
 // (function() {
 //   var hm = document.createElement("script");
