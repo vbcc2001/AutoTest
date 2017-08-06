@@ -4,7 +4,6 @@
 /resin-pro-3.1.12/cache/
 /resin-pro-3.1.12/log/
 /resin-pro-3.1.12/logs/
-/webapp/WEB-INF/classes/
 /webapp/WEB-INF/lib/
 .DS_Store
 
