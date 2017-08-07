@@ -168,7 +168,7 @@ public class HongbaoFragment extends Fragment {
             Toast.makeText(this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
         }
     }
-    class UiautomatorThread3 extends BaseThread {
+    static class UiautomatorThread3 extends BaseThread {
 
         public UiautomatorThread3() {
             super("HJTest3", false);

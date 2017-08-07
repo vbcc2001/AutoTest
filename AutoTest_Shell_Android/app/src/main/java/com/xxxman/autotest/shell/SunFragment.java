@@ -232,7 +232,7 @@ public class SunFragment extends Fragment {
     /**
      * 运行uiautomator是个费时的操作，不应该放在主线程，因此另起一个线程运行
      */
-    class UiautomatorThread extends Thread {
+    static class UiautomatorThread extends Thread {
         @Override
         public void run() {
             super.run();

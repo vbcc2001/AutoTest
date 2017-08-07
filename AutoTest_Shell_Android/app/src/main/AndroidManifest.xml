@@ -41,12 +41,12 @@
                 <action android:name="com.xxxman.autotest.shell.MyBroadCastReceiver"/>
             </intent-filter>
         </receiver>
-        <!--&lt;!&ndash; 定义一个BroadcastReceiver，监听系统开机广播 &ndash;&gt;-->
-        <!--<receiver android:name=".MyBroadCastReceiver">-->
-            <!--　　<intent-filter >-->
-            <!--　　　　<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
-            <!--　　</intent-filter>-->
-        <!--</receiver>-->
+        <receiver android:name=".BootBroadCastReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            </intent-filter>
+        </receiver>
     </application>
 
 
