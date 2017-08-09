@@ -35,8 +35,8 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class HJTest1 {
 
-    private UiDevice mUIDevice = null;
-    private Context mContext = null;
+    UiDevice mUIDevice = null;
+    Context mContext = null;
     String TAG = "HJTest1";
     String APP = "com.huajiao";
     int log_count = 0;

@@ -53,7 +53,7 @@ public class FileUtil {
                     String line;
                     //分行读取
                     int i = 1;
-                    while (( line = buffreader.readLine()) != null) {
+                    while (( line = buffreader.readLine()) != null && line.trim().length() > 0 ) {
                         String[] strArray = null;
                         strArray = line.split(",");
                         User user = new User(0,strArray[0],strArray[1]);
