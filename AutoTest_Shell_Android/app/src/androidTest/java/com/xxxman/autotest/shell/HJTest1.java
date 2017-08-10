@@ -47,8 +47,8 @@ public class HJTest1 {
     MyConnection my  = new MyConnection();
     String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
-//    boolean is4X=false;
-    boolean is4X=true;
+    boolean is4X=false;
+//    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -62,6 +62,7 @@ public class HJTest1 {
                 Log.d(TAG,":进入Watcher");
                 try {
                     closeAd();
+                    closeQiandao();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -98,7 +99,9 @@ public class HJTest1 {
                 //分享3次阳光
                 //test1(user) ;
                 //录像阳光
-                test2(user) ;
+                //test2(user) ;
+                //新版录像阳光
+                test3(user) ;
                 //完成任务
                 sqlUtil.updateEndCount(user);
             } catch (Exception e) {
@@ -116,7 +119,12 @@ public class HJTest1 {
             try {
                 //执行任务
                 sqlUtil.updateTaskCount(user);
-                test1(user) ;
+                //分享3次阳光
+                //test1(user) ;
+                //录像阳光
+                //test2(user) ;
+                //新版录像阳光
+                test3(user) ;
                 //完成任务
                 sqlUtil.updateEndCount(user);
             } catch (Exception e) {
@@ -468,5 +476,232 @@ public class HJTest1 {
         getSunshine2(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
         quit();         //8.退出
+    }
+    public void test3(User user) throws Exception {
+
+        phone = sqlUtil.selectCode();
+        if (phone.length()==13){
+            phone = phone.substring(1);
+        }
+
+        login3(user);            //1.登录
+        goGuangChang();         //3.进入广场
+        goZhiBo3();        //4.进入直播
+        recordVideo3();
+        getSunshine3(user);          //6.领取阳光
+        closeZhiBo();       //7.关直播
+        quit3();         //8.退出
+    }
+    //登录流程
+    public void login3(User user) throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
+        my.click();
+        UiObject2 login = mUIDevice.findObject(By.text("手机号登录"));
+        if(login==null){
+            quit3();
+            my = mUIDevice.findObject(new UiSelector().text("我的"));
+            my.click();
+            UiObject2 login1 = mUIDevice.findObject(By.text("手机号登录"));
+            login1.click();
+        }else {
+            login.click();
+        }
+        //提醒
+        Intent intent = new Intent();
+        intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+        intent.putExtra("name", "当前正在登录第 "+user.number+" 个账户");
+        mContext.sendBroadcast(intent);
+        UiObject phone = mUIDevice.findObject(new UiSelector().text("请输入手机号"));
+        phone.setText(user.phone);
+        //UiObject password = mUIDevice.findObject(new UiSelector().text("请输入密码"));
+        UiObject password = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/pwd_et"));
+        password.setText(user.pwd);
+        UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
+        logining.click();
+        //Thread.sleep(2000);
+    }
+    //退出流程
+    public void quit3() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
+        my.click();
+        //UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
+        //my_page.click();
+
+        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipe_target"));
+        home.flingForward();
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
+        UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
+        setting.click();
+        UiObject2 set = mUIDevice.findObject(By.res("android:id/content")).getChildren().get(1).getChildren().get(1);
+        set.scroll(Direction.DOWN, 0.8f);
+        //mUIDevice.swipe(100, 1676, 100, 600, 20);
+        UiObject quit = mUIDevice.findObject(new UiSelector().text("退出登录"));
+        quit.click();
+        UiObject quit_ok = mUIDevice.findObject(new UiSelector().text("退出"));
+        quit_ok.click();  //点击按键
+        //Thread.sleep(1000);
+    }
+    //进入直播
+    public void goZhiBo3() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject new_list = mUIDevice.findObject(new UiSelector().text("热门"));
+        new_list.click();
+        UiObject zhibozhong = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/hot_new_grid_icon_view"));
+        zhibozhong.click();
+    }
+    //分享
+    public void recordVideo3() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+
+        //UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
+        //share.click();
+        if(is4X){
+            Thread.sleep(1000);
+        }else{
+            Thread.sleep(3000);
+        }
+        mUIDevice.click(2,2);
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(680,1842);
+        }else{
+            mUIDevice.click(460,1228);
+        }
+        if(is4X){
+            Thread.sleep(200);
+        }else{
+            Thread.sleep(1000);
+        }
+        if(is4X){
+            mUIDevice.click(540,1700);
+        }else{
+            mUIDevice.click(360,1228);
+        }
+        Thread.sleep(8000);
+        if(is4X){
+            mUIDevice.click(540,1700);
+        }else{
+            mUIDevice.click(360,1228);
+        }
+        Thread.sleep(5000);
+        try{
+            UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+            send.click();
+            shareQQ();
+        }catch (Exception e){
+            Thread.sleep(5000);
+            try{
+                UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+                send.click();
+                shareQQ();
+            }catch (Exception e1){
+                Thread.sleep(5000);
+                try{
+                    UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+                    send.click();
+                    shareQQ();
+                }catch (Exception e2){
+                    Thread.sleep(5000);
+                    try{
+                        UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+                        send.click();
+                        shareQQ();
+                    }catch (Exception e3){
+                        Thread.sleep(5000);
+                        try{
+                            UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+                            send.click();
+                            shareQQ();
+                        }catch (Exception e4){
+                            Thread.sleep(5000);
+                            UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
+                            send.click();
+                            shareQQ();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void shareQQ() throws Exception {
+        UiObject my_compa = mUIDevice.findObject(new UiSelector().text("我的电脑"));
+        my_compa.click();  //点击按键
+
+        UiObject qq_sent = mUIDevice.findObject(new UiSelector().text("发送"));
+        qq_sent.click();  //点击按键
+
+        UiObject qq_back = mUIDevice.findObject(new UiSelector().text("返回花椒直播"));
+        qq_back.click();  //点击按键
+    }
+    public void getSunshine3(User user) throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
+        //sun.click();
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(976,390);
+        }else{
+            mUIDevice.click(651,268);
+        }
+        UiObject2 get = mUIDevice.findObject(By.text("录制并分享小视频(1/1)"));
+        if (get!=null){
+            Thread.sleep(1500);
+            get = mUIDevice.findObject(By.text("录制并分享小视频(1/1)"));
+        }
+        if(get!=null){
+            UiObject2 get_ = get.getParent().findObject(By.text("领取"));
+            if(get_!=null){
+                get_.click();
+            }
+            sqlUtil.updateSuccessCount(user);
+            Log.i(TAG,"count_get_sun:"+count_get_sun);
+        }else{
+            UiObject2 list = mUIDevice.findObject(By.res("com.huajiao:id/list_view"));
+            list.scroll(Direction.DOWN, 0.8f);
+            UiObject2 get1 = mUIDevice.findObject(By.text("录制并分享小视频(1/1)"));
+            UiObject2 end = get1.getParent().findObject(By.text("已完成"));
+            if(end != null){
+                sqlUtil.updateSuccessCount(user);
+                Log.i(TAG,"count_get_sun:"+count_get_sun);
+            }
+        }
+        //记录阳光数
+        UiObject2 sun_count = mUIDevice.findObject(By.res("com.huajiao:id/right_tv"));
+        if (sun_count != null){
+            Log.d(TAG,"---当前阳光数为--"+sun_count.getText()+"---------");
+            user.sun = Integer.valueOf(sun_count.getText());
+        }
+        //完成任务
+        String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"sun\\\":"+user.sun+"}\"";
+        String context = "{\"function\":\"F100004\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+        Map<String,String> parms = new HashMap<>();
+        parms.put("jsonContent",context);
+        String rs = my.getContextByHttp(url,parms);
+        Log.d(TAG,"http请求结果"+rs);
+
+        mUIDevice.pressBack();
+    }
+    //关闭弹窗广告
+    public void closeQiandao() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject2 close = mUIDevice.findObject(By.text("每日签到"));
+        if(close!=null){
+            Log.d(TAG,"有签到");
+            //close.click();
+            mUIDevice.pressBack();
+        }
+        UiObject2 finsh = mUIDevice.findObject(By.text("完成"));
+        if(finsh!=null){
+            Log.d(TAG,"有签到");
+            finsh.click();
+        }
     }
 }
