@@ -47,8 +47,8 @@ public class HJTest1 {
     MyConnection my  = new MyConnection();
     String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
-    boolean is4X=false;
-//    boolean is4X=true;
+//    boolean is4X=false;
+    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()

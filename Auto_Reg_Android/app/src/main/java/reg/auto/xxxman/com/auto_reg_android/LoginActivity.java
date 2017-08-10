@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity  {
                     //String sign = RSAUtils.sign(sn);
                     enctytCode = RSAUtils.encryptWithRSA(sn);
                     String code = SNUtil.getMD5(enctytCode);
+                    code = SNUtil.getMD5(code);
                     code = code.substring(0, 12);
                     snView.setText(code);
                     //mPasswordView.setText("4b592e783869");
