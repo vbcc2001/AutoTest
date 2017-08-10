@@ -56,7 +56,7 @@ public class F100005 extends BaseFunction   {
 	public static void main(String arg[] ) throws Exception{
 		new DBConfigure().loadConfig();
 		F100005 f = new F100005();
-		int i= f.insert("{\"phone\":\"x-001\",\"account\":\"18926085629\",\"pwd\":\"123456\",\"state\":\"1\",\"dou\":30}");
+		int i= f.insert("{\"phone\":\"94e433225479\",\"account\":\"18926085629\",\"pwd\":\"123456\",\"state\":\"1\",\"dou\":30}");
 		System.out.print(i);
 	}
 }

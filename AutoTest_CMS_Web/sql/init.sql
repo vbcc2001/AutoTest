@@ -49,7 +49,8 @@ DROP TABLE IF EXISTS t_sun;
 
 
 
-select  * from t_count ;
+select sum(dou) from t_count ;
 
---delete from  t_count;
+--delete from  t_count where  phone = 'x-001' ;
 --commit;
+--SELECT (@i:=@i+1) as id , phone , count(phone) count,sum(sun) sun ,sum(dou) dou FROM t_count t ,(select @i:= 0 ) as it group by t.phone order by t.phone;
