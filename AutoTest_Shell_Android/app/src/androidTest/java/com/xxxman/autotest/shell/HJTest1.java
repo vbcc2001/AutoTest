@@ -47,8 +47,9 @@ public class HJTest1 {
     MyConnection my  = new MyConnection();
     String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
-    boolean is4X=false;
-//    boolean is4X=true;
+    boolean is_colse_ad = true;
+//    boolean is4X=false;
+    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -62,7 +63,6 @@ public class HJTest1 {
                 Log.d(TAG,":进入Watcher");
                 try {
                     closeAd();
-                    closeQiandao();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -236,10 +236,12 @@ public class HJTest1 {
     public void closeAd() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
-        UiObject2 close = mUIDevice.findObject(By.res("com.huajiao:id/img_close"));
-        if(close!=null){
-            Log.d(TAG,"有广告");
-            close.click();
+        if(is_colse_ad){
+            UiObject2 close = mUIDevice.findObject(By.res("com.huajiao:id/img_close"));
+            if(close!=null){
+                Log.d(TAG,"有广告");
+                close.click();
+            }
         }
     }
     //进入广场
@@ -485,7 +487,7 @@ public class HJTest1 {
         }
 
         login3(user);            //1.登录
-        goGuangChang();         //3.进入广场
+        goGuangChang3();         //3.进入广场
         goZhiBo3();        //4.进入直播
         recordVideo3();
         getSunshine3(user);          //6.领取阳光
@@ -520,7 +522,6 @@ public class HJTest1 {
         password.setText(user.pwd);
         UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
         logining.click();
-        //Thread.sleep(2000);
     }
     //退出流程
     public void quit3() throws Exception {
@@ -590,6 +591,8 @@ public class HJTest1 {
             mUIDevice.click(360,1228);
         }
         Thread.sleep(5000);
+        //关闭广告监控
+        is_colse_ad = false;
         try{
             UiObject send   = mUIDevice.findObject(new UiSelector().text("发布"));
             send.click();
@@ -627,6 +630,8 @@ public class HJTest1 {
                     }
                 }
             }
+        }finally {
+            is_colse_ad = true;
         }
     }
     public void shareQQ() throws Exception {
@@ -698,10 +703,40 @@ public class HJTest1 {
             //close.click();
             mUIDevice.pressBack();
         }
-        UiObject2 finsh = mUIDevice.findObject(By.text("完成"));
-        if(finsh!=null){
-            Log.d(TAG,"有签到");
-            finsh.click();
-        }
+//        UiObject2 finsh = mUIDevice.findObject(By.text("完成"));
+//        if(finsh!=null){
+//            Log.d(TAG,"有签到");
+//            finsh.click();
+//        }
     }
+    //进入广场
+    public void goGuangChang3() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        try{
+            UiObject guangchang = mUIDevice.findObject(new UiSelector().text("广场"));
+            guangchang.click();
+        }catch(Exception e) {
+            reboot();
+            UiObject guangchang = mUIDevice.findObject(new UiSelector().text("广场"));
+            guangchang.click();
+        }
+
+//        UiObject2 guangchang = mUIDevice.findObject(By.text("广场"));
+//        if (guangchang==null){
+//            mUIDevice.pressBack();
+//            guangchang = mUIDevice.findObject(By.text("广场"));
+//
+//        }
+//        guangchang.click();
+//        Thread.sleep(2000);
+//        mUIDevice.pressBack();
+//        UiObject2 close = mUIDevice.findObject(By.text("每日签到"));
+//        if(close!=null){
+//            Log.d(TAG,"有签到");
+//            //close.click();
+//            mUIDevice.pressBack();
+//        }
+    }
+
 }
