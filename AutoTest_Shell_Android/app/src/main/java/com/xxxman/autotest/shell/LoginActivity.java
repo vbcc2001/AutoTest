@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
             //String sign = RSAUtils.sign(sn);
             enctytCode = RSAUtils.encryptWithRSA(sn);
             String code = SNUtil.getMD5(enctytCode);
+            code = SNUtil.getMD5(code);
             //String code = RSAUtils.decryptWithRSA(enctytCode);
             //Log.d(TAG,sign);
             Log.d(TAG,mPasswordView.getText().toString());

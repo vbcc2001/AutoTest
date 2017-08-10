@@ -154,6 +154,7 @@ public class SunFragment extends Fragment {
         try {
             enctytCode = RSAUtils.encryptWithRSA(sn);
             String code = SNUtil.getMD5(enctytCode);
+            code = SNUtil.getMD5(code);
             code= code.substring(0,12);
             Log.d(TAG,code);
             Log.d(TAG,value);

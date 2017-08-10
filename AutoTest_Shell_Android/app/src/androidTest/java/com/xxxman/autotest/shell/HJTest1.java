@@ -330,6 +330,10 @@ public class HJTest1 {
             mUIDevice.click(651,268);
         }
         UiObject2 get = mUIDevice.findObject(By.text("录制视频(1/1)"));
+        if (get!=null){
+            Thread.sleep(1500);
+            get = mUIDevice.findObject(By.text("录制视频(1/1)"));
+        }
         if(get!=null){
             UiObject2 get_ = get.getParent().findObject(By.text("领取"));
             get_.click();
@@ -368,7 +372,11 @@ public class HJTest1 {
 
         //UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
-        Thread.sleep(1000);
+        if(is4X){
+            Thread.sleep(1000);
+        }else{
+            Thread.sleep(3000);
+        }
         mUIDevice.click(2,2);
         Thread.sleep(1000);
         if(is4X){
@@ -376,7 +384,11 @@ public class HJTest1 {
         }else{
             mUIDevice.click(460,1228);
         }
-        Thread.sleep(200);
+        if(is4X){
+            Thread.sleep(200);
+        }else{
+            Thread.sleep(1000);
+        }
         if(is4X){
             mUIDevice.click(540,1700);
         }else{
@@ -451,9 +463,9 @@ public class HJTest1 {
         }
         login(user);            //1.登录
         goGuangChang();         //3.进入广场
-        goZhiBo();        //4.进入直播
+        goZhiBo2();        //4.进入直播
         recordVideo();
-        getSunshine(user);          //6.领取阳光
+        getSunshine2(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
         quit();         //8.退出
     }
