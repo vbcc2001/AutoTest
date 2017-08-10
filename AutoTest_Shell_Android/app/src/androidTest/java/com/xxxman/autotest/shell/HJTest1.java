@@ -82,7 +82,7 @@ public class HJTest1 {
 
     }
     @Test
-    public void test_for(){
+    public void test_for() throws Exception {
 
         List<User> list = sqlUtil.selectUser();
         for(User user:list) {
