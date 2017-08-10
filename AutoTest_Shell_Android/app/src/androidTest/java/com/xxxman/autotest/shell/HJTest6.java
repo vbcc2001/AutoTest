@@ -34,14 +34,14 @@ public class HJTest6 extends  HJTest1{
         }
         login(user);            //1.登录
         goGuangChang();         //3.进入广场
-        goZhiBo();        //4.进入直播
+        goZhiBo2();        //4.进入直播
         recordVideo();
-        getSunshine(user);          //6.领取阳光
+        getSunshine2(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
         quit();         //8.退出
     }
     //进入直播
-    public void goZhiBo() throws Exception {
+    public void goZhiBo2() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject new_list = mUIDevice.findObject(new UiSelector().text("频道"));
@@ -122,7 +122,7 @@ public class HJTest6 extends  HJTest1{
             }
         }
     }
-    public void getSunshine(User user) throws Exception {
+    public void getSunshine2(User user) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
