@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,39 +134,130 @@ public class HJTest3{
         //List<User> list = sqlUtil.selectLoginCount();
         try {
             if(user!=null) {
-                count_get_hongbao = 0 ;
+                count_get_hongbao = user.hongbao ;
                 login(user);
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 100; i++) {
                     try {
-                        if (i==0 || i==2 || i==4){
+                        if (i%4!=3){
                             find_money(user,"最新");
                         }
-                        if (i==5){
-
-                            UiObject2 city = mUIDevice.findObject(By.text("深圳"));
-                            if (city!=null){
-                                find_money(user,"深圳");
+                        if (i%4==3){
+                            if((i/4)%4==0){
+                                UiObject2 city = mUIDevice.findObject(By.text("深圳"));
+                                if (city==null){
+                                    city = mUIDevice.findObject(By.text("北京"));
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("上海"));
+                                    }
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("广州"));
+                                    }
+                                    Log.d(TAG,"切换深圳");
+                                    city.click();
+                                    Thread.sleep(1000);
+                                    city.click();
+                                    find_money(user,"深圳 (当前定位地区)");
+                                }else{
+                                    find_money(user,"深圳");
+                                }
                             }
-                            city = mUIDevice.findObject(By.text("北京"));
-                            if (city!=null){
-                                find_money(user,"北京");
+                            if((i/4)%4==1){
+                                UiObject2 city = mUIDevice.findObject(By.text("北京"));
+                                if (city==null){
+                                    city = mUIDevice.findObject(By.text("深圳"));
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("上海"));
+                                    }
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("广州"));
+                                    }
+                                    Log.d(TAG,"切换北京");
+                                    city.click();
+                                    Thread.sleep(1000);
+                                    city.click();
+                                    find_money(user,"北京");
+                                }else{
+                                    find_money(user,"北京");
+                                }
                             }
-                            city = mUIDevice.findObject(By.text("上海"));
-                            if (city!=null){
-                                find_money(user,"上海");
+                            if((i/4)%4==2){
+                                UiObject2 city = mUIDevice.findObject(By.text("上海"));
+                                if (city==null){
+                                    city = mUIDevice.findObject(By.text("深圳"));
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("北京"));
+                                    }
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("广州"));
+                                    }
+                                    Log.d(TAG,"切换上海");
+                                    city.click();
+                                    Thread.sleep(1000);
+                                    city.click();
+                                    find_money(user,"上海");
+                                }else{
+                                    find_money(user,"上海");
+                                }
                             }
-                            city = mUIDevice.findObject(By.text("广州"));
-                            if (city!=null){
-                                find_money(user,"广州");
+                            if((i/4)%4==3){
+                                UiObject2 city = mUIDevice.findObject(By.text("广州"));
+                                if (city==null){
+                                    city = mUIDevice.findObject(By.text("深圳"));
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("北京"));
+                                    }
+                                    if (city==null){
+                                        city = mUIDevice.findObject(By.text("上海"));
+                                    }
+                                    Log.d(TAG,"切换广州");
+                                    city.click();
+                                    Thread.sleep(1000);
+                                    city.click();
+                                    find_money(user,"广州");
+                                }else{
+                                    find_money(user,"广州");
+                                }
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        UiObject2 fenghao = mUIDevice.findObject(By.text("冤枉，我要申诉"));
+                        if(fenghao!=null){
+                            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                            List<User> list = new ArrayList<>();
+                            user.pwd = user.pwd+",账号被封";
+                            list.add(user);
+                            FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
+                            break;
+                        }
+                        UiObject2 yanzhengma = mUIDevice.findObject(By.text("账号已被锁定，请通过短信验证码登录"));
+                        if (yanzhengma!=null){
+                            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                            List<User> list = new ArrayList<>();
+                            user.pwd = user.pwd+",短信验证";
+                            list.add(user);
+                            FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
+                            break;
+                        }
+                        UiObject2 yanzhengma2 = mUIDevice.findObject(By.text("获取短信验证码"));
+                        if (yanzhengma2!=null){
+                            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                            List<User> list = new ArrayList<>();
+                            user.pwd = user.pwd+",短信验证";
+                            list.add(user);
+                            FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
+                            break;
+                        }
                         reboot();
                     }
-                    if (count_get_hongbao>=3){
+                    if (count_get_hongbao>=6){
                         break;
                     }
+                    //提醒
+                    Intent intent = new Intent();
+                    intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+                    intent.putExtra("name", "当前为第"+user.number+"用户,已刷新第"+(i+1)+"次，已抢红包"+count_get_hongbao+"个");
+                    mContext.sendBroadcast(intent);
                 }
                 quit(user);
             }
@@ -254,8 +346,16 @@ public class HJTest3{
 
         //UiObject new_list = mUIDevice.findObject(new UiSelector().text("最新"));
         UiObject new_list = mUIDevice.findObject(new UiSelector().text(menu));
+//        UiObject2 new_list = mUIDevice.findObject(By.text(menu));
+//        if (new_list==null){
+//            new_list = mUIDevice.findObject(By.text(menu+" (当前定位地区)"));
+//        }
         new_list.click();
-        for(int i =0 ;i < 18 ;i++){
+        int c = 18;
+        if(!menu.equals("最新")){
+            c =12;
+        }
+        for(int i =0 ;i < c ;i++){
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
                 list.swipeUp(50);
