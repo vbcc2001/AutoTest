@@ -80,6 +80,7 @@ public class HJTest3{
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
             List<User> list = sqlUtil.selectHongbaoUser();
             FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
+            FileUtil.writehengxian(list.size(),path,"bh_fail_"+sqlUtil.dateString+".txt");
             //提醒
             Intent intent = new Intent();
             intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
@@ -244,6 +245,15 @@ public class HJTest3{
                             String path = Environment.getExternalStorageDirectory().getCanonicalPath();
                             List<User> list = new ArrayList<>();
                             user.pwd = user.pwd+",短信验证";
+                            list.add(user);
+                            FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
+                            break;
+                        }
+                        UiObject2 shiming = mUIDevice.findObject(By.text("实名认证提示"));
+                        if (shiming!=null){
+                            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                            List<User> list = new ArrayList<>();
+                            user.pwd = user.pwd+",实名认证";
                             list.add(user);
                             FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
                             break;
@@ -434,18 +444,23 @@ public class HJTest3{
                                             mUIDevice.click(660,1180);
                                         }
                                     }else{
-                                        //没红包
-                                        //if(j>2){
-                                            if(is4X){
-                                                mUIDevice.click(990,1843);
-                                                mUIDevice.click(990,1843);
-                                            }else{
-                                                mUIDevice.click(660,1228);
-                                                mUIDevice.click(660,1228);
+                                        //情况5：未实名
+                                        UiObject2 renzheng = mUIDevice.findObject(By.text("实名认证提示"));
+                                        if(renzheng!=null){
+                                            throw new Exception("未实名认证");
+                                        }else {
+                                            //没红包
+                                            //if(j>2){
+                                            if (is4X) {
+                                                mUIDevice.click(990, 1843);
+                                                mUIDevice.click(990, 1843);
+                                            } else {
+                                                mUIDevice.click(660, 1228);
+                                                mUIDevice.click(660, 1228);
                                             }
                                             break;
-                                        //}
-
+                                            //}
+                                        }
                                     }
                                 }
                             }
