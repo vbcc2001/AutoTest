@@ -36,6 +36,7 @@ public class HJTest3{
     int log_count = 0;
     Context mContext = null;
     int count_get_hongbao = 0;
+    int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
 //    boolean is4X=false;
     boolean is4X=true;
@@ -136,6 +137,7 @@ public class HJTest3{
         try {
             if(user!=null) {
                 count_get_hongbao = user.hongbao ;
+                fail_count = 0;
                 login(user);
                 for (int i = 0; i < 100; i++) {
                     try {
@@ -261,6 +263,9 @@ public class HJTest3{
                         reboot();
                     }
                     if (count_get_hongbao>=6){
+                        break;
+                    }
+                    if (fail_count>=3){
                         break;
                     }
                     //提醒
@@ -403,6 +408,7 @@ public class HJTest3{
                         //情况2：失败
                         UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
                         if(wuyuan!=null){
+                            fail_count++;
                             if(is4X){
                                 mUIDevice.click(990,1843);
                                 mUIDevice.click(990,1843);
@@ -415,6 +421,7 @@ public class HJTest3{
                             //情况3：失败
                             UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
                             if(meiyou!=null){
+                                fail_count++;
                                 if(is4X){
                                     mUIDevice.click(990,1843);
                                     mUIDevice.click(990,1843);
@@ -426,6 +433,7 @@ public class HJTest3{
                             }else{
                                 UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
                                 if(yunqicha!=null){
+                                    fail_count++;
                                     if(is4X){
                                         mUIDevice.click(990,1843);
                                         mUIDevice.click(990,1843);
