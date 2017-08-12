@@ -48,8 +48,8 @@ public class HJTest1 {
     String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
     boolean is_colse_ad = true;
-//    boolean is4X=false;
-    boolean is4X=true;
+    boolean is4X=false;
+//    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -77,20 +77,22 @@ public class HJTest1 {
         }
         //mUIDevice.pressHome();  //按home键
     }
-    //@Test
+    @Test
     public void test_test() {
-        List<User> list = sqlUtil.selectFailCount();
-        try {
-            getSunshine(list.get(0));
-        } catch (Exception e) {
-            e.printStackTrace();
+        UiObject2 qiandao = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+        if(qiandao!=null){
+            qiandao.click();
         }
-
+        UiObject2 qiandao2 = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+        if(qiandao2!=null){
+            qiandao2.click();
+        }
     }
     @Test
     public void test_for() throws Exception {
 
         List<User> list = sqlUtil.selectUser();
+        boot();
         for(User user:list) {
             Log.d(TAG,user.pwd+"---");
             try {
@@ -487,9 +489,21 @@ public class HJTest1 {
         }
 
         login3(user);            //1.登录
+        for(int i=0; i<3;i++){
+            UiObject2 qiandao = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+            if(qiandao!=null){
+                qiandao.click();
+            }
+            Thread.sleep(1000);
+            UiObject2 qiandao2 = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+            if(qiandao2!=null){
+                qiandao2.click();
+            }
+        }
         goGuangChang3();         //3.进入广场
         goZhiBo3();        //4.进入直播
         recordVideo3();
+        Thread.sleep(1000);
         getSunshine3(user);          //6.领取阳光
         closeZhiBo();       //7.关直播
         quit3();         //8.退出
@@ -649,7 +663,7 @@ public class HJTest1 {
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
         //sun.click();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         if(is4X){
             mUIDevice.click(976,390);
         }else{
