@@ -35,7 +35,7 @@ public class SunFragment extends Fragment {
     EditText numberEdit;
     EditText numberEditNext;
     SQLUtil sqlUtil = new SQLUtil();
-
+    String code;
     private static final String TAG = SunFragment.class.getName();
     boolean is_code = false;
 
@@ -137,7 +137,7 @@ public class SunFragment extends Fragment {
 
         //判断是否Root
         if(ShellUtil.hasRootPermission()){
-            rootTextView.setText("已经获取Root权限，" );
+            rootTextView.setText("Root成功，" );
             rootTextView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
         }
         //判断是否注册
@@ -153,7 +153,7 @@ public class SunFragment extends Fragment {
         String enctytCode = null;
         try {
             enctytCode = RSAUtils.encryptWithRSA(sn);
-            String code = SNUtil.getMD5(enctytCode);
+            code = SNUtil.getMD5(enctytCode);
             code = SNUtil.getMD5(code);
             code= code.substring(0,12);
             Log.d(TAG,code);
@@ -168,7 +168,7 @@ public class SunFragment extends Fragment {
         }
         if(is_code){
             fab.setVisibility(View.GONE);
-            snView.setText("程序注册成功！" );
+            snView.setText("注册成功！("+code+")" );
             snView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
         }
     }

@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS t_sun;
 
 
 
-select * from t_count where sun>0 ;
+select sum(dou) from t_count where dou>0 ;
 
 --delete from  t_count where  phone = 'x-001' ;
 --commit;

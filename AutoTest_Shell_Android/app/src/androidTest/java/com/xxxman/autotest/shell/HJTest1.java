@@ -704,7 +704,6 @@ public class HJTest1 {
         parms.put("jsonContent",context);
         String rs = my.getContextByHttp(url,parms);
         Log.d(TAG,"http请求结果"+rs);
-
         mUIDevice.pressBack();
     }
     //关闭弹窗广告
