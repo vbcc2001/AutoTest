@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 		myGrid.setColSorting("int,str,str,int,date,int,date");
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
-        initData("94e433225479");
+        initData(getUrlParam("id"));
 	};
 	// ********************************************************************************************************************************************
 	// 内部方法            **************************************************************************************************************************
@@ -65,4 +65,11 @@ define(function(require, exports, module) {
             }
         });
 	}
+    //获取url中的参数
+    function getUrlParam(name) {
+    alert(window.location);
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
 });

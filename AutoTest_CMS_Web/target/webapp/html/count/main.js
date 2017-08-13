@@ -20,11 +20,12 @@ define(function(require, exports, module) {
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
 		myGrid.setHeader("编号,机器编号,账号数,阳光数,花椒豆数");
-		myGrid.setColumnIds("id,phone,count,sun,dou");
+		myGrid.setColumnIds("number,phone,count,sun,dou");
 		myGrid.setInitWidths("220,220,220,220,220");
 		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,link,txt,txt,txt");
-		myGrid.setColSorting("int,str,str,int,int");
+		myGrid.setColTypes("txt,txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,int,int,int");
+		myGrid.attachEvent("onRowDblClicked",doOnRowDblClicked);
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
         initData();
@@ -33,8 +34,7 @@ define(function(require, exports, module) {
 	// 内部方法            **************************************************************************************************************************
 	//*********************************************************************************************************************************************
 	function initData(){
-        var data ={total_count:0, pos:0, data:[]};
-
+        var data ={total_count:0, pos:0, rows:[]};
         var req = {jsonContent:'{"function":"F100007","user":{"id":"1","session":"123"},"content":{"phone":""}}'};
         $.ajax({
             type: "POST",
@@ -43,9 +43,9 @@ define(function(require, exports, module) {
             dataType: "json",
             success: function (message) {
                 if(message.head.errorNo==""){
-                    data.data = message.list;
+                    data.rows = message.list;
                     data.total_count= message.list.length
-                    myGrid.parse(data,"js");
+                    myGrid.parse(data.rows,"js");
                 }else{
                     dhtmlx.confirm({
                         title:"数据请求错误！",
@@ -64,5 +64,16 @@ define(function(require, exports, module) {
                 });
             }
         });
+	}
+	function doOnRowDblClicked(rowId){
+        //alert(rowId);
+        var id= "tab_"+rowId;
+        var name = rowId ;
+        if(_myTabbar.tabs(id)){
+            _myTabbar.tabs(id).setActive();
+        }else{
+            _myTabbar.addTab(id, name, "160px",null,true);
+            _myTabbar.tabs(id).attachURL("html/count/details.html?id="+rowId,true);
+        }
 	}
 });

@@ -48,8 +48,8 @@ public class HJTest1 {
 //    String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
     boolean is_colse_ad = true;
-//    boolean is4X=false;
-    boolean is4X=true;
+    boolean is4X=false;
+//    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()

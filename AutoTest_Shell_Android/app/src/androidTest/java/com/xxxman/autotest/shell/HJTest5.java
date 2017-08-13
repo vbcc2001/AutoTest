@@ -87,6 +87,9 @@ public class HJTest5 {
                 FileUtil.writehengxian(list.size(),path,"dou_"+dateString+".txt");
                 int i = 0;
                 sum_dou = sqlUtil2.selectSendDou(order.id);
+                for(int j = 0;j<order.id-1;j++) {
+                    list.remove(0);
+                }
                 for(User user:list) {
                     before_send_dou = user.send_dou;
                     Intent intent = new Intent();
@@ -250,67 +253,44 @@ public class HJTest5 {
 
         UiObject doushu = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/tv_text_num"));
         user.dou = Integer.valueOf(doushu.getText());
-        if(user.dou>0){
-            for(int i=0;i<order.per_dou;i++){
-                if(sum_dou>=order.max_dou){
-                    break;
+
+        int dou = 5;
+        Random random=new Random();// 定义随机类
+        int y =random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
+        if(y==2){
+            dou = 8;
+        }
+        if(user.dou>dou ){
+
+            UiObject2 liwu = mUIDevice.findObject(By.text(dou+"豆"));
+            if(!liwu.getParent().isSelected()){
+                liwu.click();
+            }
+            UiObject2 send = mUIDevice.findObject(By.text("发送"));
+            send.click();
+            user.send_dou = user.send_dou+dou;
+            sum_dou = sum_dou+dou;
+            for(int j=0 ;j<user.dou ;j++){
+                //send2.click();
+                if(is4X){
+                    mUIDevice.click(990,1843);
+                }else{
+                    mUIDevice.click(660,1228);
                 }
-                if (user.send_dou>=order.per_dou){
-                    break;
-                }
-                int dou =1;
-                if((user.send_dou+2)<=order.per_dou && sum_dou +2 < order.max_dou){
-                    Random random=new Random();// 定义随机类
-                    dou=random.nextInt(2)+1;// 返回[0,2)集合中的整数，注意不包括2
-                }
-                UiObject2 liwu = mUIDevice.findObject(By.text(dou+"豆"));
-                if(!liwu.getParent().isSelected()){
-                    liwu.click();
-                }
-                UiObject2 send = mUIDevice.findObject(By.text("发送"));
-                send.click();
-                Log.d(TAG,"---用户已送豆"+user.send_dou);
+                j = j+dou;
                 user.send_dou = user.send_dou+dou;
-                Log.d(TAG,"---现在用户送豆"+user.send_dou);
                 sum_dou = sum_dou+dou;
-                Log.d(TAG,"---现在总送豆"+user.send_dou);
-                UiObject2 yuerbuzu = mUIDevice.findObject(By.text("余额不足"));
-                if(yuerbuzu!=null){
-                    UiObject2 quxiao = mUIDevice.findObject(By.text("取消"));
-                    quxiao.click();
-                    break;
-                }
-                sqlUtil2.updateDou(user);
-                if(user.send_dou+3<=order.per_dou && sum_dou+3<=order.max_dou){
-                    //UiObject2 send2 = mUIDevice.findObject(By.text("连发"));
-                    Log.d(TAG,"---账户送豆差"+(order.per_dou-user.send_dou));
-                    Log.d(TAG,"---总数送豆差"+(order.max_dou-sum_dou));
-                    int cha = order.per_dou-user.send_dou;
-                    if(cha > order.max_dou-sum_dou){
-                        cha =order.max_dou-sum_dou;
-                    }
-                    for(int j=0 ;j<cha ;j++){
-                        //send2.click();
-                        if(is4X){
-                            mUIDevice.click(990,1843);
-                        }else{
-                            mUIDevice.click(660,1228);
-                        }
-                        if(dou==2){
-                            j++;
-                        }
-                        user.send_dou = user.send_dou+dou;
-                        Log.d(TAG,"---连发用户送豆"+user.send_dou);
-                        sum_dou = sum_dou+dou;
-                        Log.d(TAG,"---连发总送豆"+user.send_dou);
-                        Thread.sleep(1000);
-                    }
-                }
-                Log.d(TAG,"---最后总送豆"+user.send_dou);
-                sqlUtil2.updateDou(user);
-                Thread.sleep(5000);
+                Thread.sleep(500);
+            }
+            UiObject2 yuerbuzu = mUIDevice.findObject(By.text("余额不足"));
+            if(yuerbuzu!=null){
+                UiObject2 quxiao = mUIDevice.findObject(By.text("取消"));
+                quxiao.click();
             }
         }
+        sqlUtil2.updateDou(user);
+        Log.d(TAG,"---最后总送豆"+user.send_dou);
+        Thread.sleep(2000);
         Intent intent = new Intent();
         intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
         intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+(user.send_dou-before_send_dou)+"个，剩余"+(user.dou-user.send_dou)+"个");
@@ -325,6 +305,7 @@ public class HJTest5 {
             mUIDevice.click(30,70);
             mUIDevice.click(660,1228);
         }
+        mUIDevice.pressBack();
         mUIDevice.pressBack();
         mUIDevice.pressBack();
         mUIDevice.pressBack();
