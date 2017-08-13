@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 		myGrid.setColumnIds("id,phone,count,sun,dou");
 		myGrid.setInitWidths("220,220,220,220,220");
 		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,txt");
+		myGrid.setColTypes("txt,link,txt,txt,txt");
 		myGrid.setColSorting("int,str,str,int,int");
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
