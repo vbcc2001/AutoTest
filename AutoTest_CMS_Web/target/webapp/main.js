@@ -68,7 +68,7 @@ define(function(require, exports, module) {
 		var item = [
             {id: 1, text: "阳光/红包", open: 1, items: [
                 {id: 101, text: "汇总",userdata: {url: "html/count/main.html"}},
-                {id: 102, text: "详情",userdata: {url: "html/count/details.html"}}
+                {id: 102, text: "注册",userdata: {url: "html/register/main.html"}}
 //            ]},
 //            {id: 2, text: "礼物", open: 1, items: [
 //                {id: 201, text: "送豆详情"},
@@ -117,8 +117,6 @@ define(function(require, exports, module) {
 			}else{
 				myTabbar.addTab(id, name, "120px",null,true);
 				myTabbar.tabs(id).attachURL(url,true);
-				//myTabbar.tabs(id).attachURL(url,false);
-				//myTabbar.tabs("a1").attachURL("../common/test_page_1.html", true);
 			}	
 		}
 	}
