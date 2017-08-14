@@ -71,6 +71,8 @@ public class HJTest3{
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
         MyConnection my  = new MyConnection();
         String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+//        String url = "http://dxt.zbqhb.com:3000/action/lfs/action/FunctionAction";
+//        String url = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
         Map<String,String> parms = new HashMap<>();
         String phone = sqlUtil.selectCode();
         if (phone.length()==13){
