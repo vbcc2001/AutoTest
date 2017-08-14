@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView.setText(sn);
         //mPasswordView.setText("4b592e783869");
         //mPasswordView.setFocusable(true);
-        mPasswordView.requestFocus();
+        //mPasswordView.requestFocus();
         ivTwoCode= (ImageView) findViewById(R.id.iv1);
         Bitmap bitmap = ZXingUtils.createQRImage(sn, 256, 256);
         ivTwoCode.setImageBitmap(bitmap);

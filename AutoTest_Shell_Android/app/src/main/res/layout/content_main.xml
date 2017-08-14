@@ -218,7 +218,7 @@
                         android:id="@+id/root_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="未获取Root权限，"
+                        android:text="暂未Root，"
                         android:textColor="@android:color/holo_red_dark" />
                     <TextView
                         android:id="@+id/sn_view"

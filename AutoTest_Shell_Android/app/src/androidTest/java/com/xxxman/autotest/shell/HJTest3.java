@@ -38,8 +38,8 @@ public class HJTest3{
     int count_get_hongbao = 0;
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
-    boolean is4X=false;
-//    boolean is4X=true;
+//    boolean is4X=false;
+    boolean is4X=true;
 
     @Before
     public void setUp() throws RemoteException {
@@ -70,7 +70,7 @@ public class HJTest3{
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
         MyConnection my  = new MyConnection();
-//        String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+        String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
         Map<String,String> parms = new HashMap<>();
         String phone = sqlUtil.selectCode();
         if (phone.length()==13){
@@ -98,12 +98,12 @@ public class HJTest3{
                 test_for(user);
                 FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 //完成任务
-//                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
-//                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-//
-//                parms.put("jsonContent",context);
-//                String rs = my.getContextByHttp(url,parms);
-//                Log.d(TAG,"http请求结果"+rs);
+                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+
+                parms.put("jsonContent",context);
+                String rs = my.getContextByHttp(url,parms);
+                Log.d(TAG,"http请求结果"+rs);
             }
 
             for(int i = 0 ;i<100;i++){
@@ -117,12 +117,12 @@ public class HJTest3{
                     test_for(user);
                     FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                     //完成任务
-//                    String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
-//                    String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-//
-//                    parms.put("jsonContent",context);
-//                    String rs = my.getContextByHttp(url,parms);
-//                    Log.d(TAG,"http请求结果"+rs);
+                    String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+                    String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+
+                    parms.put("jsonContent",context);
+                    String rs = my.getContextByHttp(url,parms);
+                    Log.d(TAG,"http请求结果"+rs);
                 }
             }
         } catch (IOException e) {

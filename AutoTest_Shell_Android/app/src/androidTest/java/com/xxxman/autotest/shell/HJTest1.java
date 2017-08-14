@@ -45,11 +45,11 @@ public class HJTest1 {
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
     MyConnection my  = new MyConnection();
-//    String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+    String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
     String phone= "";
     boolean is_colse_ad = true;
-    boolean is4X=false;
-//    boolean is4X=true;
+//    boolean is4X=false;
+    boolean is4X=true;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -368,12 +368,12 @@ public class HJTest1 {
             user.sun = Integer.valueOf(sun_count.getText());
         }
         //完成任务
-//        String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"sun\\\":"+user.sun+"}\"";
-//        String context = "{\"function\":\"F100004\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-//        Map<String,String> parms = new HashMap<>();
-//        parms.put("jsonContent",context);
-//        String rs = my.getContextByHttp(url,parms);
-//        Log.d(TAG,"http请求结果"+rs);
+        String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"sun\\\":"+user.sun+"}\"";
+        String context = "{\"function\":\"F100004\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+        Map<String,String> parms = new HashMap<>();
+        parms.put("jsonContent",context);
+        String rs = my.getContextByHttp(url,parms);
+        Log.d(TAG,"http请求结果"+rs);
 
         mUIDevice.pressBack();
     }
@@ -698,13 +698,13 @@ public class HJTest1 {
             user.sun = Integer.valueOf(sun_count.getText());
         }
         //完成任务
-//        String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"sun\\\":"+user.sun+"}\"";
-//        String context = "{\"function\":\"F100004\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-//        Map<String,String> parms = new HashMap<>();
-//        parms.put("jsonContent",context);
-//        String rs = my.getContextByHttp(url,parms);
-//        Log.d(TAG,"http请求结果"+rs);
-//        mUIDevice.pressBack();
+        String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"sun\\\":"+user.sun+"}\"";
+        String context = "{\"function\":\"F100004\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+        Map<String,String> parms = new HashMap<>();
+        parms.put("jsonContent",context);
+        String rs = my.getContextByHttp(url,parms);
+        Log.d(TAG,"http请求结果"+rs);
+        mUIDevice.pressBack();
     }
     //关闭弹窗广告
     public void closeQiandao() throws Exception {

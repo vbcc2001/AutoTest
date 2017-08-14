@@ -27,8 +27,10 @@ public class HongbaoFragment extends Fragment {
 
     Button runBtn2;
     Button runBtn3;
+    Button runBtn4;
     TextView hongbaoView;
     EditText numberEdit1;
+    EditText numberEdit1Next;
     SQLUtil1 sqlUtil = new SQLUtil1();
 
     private static final String TAG = HongbaoFragment.class.getName();
@@ -49,10 +51,11 @@ public class HongbaoFragment extends Fragment {
 
         runBtn2 = (Button) view.findViewById(R.id.runBtn2);
         runBtn3 = (Button) view.findViewById(R.id.runBtn3);
+        runBtn4 = (Button) view.findViewById(R.id.runBtn4);
         numberEdit1 = (EditText) view.findViewById(R.id.number_edit1);
         numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         hongbaoView =(TextView)  view.findViewById(R.id.hongbao_view);
-
+        numberEdit1Next = (EditText)  view.findViewById(R.id.number_edit1_next);
         //绑定运行按钮
         runBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +70,13 @@ public class HongbaoFragment extends Fragment {
                 runHongbao2(view);
             }
         });
-
+        //绑定运行按钮
+        runBtn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextLogin(view);
+            }
+        });
         //创建表
         if (!sqlUtil.tabbleIsExist("hongbao")){
             sqlUtil.createTableCount();
@@ -83,6 +92,12 @@ public class HongbaoFragment extends Fragment {
                 e.printStackTrace();
                 Toast.makeText(this.getActivity(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
             }
+        }
+
+        //上一次登录信息
+        List<User> list_login = sqlUtil.selectLoginCount();
+        if(list_login.size()>0) {
+            numberEdit1Next.setText(""+list_login.get(0).number);
         }
 
         int user_count = 0;
@@ -157,6 +172,29 @@ public class HongbaoFragment extends Fragment {
                 e.printStackTrace();
             }
             List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt",number);
+            Log.d(TAG,"登录人数：---"+list.size());
+            sqlUtil.inserLoginCount(list);
+            if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
+                new UiautomatorThread4().start();
+                Log.i(TAG, "runMyUiautomator: ");
+            }else{
+                Toast.makeText(this.getActivity(), "未找到该用户！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void nextLogin(View v) {
+        if(is_code){
+            String number_string = numberEdit1Next.getText().toString().trim();
+            int number = Integer.parseInt(number_string);
+            String path = null;
+            try {
+                path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt",number+1);
             Log.d(TAG,"登录人数：---"+list.size());
             sqlUtil.inserLoginCount(list);
             if (list.size()>0 && sqlUtil.selectLoginCount().size()>0) {
