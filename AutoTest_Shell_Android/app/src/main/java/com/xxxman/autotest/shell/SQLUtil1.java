@@ -179,7 +179,7 @@ public class SQLUtil1 {
         }
         ContentValues cv = new ContentValues();
         cv.put("hongbao", hongbao);
-        db.update("count", cv, "id = ?", new String[] { ""+user.id });
+        db.update("hongbao", cv, "id = ?", new String[] { ""+user.id });
         return hongbao;
     }
     public void updateHongbaoTaskCount(User user){

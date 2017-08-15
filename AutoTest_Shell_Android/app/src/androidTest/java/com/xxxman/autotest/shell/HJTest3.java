@@ -38,8 +38,8 @@ public class HJTest3{
     int count_get_hongbao = 0;
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
-//    boolean is4X=false;
-    boolean is4X=true;
+    boolean is4X=false;
+//    boolean is4X=true;
 
     @Before
     public void setUp() throws RemoteException {
@@ -383,7 +383,7 @@ public class HJTest3{
             if(money!=null){
                 Log.d(TAG,"youhongbao");
                 money.click();
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 share();
                 for(int j =0 ;j < 30 ;j++){
                     if(is4X){
