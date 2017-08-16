@@ -21,7 +21,7 @@
 --使用库
 --use  huajiao
 
-DROP TABLE IF EXISTS t_sun;
+--DROP TABLE IF EXISTS t_sun;
   CREATE TABLE t_sun (
     id int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
     phone varchar(20) DEFAULT NULL COMMENT '手机编号',
@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS t_sun;
     sun int(10) DEFAULT NULL COMMENT '阳光数',
     PRIMARY KEY (id)
   );
-  DROP TABLE IF EXISTS t_count;
+  --DROP TABLE IF EXISTS t_count;
     CREATE TABLE t_count (
       id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
       phone varchar(20)  NULL  COMMENT '手机编号',
@@ -46,13 +46,27 @@ DROP TABLE IF EXISTS t_sun;
       dou int(10) DEFAULT NULL COMMENT '豆数',
       PRIMARY KEY (id)
     );
+  --DROP TABLE IF EXISTS t_register;
+    CREATE TABLE t_register (
+      id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
+      register varchar(50)  NULL  COMMENT '注册号',
+      phone varchar(20)  NULL  COMMENT '验证码',
+      tag varchar(20) UNIQUE NULL COMMENT '自定义标签',
+      update_time  timestamp  NULL   COMMENT '更新时间',
+      state varchar(100) DEFAULT NULL COMMENT '账号状态',
+      PRIMARY KEY (id)
+    );
+
 
 
 
 select sum(dou) from t_count where dou>0 ;
 
-select * from t_count where phone ='';
+select * from t_count where phone ='94e433225479';
 
+select * from t_register
+SELECT id FROM t_register where register='1'
+--delete from t_register
 --delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;
 --commit;
 --SELECT (@i:=@i+1) as id , phone , count(phone) count,sum(sun) sun ,sum(dou) dou FROM t_count t ,(select @i:= 0 ) as it group by t.phone order by t.phone;
