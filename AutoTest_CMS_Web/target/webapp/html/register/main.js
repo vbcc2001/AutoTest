@@ -19,15 +19,14 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("编号,机器编号,账号数,阳光数,花椒豆数");
-		myGrid.setColumnIds("number,phone,count,sun,dou");
-		myGrid.setInitWidths("220,220,220,220,220");
-		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,txt");
-		myGrid.setColSorting("int,str,int,int,int");
+		myGrid.setHeader("序号,机器编号,机器标签,更新日期");
+		myGrid.setColumnIds("id,phone,tag,update_time");
+		myGrid.setInitWidths("220,220,220,220");
+		myGrid.setColAlign("left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,date");
 		myGrid.attachEvent("onRowDblClicked",doOnRowDblClicked);
 		myGrid.init();
-		//myGrid.enableAutoWidth(true);
         initData();
 	};
 	// ********************************************************************************************************************************************
@@ -35,7 +34,7 @@ define(function(require, exports, module) {
 	//*********************************************************************************************************************************************
 	function initData(){
         var data ={total_count:0, pos:0, rows:[]};
-        var req = {jsonContent:'{"function":"F100007","user":{"id":"1","session":"123"},"content":{"phone":""}}'};
+        var req = {jsonContent:'{"function":"F100002","user":{"id":"1","session":"123"},"content":{}}'};
         $.ajax({
             type: "POST",
             url: "/action/lfs/action/FunctionAction",
@@ -65,15 +64,15 @@ define(function(require, exports, module) {
             }
         });
 	}
-	function doOnRowDblClicked(rowId){
+    function doOnRowDblClicked(rowId){
         //alert(rowId);
         var id= "tab_"+rowId;
         var name = rowId ;
-        if(_myTabbar.tabs(id)){
-            _myTabbar.tabs(id).setActive();
+        if(parent._myTabbar.tabs(id)){
+            parent._myTabbar.tabs(id).setActive();
         }else{
-            _myTabbar.addTab(id, name, "160px",null,true);
-            _myTabbar.tabs(id).attachURL("html/count/details.html?id="+rowId,null);
+            parent._myTabbar.addTab(id, name, "160px",null,true);
+            parent._myTabbar.tabs(id).attachURL("html/count/details.html?id="+rowId,null);
         }
-	}
+    }
 });

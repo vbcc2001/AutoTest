@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
 import com.xxx.web.http.listener.AWSConfig;
+import com.xxx.web.jdbc.DBConfigure;
 
 /** 添加  */
 public class F100001 extends BaseFunction   {
@@ -20,31 +21,40 @@ public class F100001 extends BaseFunction   {
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
 		String sun = requestParameter.getContent().get("sun");
-		insert(sun);
+		insert("","","");
 		return response;
 	}
-	private void insert(String sun) throws Exception {
+	private int insert(String register,String phone,String tag) throws Exception {
 
-		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-		Type type = new TypeToken<Map<String, Object>>() {}.getType();
-		Map<String, Object> map = gson.fromJson(sun, type);
+		Integer id = isExist(phone);
 
-		DynamoDB dynamo = AWSConfig.getDynamoDB();
-		Table table = dynamo.getTable("sun");
+		if(id==null){
+			Object arg[] = new Object[3];
+			arg[0]=register;
+			arg[1]=phone;
+			arg[2]=tag;
+			String sql="INSERT INTO t_register(register,phone,tag,state,update_time) VALUES (?,?,?,'1',now())";
+			return getNewJdbcTemplate().update(sql,arg);
+		}else{
+			Object arg[] = new Object[4];
+			arg[0]=register;
+			arg[1]=phone;
+			arg[2]=tag;
+			arg[3]=id;
+			String sql="update t_register set register=? ,phone=? ,tag=? ,update_time=now() where id=?";
+			return getNewJdbcTemplate().update(sql,arg);
+		}
+	}
+	private Integer isExist(String phone) throws Exception {
 
-		Item item = new Item()
-				.withPrimaryKey("编号", 1234)
-				.with("序号",map.get("序号"))
-				.with("用户名",map.get("用户名"))
-				.with("密码",map.get("密码"))
-				.with("日期",map.get("日期"))
-				.with("是否成功",map.get("是否成功"))
-				.with("阳光数",map.get("阳光数"));
-		table.putItem(item);
+		String sql ="SELECT id FROM t_register where phone=? ";
+		Integer id = this.getNewJdbcTemplate().queryInt(sql,new String[]{phone});
+		logger.info("当前ID为："+id);
+		return id;
 	}
 	public static void main(String arg[] ) throws Exception{
-		new AWSConfig().loadConfig();
+		new DBConfigure().loadConfig();
 		F100001 f = new F100001();
-		f.insert("{\"序号\":3,\"用户名\":\"18926085629\",\"密码\":\"123456\",\"日期\":312,\"是否成功\":true,\"阳光数\":30}");
+		f.insert("544e5f7be0f3761502f51b6486ba776","c4c8ba9f4fd2","Test-4X");
 	}
 }

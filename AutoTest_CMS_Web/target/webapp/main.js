@@ -66,17 +66,13 @@ define(function(require, exports, module) {
 	/**-------------------------------------创建目录树---------------------------------------*/
 	function createTree(){
 		var item = [
-            {id: 1, text: "阳光/红包", open: 1, items: [
-                {id: 101, text: "汇总",userdata: {url: "html/count/main.html"}},
-                {id: 102, text: "注册",userdata: {url: "html/register/main.html"}}
-//            ]},
-//            {id: 2, text: "礼物", open: 1, items: [
-//                {id: 201, text: "送豆详情"},
-//                {id: 202, text: "送阳光详情"}
-//            ]},
-//            {id: 3, text: "注册信息", open: 1, items: [
-//                {id: 301, text: "注册信息"},
-//                {id: 302, text: "其他"}
+            {id: 1, text: "汇总", open: 1, items: [
+                {id: 101, text: "花椒豆",userdata: {url: "html/dou/main.html"}},
+                {id: 102, text: "阳光",userdata: {url: "html/sun/main.html"}}
+
+            ]},
+            {id: 2, text: "注册信息", open: 1, items: [
+                {id: 202, text: "注册",userdata: {url: "html/register/main.html"}}
             ]}
 		];
 		tree = dhxLayout.cells("a").attachTreeView({
@@ -116,7 +112,7 @@ define(function(require, exports, module) {
 				myTabbar.tabs(id).setActive();
 			}else{
 				myTabbar.addTab(id, name, "120px",null,true);
-				myTabbar.tabs(id).attachURL(url,true);
+				myTabbar.tabs(id).attachURL(url,null);
 			}	
 		}
 	}

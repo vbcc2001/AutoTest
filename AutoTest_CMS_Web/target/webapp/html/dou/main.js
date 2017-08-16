@@ -19,8 +19,8 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("序号,机器编号,账号数,阳光数");
-		myGrid.setColumnIds("number,phone,count,sun");
+		myGrid.setHeader("序号,机器编号,账号数,花椒豆数");
+		myGrid.setColumnIds("number,phone,count,dou");
 		myGrid.setInitWidths("220,220,220,220");
 		myGrid.setColAlign("left,left,left,left");
 		myGrid.setColTypes("txt,txt,txt,txt");
@@ -68,12 +68,12 @@ define(function(require, exports, module) {
 	function doOnRowDblClicked(rowId){
         //alert(rowId);
         var id= "tab_"+rowId;
-        var name = "阳光详情"+rowId ;
+        var name = "豆详情-"+rowId ;
         if(parent._myTabbar.tabs(id)){
             parent._myTabbar.tabs(id).setActive();
         }else{
             parent._myTabbar.addTab(id, name, "180px",null,true);
-            parent._myTabbar.tabs(id).attachURL("html/sun/details.html?id="+rowId,null);
+            parent._myTabbar.tabs(id).attachURL("html/dou/details.html?id="+rowId,null);
         }
 	}
 });

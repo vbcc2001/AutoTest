@@ -11,20 +11,21 @@ define(function(require, exports, module) {
 	/**-------------------------------------form表单初始化------------------------------------*/
 	exports.init = function() {
 		myToolbar = new dhtmlXToolbarObject({
-						parent: "toolbarObj",
+						parent: "main_toolbarObj",
 						iconset: "awesome"
 		});
 		myToolbar.addButton("refresh", 11, "刷新", "fa fa-refresh", "fa fa-refresh");
 		myToolbar.addSeparator("sep4", 12);
 		myToolbar.attachEvent("onClick", function(id) { initData();});
-		myGrid = new dhtmlXGridObject('gridbox');
+		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("编号,机器编号,账号数,阳光数,花椒豆数");
-		myGrid.setColumnIds("id,phone,count,sun,dou");
-		myGrid.setInitWidths("220,220,220,220,220");
-		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,link,txt,txt,txt");
-		myGrid.setColSorting("int,str,str,int,int");
+		myGrid.setHeader("序号,机器编号,账号数,阳光数");
+		myGrid.setColumnIds("number,phone,count,sun");
+		myGrid.setInitWidths("220,220,220,220");
+		myGrid.setColAlign("left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,int,int");
+		myGrid.attachEvent("onRowDblClicked",doOnRowDblClicked);
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
         initData();
@@ -33,8 +34,7 @@ define(function(require, exports, module) {
 	// 内部方法            **************************************************************************************************************************
 	//*********************************************************************************************************************************************
 	function initData(){
-        var data ={total_count:0, pos:0, data:[]};
-
+        var data ={total_count:0, pos:0, rows:[]};
         var req = {jsonContent:'{"function":"F100007","user":{"id":"1","session":"123"},"content":{"phone":""}}'};
         $.ajax({
             type: "POST",
@@ -42,11 +42,10 @@ define(function(require, exports, module) {
             data: req,
             dataType: "json",
             success: function (message) {
-            //{"head":{"errorNo":"","errorInfo":""},"list":[{"phone":"94e433225479","count":8,"id":1.0,"dou":1043,"sun":null},{"phone":"x-001","count":1,"id":2.0,"dou":30,"sun":null}]}
                 if(message.head.errorNo==""){
-                    data.data = message.list;
+                    data.rows = message.list;
                     data.total_count= message.list.length
-                    myGrid.parse(data,"js");
+                    myGrid.parse(data.rows,"js");
                 }else{
                     dhtmlx.confirm({
                         title:"数据请求错误！",
@@ -65,5 +64,16 @@ define(function(require, exports, module) {
                 });
             }
         });
+	}
+	function doOnRowDblClicked(rowId){
+        //alert(rowId);
+        var id= "tab_"+rowId;
+        var name = "阳光详情"+rowId ;
+        if(parent._myTabbar.tabs(id)){
+            parent._myTabbar.tabs(id).setActive();
+        }else{
+            parent._myTabbar.addTab(id, name, "180px",null,true);
+            parent._myTabbar.tabs(id).attachURL("html/sun/details.html?id="+rowId,null);
+        }
 	}
 });
