@@ -26,7 +26,7 @@ public class F100006 extends BaseFunction   {
 
 	private List<DataRow> query(String phone) throws Exception {
 
-		String sql ="SELECT * FROM t_count where phone = ? ";
+		String sql ="SELECT *,(select tag from t_register where phone=t.phone) as tag  FROM t_count t where phone = ? ";
 		List<DataRow> list = this.getNewJdbcTemplate().query(sql,new String[]{phone});
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
@@ -48,7 +48,7 @@ public class F100006 extends BaseFunction   {
 
 		new DBConfigure().loadConfig();
 		F100006 f = new F100006();
-		List<DataRow> list =  f.query("94e433225479");
+		List<DataRow> list =  f.query("c4c8ba9f4fd2");
 		for(DataRow dataRow:list){
 			System.out.println(dataRow);
 		}

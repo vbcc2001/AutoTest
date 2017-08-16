@@ -19,12 +19,12 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("序号,机器编号,账号数,花椒豆数");
-		myGrid.setColumnIds("number,phone,count,dou");
-		myGrid.setInitWidths("220,220,220,220");
-		myGrid.setColAlign("left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt");
-		myGrid.setColSorting("int,str,int,int");
+		myGrid.setHeader("序号,机器编号,机器标签,账号数,花椒豆数");
+		myGrid.setColumnIds("number,phone,tag,count,dou");
+		myGrid.setInitWidths("220,220,220,220,220");
+		myGrid.setColAlign("left,left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,int,int");
 		myGrid.attachEvent("onRowDblClicked",doOnRowDblClicked);
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
@@ -67,8 +67,8 @@ define(function(require, exports, module) {
 	}
 	function doOnRowDblClicked(rowId){
         //alert(rowId);
-        var id= "tab_"+rowId;
-        var name = "豆详情-"+rowId ;
+        var id= "tab_dou_"+rowId;
+        var name = "豆-"+rowId ;
         if(parent._myTabbar.tabs(id)){
             parent._myTabbar.tabs(id).setActive();
         }else{

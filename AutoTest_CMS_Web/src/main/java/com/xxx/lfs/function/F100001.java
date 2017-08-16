@@ -20,8 +20,10 @@ public class F100001 extends BaseFunction   {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
-		String sun = requestParameter.getContent().get("sun");
-		insert("","","");
+		String phone = requestParameter.getContent().get("phone");
+		String tag = requestParameter.getContent().get("tag");
+		String register = requestParameter.getContent().get("register");
+		insert(register,phone,tag);
 		return response;
 	}
 	private int insert(String register,String phone,String tag) throws Exception {

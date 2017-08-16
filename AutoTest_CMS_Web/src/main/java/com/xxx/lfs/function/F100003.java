@@ -19,28 +19,20 @@ public class F100003 extends BaseFunction   {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
-		String sun = requestParameter.getContent().get("sun");
-		insert(sun);
+		String id = requestParameter.getContent().get("id");
+		del(id);
 		return response;
 	}
-	private int insert(String sun) throws Exception {
-		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-		Type type = new TypeToken<Map<String, Object>>() {}.getType();
-		Map<String, Object> para = gson.fromJson(sun, type);
-
-		Object arg[] = new Object[5];
-		arg[0]=para.get("phone");
-		arg[1]=para.get("pwd");
-		arg[2]=para.get("state");
-		arg[3]=para.get("sun");
-		arg[4]=para.get("account");
-		String sql="INSERT INTO t_sun(phone,pwd,state,sun,account) VALUES (?,?,?,?,?)";
+	private int del(String id) throws Exception {
+		Object arg[] = new Object[1];
+		arg[0]=Integer.valueOf(id);
+		String sql="delete from t_register where id=? ";
 		return getNewJdbcTemplate().update(sql,arg);
 	}
 	public static void main(String arg[] ) throws Exception{
 		new DBConfigure().loadConfig();
 		F100003 f = new F100003();
-		int i= f.insert("{\"phone\":\"x-001\",\"account\":\"18926085629\",\"pwd\":\"123456\",\"state\":\"1\",\"sun\":30}");
+		int i= f.del("6");
 		System.out.print(i);
 	}
 }
