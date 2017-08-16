@@ -70,6 +70,8 @@
             </LinearLayout>
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:gravity="center"
@@ -182,6 +184,25 @@
                     android:textColor="@color/white"
                     android:text="下一个" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/border">
+            <Button
+                android:id="@+id/runBtn5"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_selector"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="更新账号" />
         </LinearLayout>
 
         <LinearLayout

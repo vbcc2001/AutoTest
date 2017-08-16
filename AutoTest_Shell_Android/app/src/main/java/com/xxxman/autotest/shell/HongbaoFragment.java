@@ -17,7 +17,9 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tuzi on 2017/7/30.
@@ -28,9 +30,11 @@ public class HongbaoFragment extends Fragment {
     Button runBtn2;
     Button runBtn3;
     Button runBtn4;
+    Button runBtn5;
     TextView hongbaoView;
     EditText numberEdit1;
     EditText numberEdit1Next;
+    String code;
     SQLUtil1 sqlUtil = new SQLUtil1();
 
     private static final String TAG = HongbaoFragment.class.getName();
@@ -52,6 +56,8 @@ public class HongbaoFragment extends Fragment {
         runBtn2 = (Button) view.findViewById(R.id.runBtn2);
         runBtn3 = (Button) view.findViewById(R.id.runBtn3);
         runBtn4 = (Button) view.findViewById(R.id.runBtn4);
+        runBtn5 = (Button) view.findViewById(R.id.runBtn5);
+
         numberEdit1 = (EditText) view.findViewById(R.id.number_edit1);
         numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         hongbaoView =(TextView)  view.findViewById(R.id.hongbao_view);
@@ -75,6 +81,33 @@ public class HongbaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 nextLogin(view);
+            }
+        });
+        //绑定运行按钮
+        runBtn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //删除表
+                //读取txt文档，插入到表
+                try {
+                    if(is_code) {
+                        sqlUtil.delTable("hongbao");
+                        String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                        List<User> list = FileUtil.ReadTxtFile(path + "/bh_NumberList.txt");
+                        Log.d(TAG, "user_list.txt中用户数量：" + list.size());
+                        sqlUtil.inserCount(list);
+                        UpdateThread thread = new UpdateThread();
+                        thread.init(list, code);
+                        thread.start();
+                        Toast.makeText(HongbaoFragment.this.getActivity(), "更新成功，请重启花椒助手", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         //创建表
@@ -125,7 +158,7 @@ public class HongbaoFragment extends Fragment {
         String enctytCode = null;
         try {
             enctytCode = RSAUtils.encryptWithRSA(sn);
-            String code = SNUtil.getMD5(enctytCode);
+            code = SNUtil.getMD5(enctytCode);
             code = SNUtil.getMD5(code);
             code= code.substring(0,12);
             Log.d(TAG,code);
@@ -230,6 +263,34 @@ public class HongbaoFragment extends Fragment {
                     "com.xxxman.autotest.shell.HJTest4 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    static class UpdateThread extends Thread {
+
+        String code = "";
+        List<User> list =null;
+        @Override
+        public void run() {
+            super.run();
+            MyConnection my  = new MyConnection();
+            String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+            //更新到服务器
+            String listStr = "[";
+            for (User user : list) {
+                listStr = listStr + "{n:" + user.number + ",a:" + user.phone + "},";
+            }
+            listStr = listStr.substring(0,listStr.length()-1);
+            listStr = listStr + "]";
+            String context = "{\"function\":\"F100009\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"phone\":\"" + code + "\",\"list\":" + listStr + "}}";
+            Map<String, String> parms = new HashMap<>();
+            parms.put("jsonContent", context);
+            Log.d(TAG, "http请求" + context);
+            String rs = my.getContextByHttp(url, parms);
+            Log.d(TAG, "http请求结果" + rs);
+        }
+        public void init(List<User> list,String code) {
+            this.list = list;
+            this.code = code;
         }
     }
 }

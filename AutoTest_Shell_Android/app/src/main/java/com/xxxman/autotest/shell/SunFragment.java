@@ -18,7 +18,9 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tuzi on 2017/7/30.
@@ -29,6 +31,7 @@ public class SunFragment extends Fragment {
     Button runBtn;
     Button runBtn1;
     Button runBtn2;
+    Button runBtn3;
     TextView rootTextView;
     TextView taskView;
     TextView snView;
@@ -54,6 +57,7 @@ public class SunFragment extends Fragment {
         runBtn = (Button) view.findViewById(R.id.runBtn);
         runBtn1 = (Button) view.findViewById(R.id.runBtn1);
         runBtn2 = (Button) view.findViewById(R.id.runBtn2);
+        runBtn3 = (Button) view.findViewById(R.id.runBtn3);
         rootTextView = (TextView)  view.findViewById(R.id.root_view);
         taskView =(TextView)  view.findViewById(R.id.task_view);
         snView =  (TextView)  view.findViewById(R.id.sn_view);
@@ -95,6 +99,34 @@ public class SunFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 nextLogin(view);
+            }
+        });
+        //绑定运行按钮
+        runBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //删除表
+                //读取txt文档，插入到表
+                try {
+                    if(is_code) {
+                        sqlUtil.delTable("count");
+                        String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                        List<User> list = FileUtil.ReadTxtFile(path + "/NumberList.txt");
+                        Log.d(TAG, "user_list.txt中用户数量：" + list.size());
+                        sqlUtil.inserCount(list);
+                        UpdateThread thread = new UpdateThread();
+                        thread.init(list,code);
+                        thread.start();
+                        Toast.makeText(SunFragment.this.getActivity(), "更新成功，请重启花椒助手", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(SunFragment.this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(SunFragment.this.getActivity(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
         //创建表
@@ -253,4 +285,34 @@ public class SunFragment extends Fragment {
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
     }
+    static class UpdateThread extends Thread {
+
+        String code = "";
+        List<User> list =null;
+        @Override
+        public void run() {
+            super.run();
+            MyConnection my  = new MyConnection();
+            String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+            //更新到服务器
+            String listStr = "[";
+            for (User user : list) {
+                listStr = listStr + "{n:" + user.number + ",a:" + user.phone + "},";
+            }
+            listStr = listStr.substring(0,listStr.length()-1);
+            listStr = listStr + "]";
+            String context = "{\"function\":\"F100008\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"phone\":\"" + code + "\",\"list\":" + listStr + "}}";
+            Map<String, String> parms = new HashMap<>();
+            parms.put("jsonContent", context);
+            Log.d(TAG, "http请求" + context);
+            String rs = my.getContextByHttp(url, parms);
+            Log.d(TAG, "http请求结果" + rs);
+        }
+        public void init(List<User> list,String code) {
+            this.list = list;
+            this.code = code;
+        }
+    }
+
+
 }

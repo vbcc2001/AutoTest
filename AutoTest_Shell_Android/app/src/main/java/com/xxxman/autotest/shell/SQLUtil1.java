@@ -61,7 +61,9 @@ public class SQLUtil1 {
         Log.i(TAG, "code为:" + code);
         return code;
     }
-
+    public void delTable(String table){
+        db.delete(table,null,null);
+    }
     public void inserCount(List<User> list){
         ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
         for(User user:list){

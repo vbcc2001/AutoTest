@@ -75,8 +75,8 @@ public class SQLUtil {
         Log.i(TAG, "插入code为:" + code);
         db.insert("code",null,cv);//执行插入操作
     }
-    public void delCode(String code){
-        db.delete("code",null,null);
+    public void delTable(String table){
+        db.delete(table,null,null);
     }
     public List<User> selectUser() {
         String sql = "select id,number,phone,pwd from count where task_count=0 and day = '"+dateString+"'";
