@@ -53,6 +53,6 @@ select sum(dou) from t_count where dou>0 ;
 
 select * from t_count where phone ='';
 
---delete from t_count; where  phone = '' ;
+--delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;
 --commit;
 --SELECT (@i:=@i+1) as id , phone , count(phone) count,sum(sun) sun ,sum(dou) dou FROM t_count t ,(select @i:= 0 ) as it group by t.phone order by t.phone;

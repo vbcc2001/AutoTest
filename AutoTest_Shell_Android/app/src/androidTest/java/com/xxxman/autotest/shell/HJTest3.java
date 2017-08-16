@@ -71,7 +71,7 @@ public class HJTest3{
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
         MyConnection my  = new MyConnection();
         String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
-//        String url = "http://dxt.zbqhb.com:3000/action/lfs/action/FunctionAction";
+//        String url = "http://hd.zbqhb.com:3000/action/lfs/action/FunctionAction";
 //        String url = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
         Map<String,String> parms = new HashMap<>();
         String phone = sqlUtil.selectCode();
@@ -162,6 +162,7 @@ public class HJTest3{
                                     Thread.sleep(1000);
                                     city.click();
                                     find_money(user,"深圳 (当前定位地区)");
+//                                    find_money(user,"深圳");
                                 }else{
                                     find_money(user,"深圳");
                                 }

@@ -46,7 +46,7 @@ public class HJTest1 {
     SQLUtil sqlUtil = new SQLUtil();
     MyConnection my  = new MyConnection();
     String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
-//    String url = "http://dxt.zbqhb.com:3000/action/lfs/action/FunctionAction";
+//    String url = "http://hd.zbqhb.com:3000/action/lfs/action/FunctionAction";
 //    String url = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
     String phone= "";
     boolean is_colse_ad = true;
