@@ -38,9 +38,7 @@ public class HJTest3{
     int count_get_hongbao = 0;
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
-    boolean is4X=false;
-//    boolean is4X=true;
-
+    boolean is4X=Constant.IS_4X;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -70,9 +68,7 @@ public class HJTest3{
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
         MyConnection my  = new MyConnection();
-        String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
-//        String url = "http://hd.zbqhb.com:3000/action/lfs/action/FunctionAction";
-//        String url = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
+        String url = Constant.URL;
         Map<String,String> parms = new HashMap<>();
         String phone = sqlUtil.selectCode();
         if (phone.length()==13){
@@ -265,7 +261,7 @@ public class HJTest3{
                         }
                         reboot();
                     }
-                    if (count_get_hongbao>=6){
+                    if (count_get_hongbao>=Constant.HONGBAO_COUNT){
                         break;
                     }
                     if (fail_count>=3){

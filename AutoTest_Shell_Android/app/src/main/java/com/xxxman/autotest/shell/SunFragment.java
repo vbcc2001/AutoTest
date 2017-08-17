@@ -293,7 +293,7 @@ public class SunFragment extends Fragment {
         public void run() {
             super.run();
             MyConnection my  = new MyConnection();
-            String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+            String url = Constant.URL;
             //更新到服务器
             String listStr = "[";
             for (User user : list) {

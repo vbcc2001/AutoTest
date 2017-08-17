@@ -45,13 +45,10 @@ public class HJTest1 {
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
     MyConnection my  = new MyConnection();
-    String url = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
-//    String url = "http://hd.zbqhb.com:3000/action/lfs/action/FunctionAction";
-//    String url = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
+    String url = Constant.URL;
     String phone= "";
     boolean is_colse_ad = true;
-    boolean is4X=false;
-//    boolean is4X=true;
+    boolean is4X=Constant.IS_4X;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
