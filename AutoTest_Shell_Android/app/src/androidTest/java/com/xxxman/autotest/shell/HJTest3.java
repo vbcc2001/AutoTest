@@ -62,6 +62,14 @@ public class HJTest3{
             mUIDevice.wakeUp();
         }
     }
+    //@Test
+    public void test_test() throws  Exception{
+//    UiObject2 list = mUIDevice.findObject(By.res("com.huajiao:id/hot_area_list"));
+//    ist.scroll(Direction.UP, 10f);
+
+        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+        home.scrollToEnd(1);
+    }
     @Test
     public void test(){
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
@@ -139,87 +147,10 @@ public class HJTest3{
                 login(user);
                 for (int i = 0; i < 100; i++) {
                     try {
-                        if (i%4!=3){
-                            find_money(user,"最新");
-                        }
-                        if (i%4==3){
-                            if((i/4)%4==0){
-                                UiObject2 city = mUIDevice.findObject(By.text("深圳"));
-                                if (city==null){
-                                    city = mUIDevice.findObject(By.text("北京"));
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("上海"));
-                                    }
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("广州"));
-                                    }
-                                    Log.d(TAG,"切换深圳");
-                                    city.click();
-                                    Thread.sleep(1000);
-                                    city.click();
-                                    find_money(user,"深圳 (当前定位地区)");
-//                                    find_money(user,"深圳");
-                                }else{
-                                    find_money(user,"深圳");
-                                }
-                            }
-                            if((i/4)%4==1){
-                                UiObject2 city = mUIDevice.findObject(By.text("北京"));
-                                if (city==null){
-                                    city = mUIDevice.findObject(By.text("深圳"));
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("上海"));
-                                    }
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("广州"));
-                                    }
-                                    Log.d(TAG,"切换北京");
-                                    city.click();
-                                    Thread.sleep(1000);
-                                    city.click();
-                                    find_money(user,"北京");
-                                }else{
-                                    find_money(user,"北京");
-                                }
-                            }
-                            if((i/4)%4==2){
-                                UiObject2 city = mUIDevice.findObject(By.text("上海"));
-                                if (city==null){
-                                    city = mUIDevice.findObject(By.text("深圳"));
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("北京"));
-                                    }
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("广州"));
-                                    }
-                                    Log.d(TAG,"切换上海");
-                                    city.click();
-                                    Thread.sleep(1000);
-                                    city.click();
-                                    find_money(user,"上海");
-                                }else{
-                                    find_money(user,"上海");
-                                }
-                            }
-                            if((i/4)%4==3){
-                                UiObject2 city = mUIDevice.findObject(By.text("广州"));
-                                if (city==null){
-                                    city = mUIDevice.findObject(By.text("深圳"));
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("北京"));
-                                    }
-                                    if (city==null){
-                                        city = mUIDevice.findObject(By.text("上海"));
-                                    }
-                                    Log.d(TAG,"切换广州");
-                                    city.click();
-                                    Thread.sleep(1000);
-                                    city.click();
-                                    find_money(user,"广州");
-                                }else{
-                                    find_money(user,"广州");
-                                }
-                            }
+                        if(Constant.IS_HSM){
+                            selectCityHSM(i,user);
+                        }else{
+                            selectCity(i,user);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -279,6 +210,210 @@ public class HJTest3{
             e.printStackTrace();
             reboot();
         }
+    }
+    public void selectCity(int i,User user) throws Exception{
+        if (i%4!=3){
+            find_money(user,"最新");
+        }
+        if (i%4==3){
+            if((i/4)%4==0){
+                UiObject2 city = mUIDevice.findObject(By.text("深圳"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("北京"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("上海"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("广州"));
+                    }
+                    Log.d(TAG,"切换深圳");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    find_money(user,"深圳 (当前定位地区)");
+//                                    find_money(user,"深圳");
+                }else{
+                    find_money(user,"深圳");
+                }
+            }
+            if((i/4)%4==1){
+                UiObject2 city = mUIDevice.findObject(By.text("北京"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("深圳"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("上海"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("广州"));
+                    }
+                    Log.d(TAG,"切换北京");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    find_money(user,"北京");
+                }else{
+                    find_money(user,"北京");
+                }
+            }
+            if((i/4)%4==2){
+                UiObject2 city = mUIDevice.findObject(By.text("上海"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("深圳"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("北京"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("广州"));
+                    }
+                    Log.d(TAG,"切换上海");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    find_money(user,"上海");
+                }else{
+                    find_money(user,"上海");
+                }
+            }
+            if((i/4)%4==3){
+                UiObject2 city = mUIDevice.findObject(By.text("广州"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("深圳"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("北京"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("上海"));
+                    }
+                    Log.d(TAG,"切换广州");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    find_money(user,"广州");
+                }else{
+                    find_money(user,"广州");
+                }
+            }
+        }
+
+    }
+    public void selectCityHSM(int i,User user) throws Exception{
+        if (i%2==0){
+            find_money(user,"最新");
+        }else{
+            if((i/2)%4==0){
+                UiObject2 city = mUIDevice.findObject(By.text("北京"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("黑龙江"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("吉林"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("辽宁"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("深圳"));
+                    }
+                    Log.d(TAG,"切换北京");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    city = mUIDevice.findObject(By.text("北京"));
+                    if (city==null){
+                        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+                        home.scrollToBeginning(1);
+                        home.scrollToBeginning(1);
+                    }
+                    find_money(user,"北京");
+                }else{
+                    find_money(user,"北京");
+                }
+            }
+            if((i/2)%4==1){
+                UiObject2 city = mUIDevice.findObject(By.text("黑龙江"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("吉林"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("辽宁"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("北京"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("深圳"));
+                    }
+                    Log.d(TAG,"切换黑龙江");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    city = mUIDevice.findObject(By.text("黑龙江"));
+                    if (city==null){
+                        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+                        home.scrollToBeginning(1);
+                        home.scrollToEnd(1);
+                    }
+                    find_money(user,"黑龙江");
+                }else{
+                    find_money(user,"黑龙江");
+                }
+            }
+            if((i/2)%4==2){
+                UiObject2 city = mUIDevice.findObject(By.text("吉林"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("辽宁"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("北京"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("黑龙江"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("深圳"));
+                    }
+                    Log.d(TAG,"切换吉林");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    city = mUIDevice.findObject(By.text("吉林"));
+                    if (city==null){
+                        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+                        home.scrollToBeginning(1);
+                        home.scrollToEnd(1);
+                    }
+                    find_money(user,"吉林");
+                }else{
+                    find_money(user,"吉林");
+                }
+            }
+            if((i/2)%4==3){
+                UiObject2 city = mUIDevice.findObject(By.text("辽宁"));
+                if (city==null){
+                    city = mUIDevice.findObject(By.text("北京"));
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("黑龙江"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("吉林"));
+                    }
+                    if (city==null){
+                        city = mUIDevice.findObject(By.text("深圳"));
+                    }
+                    Log.d(TAG,"切换辽宁");
+                    city.click();
+                    Thread.sleep(1000);
+                    city.click();
+                    city = mUIDevice.findObject(By.text("辽宁"));
+                    if (city==null){
+                        UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+                        home.scrollToBeginning(1);
+                        home.scrollToEnd(1);
+                    }
+                    find_money(user,"辽宁");
+                }else{
+                    find_money(user,"辽宁");
+                }
+            }
+        }
+
     }
     public void reboot() {
         Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(APP);
@@ -367,7 +502,7 @@ public class HJTest3{
         new_list.click();
         int c = 18;
         if(!menu.equals("最新")){
-            c =12;
+            c = 12;
         }
         for(int i =0 ;i < c ;i++){
             if(i>0){

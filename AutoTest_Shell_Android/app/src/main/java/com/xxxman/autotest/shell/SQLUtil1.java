@@ -130,7 +130,7 @@ public class SQLUtil1 {
         return sum;
     }
     public int selectHongbaoSuccessCount(){
-        String sql = "select count(1) as sum from hongbao where hongbao>=6 and hongbao_task_count =1 and day = '"+dateString+"'";
+        String sql = "select count(1) as sum from hongbao where hongbao>="+Constant.HONGBAO_COUNT+" and hongbao_task_count =1 and day = '"+dateString+"'";
         int sum = 0;
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {

@@ -15,4 +15,9 @@ public class Constant {
 
     public static final int HONGBAO_COUNT = 6;
 //    public static final int HONGBAO_COUNT = 2;
+
+//    public static final boolean IS_HSM = true;
+    public static final boolean IS_HSM = false;
+
+
 }
