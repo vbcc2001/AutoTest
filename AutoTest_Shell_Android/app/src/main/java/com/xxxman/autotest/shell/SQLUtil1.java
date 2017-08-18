@@ -140,7 +140,7 @@ public class SQLUtil1 {
         return sum;
     }
     public List<User> selectHongbaoFailUser(){
-        String sql = "select id,phone,pwd,number,hongbao from hongbao where hongbao<6 and hongbao_task_count =1 and day = '"+dateString+"'";
+        String sql = "select id,phone,pwd,number,hongbao from hongbao where hongbao<"+Constant.HONGBAO_COUNT+" and hongbao_task_count =1 and day = '"+dateString+"'";
         List<User> list = new ArrayList<User>();
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
