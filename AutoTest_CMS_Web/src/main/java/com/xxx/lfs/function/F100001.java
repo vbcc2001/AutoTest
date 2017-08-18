@@ -15,7 +15,7 @@ import com.xxx.web.function.ResponseParameter;
 import com.xxx.web.http.listener.AWSConfig;
 import com.xxx.web.jdbc.DBConfigure;
 
-/** 添加  */
+/** 添加或修改标签 */
 public class F100001 extends BaseFunction   {
 
 	@Override

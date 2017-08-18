@@ -10,7 +10,7 @@ import com.xxx.web.jdbc.DBConfigure;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-/** 添加  */
+/** 添加阳光信息  */
 public class F100004 extends BaseFunction   {
 
 	@Override

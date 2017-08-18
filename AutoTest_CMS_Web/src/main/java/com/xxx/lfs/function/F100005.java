@@ -10,7 +10,7 @@ import com.xxx.web.jdbc.DBConfigure;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-/** 添加  */
+/** 添加豆信息  */
 public class F100005 extends BaseFunction   {
 
 	@Override

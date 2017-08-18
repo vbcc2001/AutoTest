@@ -68,7 +68,7 @@ define(function(require, exports, module) {
 	function doOnRowDblClicked(rowId){
         //alert(rowId);
         var id= "tab_dou_"+rowId;
-        var name = "豆-"+rowId ;
+        var name = "豆-"+rowId.substring(0,6); ;
         if(parent._myTabbar.tabs(id)){
             parent._myTabbar.tabs(id).setActive();
         }else{
