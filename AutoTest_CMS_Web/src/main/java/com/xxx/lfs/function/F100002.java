@@ -15,7 +15,7 @@ import com.xxx.web.http.listener.AWSConfig;
 import com.xxx.web.jdbc.DBConfigure;
 
 
-/** 查询注册信息  */
+/** 查询标签  */
 public class F100002 extends BaseFunction {
 
 	@Override

@@ -19,12 +19,12 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("序号,机器编号,机器标签,账号数,阳光数");
-		myGrid.setColumnIds("number,phone,tag,count,sun");
-		myGrid.setInitWidths("220,220,220,220,220");
-		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,txt");
-		myGrid.setColSorting("int,str,str,int,int");
+		myGrid.setHeader("序号,机器编号,机器标签,账号数");
+		myGrid.setColumnIds("number,phone,tag,count");
+		myGrid.setInitWidths("220,220,220,220");
+		myGrid.setColAlign("left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,int");
 		myGrid.attachEvent("onRowDblClicked",doOnRowDblClicked);
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
 	//*********************************************************************************************************************************************
 	function initData(){
         var data ={total_count:0, pos:0, rows:[]};
-        var req = {jsonContent:'{"function":"F100007","user":{"id":"1","session":"123"},"content":{"phone":""}}'};
+        var req = {jsonContent:'{"function":"F100011","user":{"id":"1","session":"123"},"content":{type:"hongbao"}}'};
         $.ajax({
             type: "POST",
             url: "/action/lfs/action/FunctionAction",
@@ -67,13 +67,13 @@ define(function(require, exports, module) {
 	}
 	function doOnRowDblClicked(rowId){
         //alert(rowId);
-        var id= "tab_sun_"+rowId;
-        var name = "阳光-"+rowId.substring(0,6);
+        var id= "tab_account_hongbao_"+rowId;
+        var name = "账号-豆-"+rowId.substring(0,6);
         if(parent._myTabbar.tabs(id)){
             parent._myTabbar.tabs(id).setActive();
         }else{
             parent._myTabbar.addTab(id, name, "180px",null,true);
-            parent._myTabbar.tabs(id).attachURL("html/sun/details.html?id="+rowId,null);
+            parent._myTabbar.tabs(id).attachURL("html/accout/hongbao/details.html?id="+rowId,null);
         }
 	}
 });

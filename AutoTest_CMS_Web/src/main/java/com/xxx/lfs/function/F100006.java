@@ -13,7 +13,7 @@ import java.util.List;
 import java.sql.Timestamp;
 import java.util.TimeZone;
 
-/** 添加  */
+/** 查询阳光、豆详情  */
 public class F100006 extends BaseFunction   {
 
 	@Override

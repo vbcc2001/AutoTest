@@ -14,7 +14,7 @@ import com.xxx.web.jdbc.DBConfigure;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-/** 添加  */
+/** 删除标签  */
 public class F100003 extends BaseFunction   {
 
 	@Override

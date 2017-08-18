@@ -19,12 +19,12 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('details_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("编号,机器编号,账号,阳光数,更新时间,花椒豆数,更新时间");
-		myGrid.setColumnIds("id,phone,account,sun,sun_update_time,dou,dou_update_time");
-		myGrid.setInitWidths("220,220,220,220,220,220,220");
-		myGrid.setColAlign("left,left,left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,txt,txt,txt");
-		myGrid.setColSorting("int,str,str,int,date,int,date");
+		myGrid.setHeader("编号,机器编号,机器标签,账号,更新时间");
+		myGrid.setColumnIds("number,phone,tag,accout,update_time,");
+		myGrid.setInitWidths("220,220,220,220,220");
+		myGrid.setColAlign("left,left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,str,date");
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
         initData(getUrlParam("id"));
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
 	function initData(phone){
         var data ={total_count:0, pos:0, data:[]};
 
-        var req = {jsonContent:'{"function":"F100006","user":{"id":"1","session":"123"},"content":{"phone":"'+phone+'"}}'};
+        var req = {jsonContent:'{"function":"F100010","user":{"id":"1","session":"123"},"content":{"type":"hongbao","phone":"'+phone+'"}}'};
         $.ajax({
             type: "POST",
             url: "/action/lfs/action/FunctionAction",
