@@ -281,7 +281,7 @@ public class HongbaoFragment extends Fragment {
             }
             listStr = listStr.substring(0,listStr.length()-1);
             listStr = listStr + "]";
-            String context = "{\"function\":\"F100009\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"phone\":\"" + code + "\",\"list\":" + listStr + "}}";
+            String context = "{\"function\":\"F100009\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"phone\":\"" + code + "\",\"list\":\"" + listStr + "\"}}";
             Map<String, String> parms = new HashMap<>();
             parms.put("jsonContent", context);
             Log.d(TAG, "http请求" + context);
