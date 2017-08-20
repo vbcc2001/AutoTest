@@ -19,12 +19,14 @@ define(function(require, exports, module) {
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('details_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("编号,机器编号,机器标签,账号,更新时间");
-		myGrid.setColumnIds("number,phone,tag,accout,update_time,");
-		myGrid.setInitWidths("220,220,220,220,220");
-		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,txt");
-		myGrid.setColSorting("int,str,str,str,date");
+
+        myGrid.setHeader("编号,机器编号,机器标签,账号,更新时间,豆数,豆更新时间");
+        myGrid.setColumnIds("number,phone,tag,accout,update_time,dou,dou_update_time");
+        myGrid.setInitWidths("40,220,220,220,220,220,220");
+        myGrid.setColAlign("left,left,left,left,left,left,left");
+        myGrid.setColTypes("txt,txt,txt,txt,txt,txt,txt");
+        myGrid.setColSorting("int,str,str,str,date,int,date");
+
 		myGrid.init();
 		//myGrid.enableAutoWidth(true);
         initData(getUrlParam("id"));

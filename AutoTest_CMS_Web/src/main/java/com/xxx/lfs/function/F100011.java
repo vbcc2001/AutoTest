@@ -15,30 +15,61 @@ public class F100011 extends BaseFunction   {
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
 		String type = requestParameter.getContent().get("type");
 		List<DataRow> list = query(type);
-		int i =1;
-		for(DataRow dataRow:list){
 
-			dataRow.set("number",i++);
-			dataRow.set("id",dataRow.getString("phone"));
-
-		}
 		response.setList(list);
 		return response;
 	}
 
 	private List<DataRow> query(String type) throws Exception {
 
-		String sql ="SELECT phone,(select tag from t_register where phone=t.phone) as tag , " +
-				"count(accout) count FROM t_accout t where type=? group by t.phone  order by t.phone ";
+		String sql ="";
+		if("sun".equals(type)){
+			sql ="SELECT phone,(select tag from t_register where phone=t.phone) as tag ," +
+					"(select sum(sun) FROM t_count where phone=t.phone) as sun, " +
+					"count(accout) count FROM t_accout t where type=? group by t.phone  order by t.phone ";
+		}else{
+			sql ="SELECT phone,(select tag from t_register where phone=t.phone) as tag ," +
+					"(select sum(dou) FROM t_count where phone=t.phone) as dou, " +
+					"count(accout) count FROM t_accout t where type=? group by t.phone  order by t.phone ";
+		}
+
 		List<DataRow> list = this.getNewJdbcTemplate().query(sql,new String[]{type});
+		int i =1;
+		int sum_accout = 0;
+		int sum_sun = 0;
+		int sum_dou = 0;
+		for(DataRow dataRow:list){
+			sum_accout += dataRow.getInt("count");
+			if("sun".equals(type)){
+				sum_sun += dataRow.getInt("sun");
+			}else {
+				sum_dou += dataRow.getInt("dou");
+			}
+			dataRow.set("number",i++);
+			dataRow.set("id",dataRow.getString("phone"));
+
+		}
+		DataRow sum = new DataRow();
+		sum.set("number",i++);
+		sum.set("id","sum");
+		sum.set("phone","");
+		sum.set("tag","汇总");
+		sum.set("count",sum_accout);
+		sum.set("sun",sum_sun);
+		sum.set("dou",sum_dou);
+		list.add(sum);
 		return list;
 	}
 	public static void main(String arg[] ) throws Exception{
 
 		new DBConfigure().loadConfig();
 		F100011 f = new F100011();
-		List<DataRow> list =  f.query("sun");
+		List<DataRow> list =  f.query("hongbao");
 		for(DataRow dataRow:list){
+			System.out.println(dataRow);
+		}
+		List<DataRow> list1 =  f.query("sun");
+		for(DataRow dataRow:list1){
 			System.out.println(dataRow);
 		}
 	}
