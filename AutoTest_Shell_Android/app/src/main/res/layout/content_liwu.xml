@@ -30,11 +30,11 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="5、送礼物"/>
+                    android:text="5、暖场+送豆"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="180dp"
+                android:layout_height="240dp"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -50,31 +50,11 @@
                         android:layout_height="fill_parent"
                         android:orientation="vertical">
                         <EditText
-                            android:id="@+id/idEdit"
-                            android:layout_width="match_parent"
-                            android:minWidth="180dp"
-                            android:layout_height="40dp"
-                            android:hint="开始账号"
-                            android:textSize="14sp"
-                            android:digits="1234567890"
-                            android:imeActionId="@+id/login"
-                            android:inputType="text" />
-                        <EditText
                             android:id="@+id/huajiaoEdit"
                             android:layout_width="match_parent"
                             android:minWidth="180dp"
                             android:layout_height="40dp"
-                            android:hint="花椒号"
-                            android:textSize="14sp"
-                            android:digits="1234567890"
-                            android:imeActionId="@+id/login"
-                            android:inputType="text" />
-                        <EditText
-                            android:id="@+id/perDouEdit"
-                            android:layout_width="match_parent"
-                            android:minWidth="180dp"
-                            android:layout_height="40dp"
-                            android:hint="每个账号送豆数"
+                            android:hint="主播花椒号"
                             android:textSize="14sp"
                             android:digits="1234567890"
                             android:imeActionId="@+id/login"
@@ -89,6 +69,41 @@
                             android:digits="1234567890"
                             android:imeActionId="@+id/login"
                             android:inputType="text" />
+                        <EditText
+                            android:id="@+id/hot_time"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="暖场时间（单位时间，默认0分钟）"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
+                        <EditText
+                            android:id="@+id/idEdit"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="开始账号(默认从第1个开始)"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
+                        <EditText
+                            android:id="@+id/perDouEdit"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="每个账号最多送豆数(默认全部送光)"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
+                        <CheckBox
+                            android:id="@+id/is_talk"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="是否聊天" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
