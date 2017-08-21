@@ -30,12 +30,14 @@ public class F100002 extends BaseFunction {
 		List<DataRow> list = this.getNewJdbcTemplate().query(sql);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+		int i=1;
 		for(DataRow dataRow:list){
 			Timestamp date = (Timestamp) dataRow.get("update_time");
 			if(date!=null){
 				String dateString = df.format(date.getTime()+1000*60*60*8);
 				dataRow.set("update_time",dateString);
 			}
+			dataRow.set("number",i++);
 		}
 		return list;
 	}

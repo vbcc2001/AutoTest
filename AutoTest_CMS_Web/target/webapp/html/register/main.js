@@ -43,7 +43,7 @@ define(function(require, exports, module) {
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
 		myGrid.setHeader("序号,机器编号,机器标签,更新日期");
-		myGrid.setColumnIds("id,phone,tag,update_time");
+		myGrid.setColumnIds("number,phone,tag,update_time");
 		myGrid.setInitWidths("220,220,220,220");
 		myGrid.setColAlign("left,left,left,left");
 		myGrid.setColTypes("txt,txt,txt,txt");
