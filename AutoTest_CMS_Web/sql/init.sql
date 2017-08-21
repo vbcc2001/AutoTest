@@ -68,7 +68,16 @@
       type varchar(100) DEFAULT NULL COMMENT '账号类型',
       PRIMARY KEY (id)
     );
-
+  --DROP TABLE IF EXISTS t_update;
+    CREATE TABLE t_update (
+      id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
+      version varchar(200)  NULL  COMMENT '版本',
+      remark varchar(200)  NULL  COMMENT '说明',
+      url varchar(200) NULL COMMENT '下载地址',
+      update_time  timestamp  NULL   COMMENT '更新时间',
+      state varchar(100) DEFAULT NULL COMMENT '状态',
+      PRIMARY KEY (id)
+    );
 
 
 select sum(dou) from t_count where dou>0 ;

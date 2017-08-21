@@ -74,6 +74,9 @@ define(function(require, exports, module) {
 				{id: 201, text: "阳光账号",userdata: {url: "html/accout/sun/main.html"}},
 				{id: 202, text: "红包账号",userdata: {url: "html/accout/hongbao/main.html"}},
                 {id: 203, text: "手机标签",userdata: {url: "html/register/main.html"}}
+            ]},
+            {id: 3, text: "更新注册", open: 1, items: [
+                {id: 301, text: "软件更新",userdata: {url: "html/update/main.html"}}
             ]}
 		];
 		tree = dhxLayout.cells("a").attachTreeView({
