@@ -41,9 +41,13 @@ public class F100011 extends BaseFunction   {
 		for(DataRow dataRow:list){
 			sum_accout += dataRow.getInt("count");
 			if("sun".equals(type)){
-				sum_sun += dataRow.getInt("sun");
+				if(dataRow.getInt("sun")!=null){
+					sum_sun += dataRow.getInt("sun");
+				}
 			}else {
-				sum_dou += dataRow.getInt("dou");
+				if(dataRow.getInt("dou")!=null){
+					sum_dou += dataRow.getInt("dou");
+				}
 			}
 			dataRow.set("number",i++);
 			dataRow.set("id",dataRow.getString("phone"));

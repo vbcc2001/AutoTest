@@ -66,11 +66,10 @@ define(function(require, exports, module) {
 	/**-------------------------------------创建目录树---------------------------------------*/
 	function createTree(){
 		var item = [
-            {id: 1, text: "汇总", open: 1, items: [
-                {id: 101, text: "花椒豆",userdata: {url: "html/dou/main.html"}},
-                {id: 102, text: "阳光",userdata: {url: "html/sun/main.html"}}
-
-            ]},
+//            {id: 1, text: "汇总", open: 1, items: [
+//                {id: 101, text: "花椒豆",userdata: {url: "html/dou/main.html"}},
+//                {id: 102, text: "阳光",userdata: {url: "html/sun/main.html"}}
+//            ]},
             {id: 2, text: "账号信息", open: 1, items: [
 				{id: 201, text: "阳光账号",userdata: {url: "html/accout/sun/main.html"}},
 				{id: 202, text: "红包账号",userdata: {url: "html/accout/hongbao/main.html"}},
