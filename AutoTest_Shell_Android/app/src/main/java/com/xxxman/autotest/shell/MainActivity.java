@@ -21,6 +21,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,24 +42,16 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-
-
-
-
-
     TabLayout mTablayout;
     ViewPager mViewPager;
     TabTitlePager mTabTitleAdapter;
     String[] titleArr = new String[]{"阳光","红包","礼物"};
-
+    private static final String TAG = MainActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mTablayout = (TabLayout) findViewById(R.id.tabLayout);
-
-
         mTablayout.setTabGravity(TabLayout.GRAVITY_FILL);
         mTablayout.setTabMode(TabLayout.MODE_FIXED);
 
@@ -64,19 +59,31 @@ public class MainActivity extends AppCompatActivity {
         mTabTitleAdapter = new TabTitlePager(getSupportFragmentManager());
         mViewPager.setAdapter(mTabTitleAdapter);
         mTablayout.setupWithViewPager(mViewPager);
-
-
-//        runBtn = (Button) findViewById(R.id.runBtn);
-//        rootTextView = (TextView) findViewById(R.id.root_view);
-//        taskView =(TextView) findViewById(R.id.task_view);
-//        hongbaoView =(TextView) findViewById(R.id.hongbao_view);
-//        snView =  (TextView) findViewById(R.id.sn_view);
-//        numberEdit = (EditText) findViewById(R.id.number_edit);
-//        numberEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        /*
-
-
-        */
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login_menu:
+                Log.d(TAG,"程序注册");
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(intent);
+                return true;
+            case R.id.udate_menu:
+                Log.d(TAG,"下载更新");
+                Intent intent1 = new Intent();
+                intent1.setClass(MainActivity.this, updateActivity.class);
+                MainActivity.this.startActivity(intent1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     public class TabTitlePager extends FragmentPagerAdapter {
 

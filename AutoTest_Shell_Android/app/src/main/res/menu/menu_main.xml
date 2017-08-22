@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.xxxman.autotest.shell.MainActivity">
     <item
-        android:id="@+id/action_settings"
+    android:id="@+id/login_menu"
+    android:orderInCategory="100"
+    android:title="手机注册"
+    app:showAsAction="never" />
+    <item
+        android:id="@+id/udate_menu"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="软件更新"
         app:showAsAction="never" />
 </menu>
