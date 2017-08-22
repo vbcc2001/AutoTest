@@ -213,8 +213,7 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
     public void download(int i){
         String versionUrl = (String) list.get(i).get("url");
         Log.d(TAG, "url=" + versionUrl);
-//        final String fileName = (String) list.get(i).get("url");
-        String versionName = "123.apk";
+        String versionName = (String) list.get(i).get("version");
 
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(versionUrl));
