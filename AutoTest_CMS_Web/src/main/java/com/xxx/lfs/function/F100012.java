@@ -21,7 +21,7 @@ public class F100012 extends BaseFunction {
 	}
 	private List<DataRow> query() throws Exception {
 
-		String sql ="SELECT * FROM t_update order by update_time  ";
+		String sql ="SELECT * FROM t_update order by update_time desc  ";
 		List<DataRow> list = this.getNewJdbcTemplate().query(sql);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
