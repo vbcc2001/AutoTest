@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.udate_menu:
                 Log.d(TAG,"下载更新");
                 Intent intent1 = new Intent();
-                intent1.setClass(MainActivity.this, updateActivity.class);
+                intent1.setClass(MainActivity.this, UpdateActivity.class);
                 MainActivity.this.startActivity(intent1);
                 return true;
             default:

@@ -55,7 +55,7 @@
         </receiver>
 
         <activity
-            android:name=".updateActivity"
+            android:name=".UpdateActivity"
             android:label="软件更新"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
