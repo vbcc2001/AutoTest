@@ -289,10 +289,11 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL:
                     Log.d(TAG, ">>>下载完成");
+                    Toast.makeText(UpdateActivity.this, "下载完成，请打开根目录进行安装！", Toast.LENGTH_LONG).show();
                     //下载完成安装APK
                     //downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + versionName;
                     Log.d(TAG, "文件路径："+downloadPath);
-                    installAPK(new File(downloadPath));
+                    //installAPK(new File(downloadPath));
                     break;
                 case DownloadManager.STATUS_FAILED:
                     Log.d(TAG, ">>>下载失败");
