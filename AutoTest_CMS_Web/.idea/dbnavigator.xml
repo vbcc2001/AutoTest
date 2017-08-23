@@ -16,7 +16,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="GBK" />
+      <charset value="UTF-8" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -25,6 +25,9 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4">
+        <schema name="huajiao" object-types="column, function, table, view" />
+      </connection>
+      <connection connection-id="2cac900b-13d5-472b-a0f3-ee30d4c42634">
         <schema name="huajiao" object-types="column, function, table, view" />
       </connection>
     </loaded-nodes>
@@ -46,7 +49,7 @@
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
     <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="2cac900b-13d5-472b-a0f3-ee30d4c42634" current-schema="huajiao" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="2cac900b-13d5-472b-a0f3-ee30d4c42634" current-schema="huajiao" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -430,6 +433,7 @@
           <content-type name="Groovy" enabled="true" />
           <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
+          <content-type name="Bash" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
       </qualified-text-editor>
