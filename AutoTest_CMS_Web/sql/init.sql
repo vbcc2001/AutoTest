@@ -16,7 +16,7 @@
 --vim /etc/mysql/mysql.conf.d/mysqld.cnf
 --修改bind-address  = 127.0.0.1 为 bind-address  = 0.0.0.0
 --在找到[mysqld] 添加
---default-character-set=utf8
+--character_set_server=utf8
 --init_connect='SET NAMES utf8'
 --使用库
 --use  huajiao
@@ -76,6 +76,7 @@
       url varchar(200) NULL COMMENT '下载地址',
       update_time  timestamp  NULL   COMMENT '更新时间',
       state varchar(100) DEFAULT NULL COMMENT '状态',
+      type varchar(100) DEFAULT NULL COMMENT '类型',
       PRIMARY KEY (id)
     );
 

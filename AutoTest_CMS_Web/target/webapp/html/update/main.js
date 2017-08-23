@@ -40,12 +40,12 @@ define(function(require, exports, module) {
 		});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
-		myGrid.setHeader("序号,版本名,更新说明,更新日期,下载地址");
-		myGrid.setColumnIds("number,version,remark,update_time,link");
-		myGrid.setInitWidths("60,200,320,160,160");
-		myGrid.setColAlign("left,left,left,left,left");
-		myGrid.setColTypes("txt,txt,txt,txt,link");
-		myGrid.setColSorting("int,str,str,date,str");
+		myGrid.setHeader("序号,分类,版本名,更新说明,更新日期,下载地址");
+		myGrid.setColumnIds("number,type,version,remark,update_time,url");
+		myGrid.setInitWidths("60,60,220,220,160,220");
+		myGrid.setColAlign("left,left,left,left,left,left");
+		myGrid.setColTypes("txt,txt,txt,txt,txt,txt");
+		myGrid.setColSorting("int,str,str,str,date,str");
 		myGrid.init();
         initData();
         dhxWins = new dhtmlXWindows();
@@ -103,6 +103,11 @@ define(function(require, exports, module) {
             {type: "settings", position: "label-left", labelWidth: 100, inputWidth: 260},
             {type: "fieldset", label: "", inputWidth: 520, list:[
                     {type: "input", offsetLeft: 60,name:"version" , label: "版本", value: ""},
+                    {type: "select", offsetLeft: 60,name: "type",label: "分类", inputWidth: 260, options:[
+                        {value: "助手", text: "助手", selected: true},
+                        {value: "流程", text: "流程"},
+                        {value: "其他", text: "其他"}
+                    ]},
                     {type: "input", offsetLeft: 60,name:"remark" , label: "说明", value: ""},
                     {type: "input", offsetLeft: 60,name:"url" , label: "下载地址", value: ""},
                     {type: "label", label: "",list:[
@@ -123,8 +128,9 @@ define(function(require, exports, module) {
             var version = $.trim(myForm.getInput("version").value);
             var remark = $.trim(myForm.getInput("remark").value);
             var url = $.trim(myForm.getInput("url").value);
-            if(version!="" && remark!= "" && url!=""  ){
-                var req = {jsonContent:'{"function":"F100013","user":{"id":"1","session":"123"},"content":{"version":"'+version+'","remark":"'+remark+'","url":"'+url+'"}}'};
+            var type = $.trim(myForm.getSelect("type").value);
+            if(version!="" && remark!= "" && url!="" ){
+                var req = {jsonContent:'{"function":"F100013","user":{"id":"1","session":"123"},"content":{"version":"'+version+'","remark":"'+remark+'","url":"'+url+'","type":"'+type+'"}}'};
                 $.ajax({
                     type: "POST",
                     url: "/action/lfs/action/FunctionAction",
