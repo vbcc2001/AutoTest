@@ -98,6 +98,8 @@ select * from t_register
 SELECT id FROM t_register where register='1'
 
 select * from t_accout where type='sun';
+select * from t_code
+--delete from t_code
 --delete from t_register
 --delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;
 --commit;
