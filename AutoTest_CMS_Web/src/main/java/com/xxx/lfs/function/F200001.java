@@ -1,6 +1,5 @@
-package com.xxx.lfs.function2;
+package com.xxx.lfs.function;
 
-import com.xxx.lfs.function.BaseFunction;
 import com.xxx.web.function.DataRow;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
@@ -11,19 +10,28 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-/** 查询空验证码  */
-public class F200002 extends BaseFunction {
+/** 查询验证码  */
+public class F200001 extends BaseFunction {
 
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
-		List<DataRow> list = query();
+		String register = requestParameter.getContent().get("sn");
+		List<DataRow> list = query(register);
 		response.setList(list);
 		return response;
 	}
-	private List<DataRow> query() throws Exception {
+	private List<DataRow> query(String register) throws Exception {
 
-		String	sql ="SELECT * FROM t_code where phone='' order by update_time desc ";
-		List<DataRow> list = this.getNewJdbcTemplate().query(sql);
+		String sql = "";
+		List<DataRow> list;
+		if(register==null){
+			sql ="SELECT * FROM t_code order by update_time desc ";
+			list = this.getNewJdbcTemplate().query(sql);
+		}else {
+			sql ="SELECT * FROM t_code where register=? order by update_time desc ";
+			list = this.getNewJdbcTemplate().query(sql,new String[]{register});
+		}
+
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 		int i=1;
@@ -39,8 +47,8 @@ public class F200002 extends BaseFunction {
 	}
 	public static void main(String[] args) throws Exception {
 		new DBConfigure().loadConfig();
-		F200002 f = new F200002();
-		List<DataRow> list =  f.query();
+		F200001 f = new F200001();
+		List<DataRow> list =  f.query("544e5f7be0f3761502f51b6486ba776");
 		for(DataRow dataRow:list){
 			System.out.println(dataRow);
 		}

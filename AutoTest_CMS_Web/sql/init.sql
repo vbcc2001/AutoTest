@@ -84,7 +84,7 @@
       id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
       register varchar(50)  NULL  COMMENT '注册号',
       phone varchar(20)  NULL  COMMENT '验证码',
-      tag varchar(20) UNIQUE NULL COMMENT '自定义标签',
+      tag varchar(20)  NULL COMMENT '自定义标签',
       update_time  timestamp  NULL   COMMENT '更新时间',
       state varchar(100) DEFAULT NULL COMMENT '账号状态',
       PRIMARY KEY (id)

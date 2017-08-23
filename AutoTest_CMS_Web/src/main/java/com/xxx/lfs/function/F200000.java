@@ -1,6 +1,5 @@
-package com.xxx.lfs.function2;
+package com.xxx.lfs.function;
 
-import com.xxx.lfs.function.BaseFunction;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
 import com.xxx.web.jdbc.DBConfigure;
@@ -25,7 +24,6 @@ public class F200000 extends BaseFunction {
 		if(tag==null){
 			tag="";
 		}
-
 		if(id==null){
 			Object arg[] = new Object[3];
 			arg[0]=register;
