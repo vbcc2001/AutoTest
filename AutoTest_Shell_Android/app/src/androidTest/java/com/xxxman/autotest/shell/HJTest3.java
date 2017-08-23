@@ -529,6 +529,7 @@ public class HJTest3{
                     if(kaihongbao!=null){
                         count_get_hongbao++;
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
+                        kaihongbao.click();
                         if(is4X){
                             mUIDevice.click(990,1843);
                             mUIDevice.click(990,1843);
@@ -536,7 +537,6 @@ public class HJTest3{
                             mUIDevice.click(660,1228);
                             mUIDevice.click(660,1228);
                         }
-
                         break;
                     }else{
                         //情况2：失败
