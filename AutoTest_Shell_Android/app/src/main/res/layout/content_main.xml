@@ -220,6 +220,7 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:layout_margin="20dp"
+                    android:visibility="gone"
                     android:background="@drawable/btn_selector"
                     android:layout_gravity="center"
                     android:textStyle="bold"

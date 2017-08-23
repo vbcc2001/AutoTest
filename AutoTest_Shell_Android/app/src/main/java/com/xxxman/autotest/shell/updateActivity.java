@@ -87,7 +87,13 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            UpdateActivity.this.adapter.notifyDataSetChanged();
+            Bundle b = msg.getData();
+            if(b.getString("error_num")==""){
+                UpdateActivity.this.adapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(getApplicationContext(), "查询失败,请稍后重新。"+b.getString("error_num")+"："+b.getString("error_msg"), Toast.LENGTH_LONG).show();
+            }
+
         }
     }
     @Override
@@ -120,15 +126,24 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
             String rs = my.getContextByHttp(url, parms);
             Log.d(TAG, "http请求结果" + rs);
             Gson gson = new GsonBuilder().serializeNulls().create();
-            HttpResult requestParameter = (HttpResult) gson.fromJson(rs, new TypeToken<HttpResult<Map<String,String>>>() {}.getType());
-            Log.d(TAG, "error" + requestParameter.getError().getNum()+":"+requestParameter.getError().getMsg());
-            Log.d(TAG, "list" + "("+requestParameter.getList().size()+"):"+requestParameter.getList());
-            if(requestParameter.getError().getNum()=="" && requestParameter.getList().size()>0){
-                list = requestParameter.getList();
-
+            try{
+                HttpResult requestParameter = (HttpResult) gson.fromJson(rs, new TypeToken<HttpResult>() {}.getType());
+                Log.d(TAG, "error" + requestParameter.getErrorNo()+":"+requestParameter.getErrorInfo());
+                Log.d(TAG, "list" + "("+requestParameter.getList().size()+"):"+requestParameter.getList());
+                if(requestParameter.getErrorNo()=="" && requestParameter.getList().size()>0){
+                    list = requestParameter.getList();
+                    Message msg = new Message();
+                    Bundle b = new Bundle();// 存放数据
+                    b.putString("error_num",requestParameter.getErrorNo());
+                    b.putString("error_msg",requestParameter.getErrorInfo());
+                    msg.setData(b);
+                    UpdateActivity.this.myHandler.sendMessage(msg); // 向Handler发送消息，更新UI
+                }
+            }catch (Exception e){
                 Message msg = new Message();
                 Bundle b = new Bundle();// 存放数据
-                b.putString("color","我的");
+                b.putString("error_num","-999");
+                b.putString("error_msg","网络错误！");
                 msg.setData(b);
                 UpdateActivity.this.myHandler.sendMessage(msg); // 向Handler发送消息，更新UI
             }
