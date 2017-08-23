@@ -89,7 +89,7 @@ define(function(require, exports, module) {
     function openAddWindow(){
         var id = "addWindow";
         var w = 535;
-        var h = 290;
+        var h = 310;
         var x = 100;
         var y = 100;
 //        if(addWindow == null ){
