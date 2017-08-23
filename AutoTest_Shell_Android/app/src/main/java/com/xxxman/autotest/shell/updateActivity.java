@@ -175,7 +175,13 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
             }else {
                 holder = (ViewHolder)convertView.getTag();
             }
-            holder.img.setBackgroundResource(R.drawable.i1);
+            if("助手".equals(list.get(position).get("type"))){
+                holder.img.setBackgroundResource(R.drawable.i1);
+            }else if ("流程".equals(list.get(position).get("type"))){
+                holder.img.setBackgroundResource(R.drawable.i2);
+            }else{
+                holder.img.setBackgroundResource(R.drawable.i3);
+            }
             holder.version.setText((String)list.get(position).get("version"));
             holder.remark.setText("更新时间："+(String)list.get(position).get("update_time"));
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -185,10 +191,8 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
                     showInfo(i);
                 }
             });
-
             return convertView;
         }
-
     }
     public final class ViewHolder{
         public ImageView img;
