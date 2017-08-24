@@ -24,10 +24,7 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4">
-        <schema name="huajiao" object-types="column, function, table, view" />
-      </connection>
-      <connection connection-id="2cac900b-13d5-472b-a0f3-ee30d4c42634">
+      <connection connection-id="94f5fe02-f7f8-4ff0-819c-c8f4d74bcc73">
         <schema name="huajiao" object-types="column, function, table, view" />
       </connection>
     </loaded-nodes>
@@ -42,14 +39,20 @@
     <connection id="65d150df-11cd-4794-9105-087a487b854e">
       <console name="hsm.zbqhb.com" type="STANDARD" />
     </connection>
+    <connection id="94f5fe02-f7f8-4ff0-819c-c8f4d74bcc73">
+      <console name="reg" type="STANDARD" />
+    </connection>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="94f5fe02-f7f8-4ff0-819c-c8f4d74bcc73" current-schema="huajiao" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="e1cb74f6-b30b-4dc4-87fb-53b330818191" current-schema="" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
     <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
     <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="2cac900b-13d5-472b-a0f3-ee30d4c42634" current-schema="huajiao" />
-    <mapping file-url="file://$PROJECT_DIR$/sql/init.sql" connection-id="9c2084f8-52d4-43c6-beb0-d05c20d4eeb4" current-schema="huajiao" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -235,6 +238,82 @@
           <driver value="" />
           <url-type value="DATABASE" />
           <host value="139.162.121.240" />
+          <port value="3306" />
+          <database value="huajiao" />
+          <os-authentication value="false" />
+          <empty-password value="false" />
+          <user value="huajiao" />
+          <password value="aHVhamlhbw==" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <proxy-password value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <details>
+          <charset value="UTF-8" />
+          <ddl-file-binding value="true" />
+          <database-logging value="false" />
+          <connect-automatically value="true" />
+          <restore-workspace value="true" />
+          <restore-workspace-deep value="true" />
+          <environment-type value="default" />
+          <idle-time-to-disconnect value="30" />
+          <password-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+        </details>
+        <object-filters hide-empty-schemas="false">
+          <object-type-filter use-master-settings="true">
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+      <connection id="94f5fe02-f7f8-4ff0-819c-c8f4d74bcc73" active="true">
+        <database>
+          <name value="reg.zbqhb.com" />
+          <description value="reg.zbqhb.com" />
+          <database-type value="MYSQL" />
+          <config-type value="BASIC" />
+          <database-version value="5.7" />
+          <driver-source value="BUILTIN" />
+          <driver-library value="" />
+          <driver value="" />
+          <url-type value="DATABASE" />
+          <host value="172.104.89.76" />
           <port value="3306" />
           <database value="huajiao" />
           <os-authentication value="false" />
