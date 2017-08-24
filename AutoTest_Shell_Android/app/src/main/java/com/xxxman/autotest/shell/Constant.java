@@ -6,13 +6,13 @@ package com.xxxman.autotest.shell;
 
 public class Constant {
 
-    public static final String URL = "http://vpn.m2ss.top:3000/action/lfs/action/FunctionAction";
+    public static final String URL = "http://ite.zbqhb.com:3000/action/lfs/action/FunctionAction";
     public static final String REG_URL = "http://reg.zbqhb.com:3000/action/lfs/action/FunctionAction";
 //    public static final String URL = "http://hd.zbqhb.com:3000/action/lfs/action/FunctionAction";
 //    public static final String URL = "http://hsm.zbqhb.com:3000/action/lfs/action/FunctionAction";
 
-    public static final boolean IS_4X = true;
-//    public static final boolean IS_4X = false;
+//    public static final boolean IS_4X = true;
+    public static final boolean IS_4X = false;
 
     //总红包任务数
     public static final int HONGBAO_COUNT = 6;
