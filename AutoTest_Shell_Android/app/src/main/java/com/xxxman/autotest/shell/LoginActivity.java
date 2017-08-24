@@ -189,10 +189,10 @@ public class LoginActivity extends AppCompatActivity {
         public void run() {
             super.run();
             MyConnection my  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.REG_URL;
             String sn = SNUtil.getuniqueId(mEmailView.getContext());
             //更新到服务器
-            String context = "{\"function\":\"F200000\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"sn\":\"" + sn + "\"}}";
+            String context = "{\"function\":\"F200000\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"sn\":\"" + sn + "\",\"tag\":\"" + Constant.TAG + "\"}}";
             Map<String, String> parms = new HashMap<>();
             parms.put("jsonContent", context);
             Log.d(TAG, "http请求" + context);
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
         public void run() {
             super.run();
             MyConnection my  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.REG_URL;
             String sn = SNUtil.getuniqueId(mEmailView.getContext());
             //更新到服务器
             String context = "{\"function\":\"F200001\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"sn\":\"" + sn + "\"}}";

@@ -143,6 +143,11 @@ public class HJTest3{
         try {
             if(user!=null) {
                 count_get_hongbao = user.hongbao ;
+                int hongbao_count_two = 0;
+                //如果完成了3次抢红包，则要求抢6次，
+                if(count_get_hongbao>=Constant.HONGBAO_COUNT_ONE){
+                    hongbao_count_two = Constant.HONGBAO_COUNT - Constant.HONGBAO_COUNT_ONE;
+                }
                 fail_count = 0;
                 login(user);
                 for (int i = 0; i < 100; i++) {
@@ -192,7 +197,7 @@ public class HJTest3{
                         }
                         reboot();
                     }
-                    if (count_get_hongbao>=Constant.HONGBAO_COUNT){
+                    if (count_get_hongbao>=(Constant.HONGBAO_COUNT_ONE+hongbao_count_two)){
                         break;
                     }
                     if (fail_count>=3){

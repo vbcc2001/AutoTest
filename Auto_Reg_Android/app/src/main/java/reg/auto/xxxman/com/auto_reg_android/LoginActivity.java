@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity  {
         sendButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEmailView.setText("");
+                snView.setText("不通过");
                 SendThread thread = new SendThread();
                 thread.start();
             }

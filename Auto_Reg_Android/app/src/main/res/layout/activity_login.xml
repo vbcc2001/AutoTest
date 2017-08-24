@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="注册（并发送验证码）"
+                    android:text="注册(并发送验证码)"
                     android:textStyle="bold" />
                 <Button
                     android:id="@+id/web_get_in_button"
@@ -55,16 +55,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="获得注册码"
+                    android:text="获取注册码"
                     android:textStyle="bold" />
                 <Button
                     android:id="@+id/web_send_in_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginTop="16dp"
-                    android:text="发送验证码"
+                    android:text="不通过"
                     android:textStyle="bold" />
             </LinearLayout>
             <TextView
