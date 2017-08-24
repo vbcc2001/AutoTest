@@ -535,6 +535,7 @@ public class HJTest3{
                         count_get_hongbao++;
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
                         kaihongbao.click();
+                        Thread.sleep(1000);
                         if(is4X){
                             mUIDevice.click(990,1843);
                             mUIDevice.click(990,1843);
