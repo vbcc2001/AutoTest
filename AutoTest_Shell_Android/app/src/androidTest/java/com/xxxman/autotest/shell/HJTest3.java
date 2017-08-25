@@ -195,6 +195,10 @@ public class HJTest3{
                             FileUtil.writeTxtFile(list,path,"bh_fail_"+sqlUtil.dateString+".txt");
                             break;
                         }
+                        UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+                        if (login!=null){
+                            break;
+                        }
                         reboot();
                     }
                     if (count_get_hongbao>=(Constant.HONGBAO_COUNT_ONE+hongbao_count_two)){
@@ -597,17 +601,23 @@ public class HJTest3{
                                         if(renzheng!=null){
                                             throw new Exception("未实名认证");
                                         }else {
-                                            //没红包
-                                            //if(j>2){
-                                            if (is4X) {
-                                                mUIDevice.click(990, 1843);
-                                                mUIDevice.click(990, 1843);
-                                            } else {
-                                                mUIDevice.click(660, 1228);
-                                                mUIDevice.click(660, 1228);
+                                            UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+                                            if(login!=null){
+                                                throw new Exception("未登录");
+                                            }else{
+                                                //没红包
+                                                //if(j>2){
+                                                    if (is4X) {
+                                                        mUIDevice.click(990, 1843);
+                                                        mUIDevice.click(990, 1843);
+                                                    } else {
+                                                        mUIDevice.click(660, 1228);
+                                                        mUIDevice.click(660, 1228);
+                                                    }
+                                                    break;
+                                                //}
                                             }
-                                            break;
-                                            //}
+
                                         }
                                     }
                                 }
