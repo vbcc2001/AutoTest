@@ -239,8 +239,11 @@ public class HJTest3{
                     city.click();
                     Thread.sleep(1000);
                     city.click();
-                    find_money(user,"深圳 (当前定位地区)");
-//                                    find_money(user,"深圳");
+                    if("hd".equals(Constant.TAG)){
+                        find_money(user,"深圳");
+                    }else{
+                        find_money(user,"深圳 (当前定位地区)");
+                    }
                 }else{
                     find_money(user,"深圳");
                 }
