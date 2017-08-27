@@ -26,7 +26,9 @@ public class Constant {
 //    public static final String TAG = "hsm";
 //    public static final String TAG = "ab";
 
-    public static final boolean IS_HSM = false;
-//    public static final boolean IS_HSM = true;
+    public static final String LO_CITY = "深圳";
+
+//    public static final boolean IS_HSM = false;
+    public static final boolean IS_HSM = true;
 
 }

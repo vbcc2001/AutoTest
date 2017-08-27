@@ -39,6 +39,8 @@ public class HJTest3{
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
     boolean is4X=Constant.IS_4X;
+    String citys[] = new String[]{"最新","北京","上海","广州","深圳","黑龙江","吉林","辽宁"};
+    int next_city = 0;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -153,7 +155,8 @@ public class HJTest3{
                 for (int i = 0; i < 100; i++) {
                     try {
                         if(Constant.IS_HSM){
-                            selectCityHSM(i,user);
+                            //selectCityHSM(i,user);
+                            selectCityHSM2(user);
                         }else{
                             selectCity(i,user);
                         }
@@ -426,6 +429,50 @@ public class HJTest3{
             }
         }
 
+    }
+    public void selectCityHSM2(User user) throws Exception{
+        if(next_city>=citys.length){
+            next_city = 1;
+            selectCityHSM3(user,citys[citys.length-1]);
+        }else{
+            next_city++;
+            selectCityHSM3(user,citys[next_city-1]);
+        }
+    }
+    public void selectCityHSM3(User user,String city) throws Exception{
+        if("最新".equals(city)){
+            find_money(user,city);
+        }else{
+            UiObject2 city_ui = mUIDevice.findObject(By.text(city));
+            if (city_ui==null){
+                for(int i=1;i<citys.length;i++){
+                    city_ui = mUIDevice.findObject(By.text(citys[i]));
+                    if (city_ui!=null){
+                        if(!city_ui.isSelected()){
+                            city_ui.click();
+                        }
+                        Thread.sleep(1000);
+                        city_ui.click();
+                        if(Constant.LO_CITY.equals(city)){
+                            city =city +" (当前定位地区)";
+                        }
+                        city_ui = mUIDevice.findObject(By.text(city));
+                        if (city_ui==null){
+                            UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/hot_area_list"));
+                            home.scrollToBeginning(1);
+                            city_ui = mUIDevice.findObject(By.text(city));
+                            if (city_ui==null){
+                                home.scrollToEnd(1);
+                            }
+                        }
+                        break;
+                    }
+                }
+                find_money(user,city);
+            }else{
+                find_money(user,city);
+            }
+        }
     }
     public void reboot() {
         Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(APP);
