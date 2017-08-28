@@ -152,6 +152,9 @@ public class HJTest3{
                 }
                 fail_count = 0;
                 login(user);
+                if(Constant.IS_HSM){
+                    Thread.sleep(3000);
+                }
                 for (int i = 0; i < 100; i++) {
                     try {
                         if(Constant.IS_HSM){
@@ -203,6 +206,9 @@ public class HJTest3{
                             break;
                         }
                         reboot();
+                        if(Constant.IS_HSM){
+                            Thread.sleep(5000);
+                        }
                     }
                     if (count_get_hongbao>=(Constant.HONGBAO_COUNT_ONE+hongbao_count_two)){
                         break;
@@ -432,20 +438,21 @@ public class HJTest3{
     }
     public void selectCityHSM2(User user) throws Exception{
         if(next_city>=citys.length){
-            next_city = 1;
-            selectCityHSM3(user,citys[citys.length-1]);
-        }else{
-            next_city++;
-            selectCityHSM3(user,citys[next_city-1]);
+            next_city = 0;
         }
+        next_city++;
+        selectCityHSM3(user,citys[next_city-1]);
     }
     public void selectCityHSM3(User user,String city) throws Exception{
+        Log.d(TAG,"----------进行城市--------："+city);
         if("最新".equals(city)){
             find_money(user,city);
         }else{
             UiObject2 city_ui = mUIDevice.findObject(By.text(city));
+
             if (city_ui==null){
                 for(int i=1;i<citys.length;i++){
+                    Log.d(TAG,"-------查看城市----------"+citys[i]);
                     city_ui = mUIDevice.findObject(By.text(citys[i]));
                     if (city_ui!=null){
                         if(!city_ui.isSelected()){
@@ -464,8 +471,10 @@ public class HJTest3{
                             if (city_ui==null){
                                 home.scrollToEnd(1);
                             }
+                            break;
+                        }else{
+                            break;
                         }
-                        break;
                     }
                 }
                 find_money(user,city);
