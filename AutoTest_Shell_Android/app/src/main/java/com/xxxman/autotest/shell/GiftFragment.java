@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,9 @@ public class GiftFragment extends Fragment {
     EditText huajiaoEdit ;
     EditText perDouEdit ;
     EditText maxDouEdit ;
+    EditText startAccoutEdit;
+    EditText hotTimeEdit;
+    CheckBox isTalkCheckBox;
     TextView douView;
     SQLUtil sqlUtil = new SQLUtil();
 
@@ -61,8 +65,13 @@ public class GiftFragment extends Fragment {
         perDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         maxDouEdit = (EditText) view.findViewById(R.id.maxDouEdit);
         maxDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        douView =(TextView) view.findViewById(R.id.dou_view);
+        startAccoutEdit =(EditText) view.findViewById(R.id.startAccoutEdit);
+        startAccoutEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        hotTimeEdit =(EditText) view.findViewById(R.id.hotTimeEdit);
+        hotTimeEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        isTalkCheckBox =(CheckBox) view.findViewById(R.id.isTalkCheckBox);
 
+        douView =(TextView) view.findViewById(R.id.dou_view);
         //绑定运行按钮
         runBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +120,7 @@ public class GiftFragment extends Fragment {
         }
     }
 
-    public void songDou(View v) {
+    public void songDou(View v)  {
         if(is_code){
             try {
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
@@ -127,6 +136,9 @@ public class GiftFragment extends Fragment {
                 String huajiao_id_string = huajiaoEdit.getText().toString().trim();
                 String per_dou_string = perDouEdit.getText().toString().trim();
                 String max_dou_string = maxDouEdit.getText().toString().trim();
+
+                String begin_accout_string = startAccoutEdit.getText().toString().trim();
+                String wait_time_string = hotTimeEdit.getText().toString().trim();
                 if(task_id_string.isEmpty()){
                     Toast.makeText(this.getContext(), "没输入任务编号!", Toast.LENGTH_LONG).show();
                     return;
@@ -135,22 +147,37 @@ public class GiftFragment extends Fragment {
                     Toast.makeText(this.getContext(), "没输入花椒号!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(per_dou_string.isEmpty()){
-                    Toast.makeText(this.getContext(), "没输入每个账号送豆数!", Toast.LENGTH_LONG).show();
-                    return;
-                }
                 if(max_dou_string.trim().isEmpty()){
                     Toast.makeText(this.getContext(), "没输入总送豆数!", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 int task_id = Integer.parseInt(task_id_string);
                 int huajiao_id = Integer.parseInt(huajiao_id_string);
-                int per_dou = Integer.parseInt(per_dou_string);
+
                 int max_dou = Integer.parseInt(max_dou_string);
 
-                Order order = new Order(task_id,huajiao_id,per_dou,max_dou);
-
+                Order order = new Order();
+                order.id =task_id;
+                order.huajiao_id =huajiao_id;
+                order.max_dou =max_dou;
+                if(per_dou_string.isEmpty()){
+                    order.per_dou =9999;
+                }else{
+                    int per_dou = Integer.parseInt(per_dou_string);
+                    order.per_dou =per_dou;
+                }
+                if(begin_accout_string.isEmpty()){
+                    order.begin_accout =1;
+                }else{
+                    int begin_accout = Integer.parseInt(begin_accout_string);
+                    order.begin_accout =begin_accout;
+                }
+                if(!wait_time_string.isEmpty()){
+                    int wait_time = Integer.parseInt(wait_time_string);
+                    order.wait_time =wait_time;
+                }
+                order.is_talk = isTalkCheckBox.isChecked();
+                Log.d(TAG,"1任务信息为："+order.id+","+order.huajiao_id+","+order.per_dou+","+order.max_dou+","+order.wait_time+","+order.begin_accout+","+order.is_talk);
                 if(task_id<=0){
                     //SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
                     //order.id = Integer.parseInt(formatter.format(new Date()));
@@ -167,7 +194,7 @@ public class GiftFragment extends Fragment {
                     }
                 }
                 if (list.size()>0 ) {
-                    if (huajiao_id>0  && per_dou>0 && max_dou>0){
+                    if (huajiao_id>0  && max_dou>0){
                         UiautomatorThread5 thread5 = new UiautomatorThread5();
                         Log.i(TAG, "runMyUiautomator5: ");
                     }else{
@@ -192,8 +219,18 @@ public class GiftFragment extends Fragment {
             Order order = sqlUtil2.selectOrder();
             idEdit.setText(""+order.id);
             huajiaoEdit.setText(""+order.huajiao_id);
-            perDouEdit.setText(""+order.per_dou);
             maxDouEdit.setText(""+order.max_dou);
+            if(order.per_dou!=9999){
+                perDouEdit.setText(""+order.per_dou);
+            }
+            if(order.begin_accout!=1){
+                startAccoutEdit.setText(""+order.begin_accout);
+            }
+            if(order.wait_time!=0){
+                hotTimeEdit.setText(""+order.wait_time);
+            }
+            isTalkCheckBox.setChecked(order.is_talk);
+
             int sum = sqlUtil2.selectSendDou(order.id);
             int user_sum = sqlUtil2.selectDouUser(order).size();
             if(user_sum==0){
@@ -212,6 +249,10 @@ public class GiftFragment extends Fragment {
             huajiaoEdit.setText("");
             perDouEdit.setText("");
             maxDouEdit.setText("");
+            douView.setText("");
+            startAccoutEdit.setText("");
+            hotTimeEdit.setText("");
+            isTalkCheckBox.setChecked(false);
             douView.setText("");
         }else {
             Toast.makeText(this.getContext(), "请先注册！", Toast.LENGTH_LONG).show();

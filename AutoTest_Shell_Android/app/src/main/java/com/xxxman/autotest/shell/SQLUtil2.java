@@ -55,13 +55,14 @@ public class SQLUtil2    {
     //送红包order表
     public  void createTableOrder() {
         //创建表SQL语句
-        String stu_table = "create table order1(id integer primary key autoincrement,day string," +
+        String stu_table = "create table order1(id integer primary key autoincrement,day string,wait_time int DEFAULT 0,begin_accout int DEFAULT 1,is_talk int DEFAULT 0," +
                 "order_id int,huajiao_id int,per_dou int,max_dou int )";
         //执行SQL语句
         db.execSQL(stu_table);
     }
     //初始化order
     public void inserOrder(Order order){
+        Log.d(TAG,"插入任务信息为："+order.id+","+order.huajiao_id+","+order.per_dou+","+order.max_dou+","+order.wait_time+","+order.begin_accout+","+order.is_talk);
         String dateString = formatter.format(new Date());
         ContentValues cv = new ContentValues();//实例化一个ContentValues用来装载待插入的数据
         cv.put("day",dateString);
@@ -69,11 +70,16 @@ public class SQLUtil2    {
         cv.put("huajiao_id",order.huajiao_id);
         cv.put("per_dou",order.per_dou);
         cv.put("max_dou",order.max_dou);
+        cv.put("wait_time",order.wait_time);
+        cv.put("begin_accout",order.begin_accout);
+        if(order.is_talk){
+            cv.put("is_talk",1);
+        }
         db.insert("order1",null,cv);//执行插入操作
     }
     //查询order
     public Order selectOrder(){
-        String sql = "select order_id,huajiao_id,per_dou,max_dou from order1 order by id desc LIMIT 1 ";
+        String sql = "select order_id,huajiao_id,per_dou,max_dou,wait_time,begin_accout,is_talk from order1 order by id desc LIMIT 1 ";
         Order order = new Order();
         Cursor c = db.rawQuery(sql, null);
 
@@ -82,9 +88,14 @@ public class SQLUtil2    {
             order.huajiao_id = c.getInt(c.getColumnIndex("huajiao_id"));
             order.per_dou = c.getInt(c.getColumnIndex("per_dou"));
             order.max_dou = c.getInt(c.getColumnIndex("max_dou"));
+            order.wait_time = c.getInt(c.getColumnIndex("wait_time"));
+            order.begin_accout = c.getInt(c.getColumnIndex("begin_accout"));
+            if(c.getInt(c.getColumnIndex("is_talk"))==1){
+                order.is_talk = true;
+            }
         }
         Log.i(TAG, "order:" + order);
-        Log.d(TAG,"任务信息为："+order.id+","+order.huajiao_id+","+order.per_dou+","+order.max_dou);
+        Log.d(TAG,"任务信息为："+order.id+","+order.huajiao_id+","+order.per_dou+","+order.max_dou+","+order.wait_time+","+order.begin_accout+","+order.is_talk);
         return order;
     }
     //初始化数据

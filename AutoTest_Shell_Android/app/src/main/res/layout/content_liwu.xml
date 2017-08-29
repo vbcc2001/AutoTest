@@ -34,7 +34,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="240dp"
+                android:layout_height="320dp"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -49,6 +49,16 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:orientation="vertical">
+                        <EditText
+                            android:id="@+id/idEdit"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="任务编号(自定义，后续跟踪用)"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
                         <EditText
                             android:id="@+id/huajiaoEdit"
                             android:layout_width="match_parent"
@@ -70,17 +80,17 @@
                             android:imeActionId="@+id/login"
                             android:inputType="text" />
                         <EditText
-                            android:id="@+id/hot_time"
+                            android:id="@+id/hotTimeEdit"
                             android:layout_width="match_parent"
                             android:minWidth="180dp"
                             android:layout_height="40dp"
-                            android:hint="暖场时间（单位时间，默认0分钟）"
+                            android:hint="暖场时间（单位分钟，默认0分钟）"
                             android:textSize="14sp"
                             android:digits="1234567890"
                             android:imeActionId="@+id/login"
                             android:inputType="text" />
                         <EditText
-                            android:id="@+id/idEdit"
+                            android:id="@+id/startAccoutEdit"
                             android:layout_width="match_parent"
                             android:minWidth="180dp"
                             android:layout_height="40dp"
@@ -100,7 +110,7 @@
                             android:imeActionId="@+id/login"
                             android:inputType="text" />
                         <CheckBox
-                            android:id="@+id/is_talk"
+                            android:id="@+id/isTalkCheckBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="是否聊天" />
