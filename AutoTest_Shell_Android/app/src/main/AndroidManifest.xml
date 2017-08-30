@@ -58,6 +58,10 @@
             android:name=".UpdateActivity"
             android:label="软件更新"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MoneyActivity"
+            android:label="花椒充值"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
                 intent1.setClass(MainActivity.this, UpdateActivity.class);
                 MainActivity.this.startActivity(intent1);
                 return true;
+            case R.id.money_menu:
+                Log.d(TAG,"花椒充值");
+                Intent intent2 = new Intent();
+                intent2.setClass(MainActivity.this, MoneyActivity.class);
+                MainActivity.this.startActivity(intent2);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="软件更新"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/money_menu"
+        android:orderInCategory="100"
+        android:title="花椒充值"
+        app:showAsAction="never" />
 </menu>
