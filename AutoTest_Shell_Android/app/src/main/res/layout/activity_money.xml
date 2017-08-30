@@ -57,7 +57,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="开始充值"
+                    android:text="1、开始充值"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/close_in_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="2、充值并关闭账号保护"
                     android:textStyle="bold" />
             </LinearLayout>
 

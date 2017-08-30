@@ -56,10 +56,16 @@ public class MoneyActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                goMoney(view);
+                goMoney(view,false);
             }
         });
-
+        Button closeInButton = (Button) findViewById(R.id.close_in_button);
+        closeInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMoney(view,true);
+            }
+        });
 
 
         //判断是否注册
@@ -89,7 +95,7 @@ public class MoneyActivity extends AppCompatActivity {
         }
     }
 
-    private void goMoney(View v) {
+    private void goMoney(View v,boolean is_close) {
         //创建表
         if (!sqlUtil.tabbleIsExist("money")){
             sqlUtil.createTableMoney();
@@ -102,18 +108,13 @@ public class MoneyActivity extends AppCompatActivity {
                 number = Integer.parseInt(number_string);
             }
             sqlUtil.inserMoney(number);
-            UiautomatorThread3 thread3 = new UiautomatorThread3();
-            Log.i(TAG, "runMyUiautomator: ");
-            try {
-                Thread.sleep(10000);
-                Log.i(TAG, "runMyUiautomator: 10s----");
-                thread3.suspend();
-                Thread.sleep(10000);
-                Log.i(TAG, "runMyUiautomator: 20s----");
-                thread3.resume();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(is_close){
+                UiautomatorThread4 thread4 = new UiautomatorThread4();
+            }else{
+                UiautomatorThread3 thread3 = new UiautomatorThread3();
             }
+            Log.i(TAG, "runMyUiautomator: ");
+
         }else {
             Toast.makeText(this, "请先注册！", Toast.LENGTH_LONG).show();
         }
@@ -129,6 +130,21 @@ public class MoneyActivity extends AppCompatActivity {
             //super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest7 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+
+    }
+    static class UiautomatorThread4 extends BaseThread {
+
+        public UiautomatorThread4() {
+            super("HJTest8", false);
+        }
+        @Override
+        public void process() {
+            //super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest8 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
