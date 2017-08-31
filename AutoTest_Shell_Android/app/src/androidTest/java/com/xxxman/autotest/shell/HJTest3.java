@@ -114,13 +114,12 @@ public class HJTest3{
                 String rs = my.getContextByHttp(url,parms);
                 Log.d(TAG,"http请求结果"+rs);
             }
-
-            for(int i = 0 ;i<20;i++){
-                changeIP();
+            for(int i = 0 ;i<100;i++){
                 list = sqlUtil.selectHongbaoFailUser();
                 FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
                 num = 0;
                 for(User user:list) {
+                    changeIP();
                     num++;
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
@@ -140,19 +139,34 @@ public class HJTest3{
         }
     }
     public void changeIP(){
-        Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
-        mContext.startActivity(myIntent1);
-        mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
-        UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
-        if(conn!=null){
-            conn.click();
-        }
+
         try {
+            Thread.sleep(5000);
+            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+            mContext.startActivity(myIntent1);
+            mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+            Thread.sleep(5000);
+            UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
+            if(login!=null){
+                login.click();
+                Thread.sleep(5000);
+            }
+            UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+            if(conn!=null){
+                conn.click();
+            }
+            Thread.sleep(5000);
+            reboot();
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         }
-        reboot();
+
     }
     //@Test
     public void test_for(User user){
@@ -171,7 +185,7 @@ public class HJTest3{
                 if(Constant.IS_HSM){
                     Thread.sleep(3000);
                 }
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 30; i++) {
                     try {
                         if(Constant.IS_HSM){
                             //selectCityHSM(i,user);
