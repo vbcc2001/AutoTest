@@ -97,6 +97,7 @@ public class HJTest3{
             mContext.sendBroadcast(intent);
             int num =0;
             for(User user:list) {
+                changeIP();
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
                 Log.d(TAG, user.pwd + "---");
@@ -114,7 +115,8 @@ public class HJTest3{
                 Log.d(TAG,"http请求结果"+rs);
             }
 
-            for(int i = 0 ;i<100;i++){
+            for(int i = 0 ;i<20;i++){
+                changeIP();
                 list = sqlUtil.selectHongbaoFailUser();
                 FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
                 num = 0;
@@ -136,7 +138,21 @@ public class HJTest3{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    }
+    public void changeIP(){
+        Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+        mContext.startActivity(myIntent1);
+        mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+        UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+        if(conn!=null){
+            conn.click();
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        reboot();
     }
     //@Test
     public void test_for(User user){

@@ -118,17 +118,19 @@ public class HJTest7 {
     public void test3(User user) throws Exception {
 
         login3(user);            //1.登录
-        for(int i=0; i<3;i++){
-            UiObject2 qiandao = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
-            if(qiandao!=null){
-                qiandao.click();
-            }
-            Thread.sleep(1000);
-            UiObject2 qiandao2 = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
-            if(qiandao2!=null){
-                qiandao2.click();
-            }
-        }
+//        for(int i=0; i<3;i++){
+//            UiObject2 qiandao = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+//            if(qiandao!=null){
+//                qiandao.click();
+//            }
+//            Thread.sleep(1000);
+//            UiObject2 qiandao2 = mUIDevice.findObject(By.res("com.huajiao:id/checkin_btn"));
+//            if(qiandao2!=null){
+//                qiandao2.click();
+//            }
+//        }
+        Thread.sleep(3000);
+        mUIDevice.pressBack();
         goWode();         //3.进入我的
         chongzhi();
         quit3();         //8.退出
@@ -144,7 +146,10 @@ public class HJTest7 {
         jiner.setText("1");
         UiObject zhifubao = mUIDevice.findObject(new UiSelector().text("支付宝"));
         zhifubao.click();
-        Thread.sleep(12000);
+        Thread.sleep(2000);
+        UiObject fukuang = mUIDevice.findObject(new UiSelector().text("立即付款"));
+        fukuang.click();
+        //Thread.sleep(12000);
         mUIDevice.pressBack();
         mUIDevice.pressBack();
     }
