@@ -11,6 +11,7 @@ import android.support.test.uiautomator.Direction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
+import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
@@ -37,6 +38,7 @@ public class HJTest7 {
     SQLUtil7 sqlUtil = new SQLUtil7();
     boolean is_colse_ad = true;
     boolean is4X=Constant.IS_4X;
+    String password = "@456123";
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -63,6 +65,11 @@ public class HJTest7 {
     //@Test
     public void test_test() {
 
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void test_for() throws Exception {
@@ -70,6 +77,10 @@ public class HJTest7 {
         String path = Environment.getExternalStorageDirectory().getCanonicalPath();
         List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt");
         Log.d(TAG,"user_list.txt中用户数量："+list.size());
+        String pwd = sqlUtil.selectPassword();
+        if(!"".equals(pwd)){
+            password = pwd;
+        }
         int number = sqlUtil.selectMoney();
         //从指定账号开始，跳过以前的账号
         for(int j = 0;j<number-1;j++) {
@@ -129,7 +140,7 @@ public class HJTest7 {
 //                qiandao2.click();
 //            }
 //        }
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         mUIDevice.pressBack();
         goWode();         //3.进入我的
         chongzhi();
@@ -149,7 +160,38 @@ public class HJTest7 {
         Thread.sleep(2000);
         UiObject fukuang = mUIDevice.findObject(new UiSelector().text("立即付款"));
         fukuang.click();
-        //Thread.sleep(12000);
+        Thread.sleep(500);
+        //支付密码
+        UiObject2 zhifu = mUIDevice.findObject(By.res("com.alipay.android.app:id/simplePwdLayout"));
+        zhifu.click();
+        char[] a1 = password.toCharArray();
+        for(int i=1 ;i<a1.length;i++){
+            Thread.sleep(200);
+            //4x
+            int x=0;
+            int y=0;
+            //4A
+            int x1 =0;
+            int y1 = 0;
+            switch (""+a1[i]){
+                case "0":x=540;y=1840;break;
+                case "1": x=200;y=1360;break;
+                case "2": x=550;y=1360;break;
+                case "3": x=900;y=1360;break;
+                case "4": x=200;y=1520;break;
+                case "5": x=550;y=1520;break;
+                case "6": x=900;y=1520;break;
+                case "7": x=200;y=1680;break;
+                case "8": x=550;y=1680;break;
+                case "9": x=900;y=1680;break;
+            }
+            if(is4X){
+                mUIDevice.click(x,y);
+            }else{
+                mUIDevice.click(x1,y1);
+            }
+        }
+        Thread.sleep(5000);
         mUIDevice.pressBack();
         mUIDevice.pressBack();
     }

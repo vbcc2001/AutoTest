@@ -43,6 +43,7 @@ public class MoneyActivity extends AppCompatActivity {
 
     private static final String TAG = "MoneyActivity";
     private EditText mEmailView;
+    private EditText mPwdView;
     boolean is_code = false;
     String code;
     SQLUtil7 sqlUtil = new SQLUtil7();
@@ -51,7 +52,7 @@ public class MoneyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money);
         mEmailView = (EditText) findViewById(R.id.email);
-
+        mPwdView = (EditText) findViewById(R.id.pwd);
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,7 +108,11 @@ public class MoneyActivity extends AppCompatActivity {
             if(!"".equals(number_string)){
                 number = Integer.parseInt(number_string);
             }
-            sqlUtil.inserMoney(number);
+            String pwd = mPwdView.getText().toString().trim();
+            if(!"".equals(pwd)){
+                pwd = "@"+pwd;
+            }
+            sqlUtil.inserMoney(number,pwd);
             if(is_close){
                 UiautomatorThread4 thread4 = new UiautomatorThread4();
             }else{
