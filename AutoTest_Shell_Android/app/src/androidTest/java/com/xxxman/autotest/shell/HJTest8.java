@@ -47,13 +47,16 @@ public class HJTest8 extends  HJTest7 {
         Thread.sleep(2000);
         UiObject baohu = mUIDevice.findObject(new UiSelector().text("账号保护"));
         baohu.click();
+        Thread.sleep(1000);
         //开关
         UiObject kaiguan = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/toggle_account_protection"));
         kaiguan.click();
+        Thread.sleep(500);
         //提示框
         UiObject2 tishi = mUIDevice.findObject(By.text("确定"));
         if(tishi==null){
             kaiguan.click();
+            Thread.sleep(500);
             tishi = mUIDevice.findObject(By.text("确定"));
             if(tishi!=null){
                 tishi.click();
