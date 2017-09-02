@@ -59,7 +59,7 @@ public class SQLUtil7 {
     }
     public int selectMoney(){
 
-        String sql = "select number from money order by id desc ";
+        String sql = "select number from money order by id  ";
         int number = 1;
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {
@@ -70,7 +70,7 @@ public class SQLUtil7 {
     }
     public String selectPassword(){
 
-        String sql = "select password from money order by id desc ";
+        String sql = "select password from money order by id  ";
         String password = "";
         Cursor c = db.rawQuery(sql, null);
         while (c.moveToNext()) {

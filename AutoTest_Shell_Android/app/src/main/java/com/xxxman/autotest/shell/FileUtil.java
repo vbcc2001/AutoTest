@@ -219,4 +219,33 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
+    //充值
+    public static void writeCZ(User user,boolean is_succ,String path,String name) {
+        String filePath = path;
+        String fileName = name;
+        //生成文件夹之后，再生成文件，不然会出错
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(filePath +"/"+ fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            String content = "";
+            if(is_succ){
+                content = user.number+","+user.phone+","+user.pwd+"--充值成功"+"\r\n";
+            }else{
+                content = user.number+","+user.phone+","+user.pwd+"------------充值失败"+"\r\n";
+            }
+            raf.write(content.getBytes());
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

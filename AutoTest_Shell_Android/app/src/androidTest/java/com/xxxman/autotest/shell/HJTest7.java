@@ -23,6 +23,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,12 +79,16 @@ public class HJTest7 {
         String path = Environment.getExternalStorageDirectory().getCanonicalPath();
         List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt");
         Log.d(TAG,"user_list.txt中用户数量："+list.size());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String dateString = formatter.format(new Date());
+        FileUtil.writehengxian(list.size(),path,"chongzhi_"+dateString+".txt");
         String pwd = sqlUtil.selectPassword();
         if(!"".equals(pwd)){
             password = pwd;
         }
         int number = sqlUtil.selectMoney();
         //从指定账号开始，跳过以前的账号
+        Log.d(TAG,"跳过账号编号："+number);
         for(int j = 0;j<number-1;j++) {
             list.remove(0);
         }
@@ -91,9 +97,11 @@ public class HJTest7 {
             Log.d(TAG,user.pwd+"---");
             try {
                 test3(user) ;
+                FileUtil.writeCZ(user,true,path,"chongzhi_"+dateString+".txt");
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
+                    FileUtil.writeCZ(user,false,path,"chongzhi_"+dateString+".txt");
                     reboot();
                 } catch (Exception e1) {
                     e1.printStackTrace();
@@ -161,7 +169,9 @@ public class HJTest7 {
         Thread.sleep(500);
         //支付密码
         UiObject2 zhifu = mUIDevice.findObject(By.res("com.alipay.android.app:id/simplePwdLayout"));
-        zhifu.click();
+        if(zhifu!=null){
+            zhifu.click();
+        }
         char[] a1 = password.toCharArray();
         for(int i=1 ;i<a1.length;i++){
             Thread.sleep(200);
@@ -172,16 +182,16 @@ public class HJTest7 {
             int x1 =0;
             int y1 = 0;
             switch (""+a1[i]){
-                case "0":x=540;y=1840;break;
-                case "1": x=200;y=1360;break;
-                case "2": x=550;y=1360;break;
-                case "3": x=900;y=1360;break;
-                case "4": x=200;y=1520;break;
-                case "5": x=550;y=1520;break;
-                case "6": x=900;y=1520;break;
-                case "7": x=200;y=1680;break;
-                case "8": x=550;y=1680;break;
-                case "9": x=900;y=1680;break;
+                case "0":x=540;y=1840;x1=360;y1=1230;break;
+                case "1": x=200;y=1360;x1=120;y1=910;break;
+                case "2": x=550;y=1360;x1=360;y1=910;break;
+                case "3": x=900;y=1360;x1=600;y1=910;break;
+                case "4": x=200;y=1520;x1=120;y1=1010;break;
+                case "5": x=550;y=1520;x1=360;y1=1010;break;
+                case "6": x=900;y=1520;x1=600;y1=1010;break;
+                case "7": x=200;y=1680;x1=120;y1=1120;break;
+                case "8": x=550;y=1680;x1=360;y1=1120;break;
+                case "9": x=900;y=1680;x1=600;y1=1120;break;
             }
             if(is4X){
                 mUIDevice.click(x,y);
