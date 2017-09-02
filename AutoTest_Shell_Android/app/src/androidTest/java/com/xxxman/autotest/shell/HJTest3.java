@@ -230,22 +230,6 @@ public class HJTest3{
                     mContext.sendBroadcast(intent);
                 }
                 quit(user);
-                MyConnection my  = new MyConnection();
-                String url = Constant.URL;
-                Map<String,String> parms = new HashMap<>();
-                String phone = sqlUtil.selectCode();
-                if (phone.length()==13){
-                    phone = phone.substring(1);
-                }
-                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
-                //完成任务
-                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
-                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-
-                parms.put("jsonContent",context);
-                String rs = my.getContextByHttp(url,parms);
-                Log.d(TAG,"http请求结果"+rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -568,6 +552,18 @@ public class HJTest3{
         if (dou != null){
             Log.d(TAG,dou.getText()+"---------");
             user.dou = Integer.valueOf(dou.getText());
+            MyConnection my1  = new MyConnection();
+            String url = Constant.URL;
+            Map<String,String> parms = new HashMap<>();
+            String phone = sqlUtil.selectCode();
+            if (phone.length()==13){
+                phone = phone.substring(1);
+            }
+            String dou1 = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+            String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou1+"}}";
+            parms.put("jsonContent",context);
+            String rs = my1.getContextByHttp(url,parms);
+            Log.d(TAG,"http请求结果"+rs);
         }
 
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
