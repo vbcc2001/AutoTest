@@ -77,13 +77,7 @@ public class HJTest3{
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
-        MyConnection my  = new MyConnection();
-        String url = Constant.URL;
-        Map<String,String> parms = new HashMap<>();
-        String phone = sqlUtil.selectCode();
-        if (phone.length()==13){
-            phone = phone.substring(1);
-        }
+
         String path = null;
         try {
             path = Environment.getExternalStorageDirectory().getCanonicalPath();
@@ -105,18 +99,9 @@ public class HJTest3{
                 intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第1次循环）");
                 mContext.sendBroadcast(intent);
                 test_for(user);
-                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
-                //完成任务
-                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
-                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-
-                parms.put("jsonContent",context);
-                String rs = my.getContextByHttp(url,parms);
-                Log.d(TAG,"http请求结果"+rs);
             }
             for(int i = 0 ;i<100;i++){
                 list = sqlUtil.selectHongbaoFailUser();
-                FileUtil.writehengxian(list.size(),path,"hongbao_"+sqlUtil.dateString+".txt");
                 num = 0;
                 for(User user:list) {
                     changeIP();
@@ -124,14 +109,6 @@ public class HJTest3{
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
                     test_for(user);
-                    FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
-                    //完成任务
-                    String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
-                    String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
-
-                    parms.put("jsonContent",context);
-                    String rs = my.getContextByHttp(url,parms);
-                    Log.d(TAG,"http请求结果"+rs);
                 }
             }
         } catch (IOException e) {
@@ -253,6 +230,22 @@ public class HJTest3{
                     mContext.sendBroadcast(intent);
                 }
                 quit(user);
+                MyConnection my  = new MyConnection();
+                String url = Constant.URL;
+                Map<String,String> parms = new HashMap<>();
+                String phone = sqlUtil.selectCode();
+                if (phone.length()==13){
+                    phone = phone.substring(1);
+                }
+                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
+                //完成任务
+                String dou = "\"{\\\"phone\\\":\\\""+phone+"\\\",\\\"account\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\"*\\\",\\\"state\\\":\\\"1\\\",\\\"dou\\\":"+user.dou+"}\"";
+                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou+"}}";
+
+                parms.put("jsonContent",context);
+                String rs = my.getContextByHttp(url,parms);
+                Log.d(TAG,"http请求结果"+rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
