@@ -191,7 +191,7 @@
             android:layout_height="match_parent"
             android:gravity="bottom"
             android:padding="10dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:background="@drawable/border">
             <Button
                 android:id="@+id/runBtn5"
@@ -203,6 +203,16 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="更新账号" />
+            <Button
+                android:id="@+id/runBtn6"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/btn_selector"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="更新豆信息" />
         </LinearLayout>
 
         <LinearLayout

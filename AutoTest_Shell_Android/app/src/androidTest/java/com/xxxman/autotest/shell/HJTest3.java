@@ -622,6 +622,11 @@ public class HJTest3{
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
                         kaihongbao.click();
                         Thread.sleep(1000);
+//                        if(Constant.IS_4X){
+//                            Thread.sleep(1000);
+//                        }else{
+//                            Thread.sleep(4000);
+//                        }
                         if(is4X){
                             mUIDevice.click(990,1843);
                             mUIDevice.click(990,1843);
@@ -629,6 +634,9 @@ public class HJTest3{
                             mUIDevice.click(660,1228);
                             mUIDevice.click(660,1228);
                         }
+//                        if(!Constant.IS_4X){
+//                            Thread.sleep(1000);
+//                        }
                         break;
                     }else{
                         //情况2：失败

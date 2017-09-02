@@ -31,6 +31,7 @@ public class HongbaoFragment extends Fragment {
     Button runBtn3;
     Button runBtn4;
     Button runBtn5;
+    Button runBtn6;
     TextView hongbaoView;
     EditText numberEdit1;
     EditText numberEdit1Next;
@@ -57,7 +58,7 @@ public class HongbaoFragment extends Fragment {
         runBtn3 = (Button) view.findViewById(R.id.runBtn3);
         runBtn4 = (Button) view.findViewById(R.id.runBtn4);
         runBtn5 = (Button) view.findViewById(R.id.runBtn5);
-
+        runBtn6 = (Button) view.findViewById(R.id.runBtn6);
         numberEdit1 = (EditText) view.findViewById(R.id.number_edit1);
         numberEdit1.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         hongbaoView =(TextView)  view.findViewById(R.id.hongbao_view);
@@ -108,6 +109,17 @@ public class HongbaoFragment extends Fragment {
                     Toast.makeText(HongbaoFragment.this.getActivity(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+        runBtn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_code){
+                    new UiautomatorThread5().start();
+                    Log.i(TAG, "runMyUiautomator: ");
+                }else {
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册！", Toast.LENGTH_LONG).show();
+                }
             }
         });
         //创建表
@@ -261,6 +273,16 @@ public class HongbaoFragment extends Fragment {
             super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest4 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread5 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest4A com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
