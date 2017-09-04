@@ -119,18 +119,39 @@ public class HJTest3{
 
         try {
             Thread.sleep(5000);
-            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
-            mContext.startActivity(myIntent1);
-            mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
-            Thread.sleep(5000);
-            UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
-            if(login!=null){
-                login.click();
+            if(Constant.IS_HSM){
+                Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("org.wuji");  //启动app
+                mContext.startActivity(myIntent1);
+                mUIDevice.waitForWindowUpdate("org.wuji", 5 * 2000);
                 Thread.sleep(5000);
-            }
-            UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
-            if(conn!=null){
-                conn.click();
+                UiObject2 login = mUIDevice.findObject(By.text("登       陆"));
+                if(login!=null){
+                    login.click();
+                    Thread.sleep(5000);
+                }
+                UiObject2 conn = mUIDevice.findObject(By.text("切换VPN"));
+                if(conn!=null){
+                    conn.click();
+                }else {
+                    UiObject2 conn1 = mUIDevice.findObject(By.text("尚未使用VPN"));
+                    if(conn1!=null){
+                        conn1.click();
+                    }
+                }
+            }else{
+                Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+                mContext.startActivity(myIntent1);
+                mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                Thread.sleep(5000);
+                UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
+                if(login!=null){
+                    login.click();
+                    Thread.sleep(5000);
+                }
+                UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+                if(conn!=null){
+                    conn.click();
+                }
             }
             Thread.sleep(5000);
             reboot();
@@ -594,7 +615,12 @@ public class HJTest3{
         for(int i =0 ;i < c ;i++){
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
-                list.swipeUp(50);
+                if(Constant.IS_HSM){
+                    list.swipeUp(100);
+                }else{
+                    list.swipeUp(50);
+                }
+
                 Log.d(TAG,"-----");
                 Thread.sleep(1000);
             }
