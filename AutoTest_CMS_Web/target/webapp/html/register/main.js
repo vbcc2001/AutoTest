@@ -41,6 +41,7 @@ define(function(require, exports, module) {
             }
 		});
 		myGrid = new dhtmlXGridObject('main_gridbox');
+		myGrid.selMultiRows = true;
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
 		myGrid.setHeader("序号,机器编号,机器标签,更新日期");
 		myGrid.setColumnIds("number,phone,tag,update_time");

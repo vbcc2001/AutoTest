@@ -18,6 +18,7 @@ define(function(require, exports, module) {
 		myToolbar.addSeparator("sep4", 12);
 		myToolbar.attachEvent("onClick", function(id) { initData();});
 		myGrid = new dhtmlXGridObject('details_gridbox');
+		myGrid.selMultiRows = true;
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
 
         myGrid.setHeader("编号,机器编号,机器标签,账号,花椒号,更新时间,豆数,豆更新时间");
