@@ -98,6 +98,7 @@ select * from t_register
 SELECT id FROM t_register where register='1'
 
 select * from t_accout where type='sun';
+select * from t_accout where accout='15889649769'
 select * from t_code
 --delete from t_code
 --delete from t_register---

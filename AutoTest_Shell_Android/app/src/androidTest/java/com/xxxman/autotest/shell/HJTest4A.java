@@ -58,8 +58,13 @@ public class HJTest4A extends HJTest3{
 
             if(list.size()>0) {
                 for(User user:list){
-                    login(user);
-                    quit(user);
+                    try{
+                        login(user);
+                        quit(user);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        reboot();
+                    }
                 }
             }
         } catch (Exception e) {
