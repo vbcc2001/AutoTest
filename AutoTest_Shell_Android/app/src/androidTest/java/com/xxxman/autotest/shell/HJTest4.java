@@ -21,7 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class HJTest4 extends HJTest3{
@@ -63,10 +65,33 @@ public class HJTest4 extends HJTest3{
             if(list.size()>0) {
                 User user = list.get(0);
                 login(user);
+                update(user);
             }
         } catch (Exception e) {
             e.printStackTrace();
             reboot();
+        }
+    }
+    //更新花椒号
+    public void update(User user) throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
+        my.click();
+        //UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
+        //my_page.click();
+        Thread.sleep(1000);
+        UiObject2 acc = mUIDevice.findObject(By.res("com.huajiao:id/uid_tv"));
+        if(acc!=null){
+            user.pwd = acc.getText();
+            MyConnection my1  = new MyConnection();
+            String url = Constant.URL;
+            Map<String,String> parms = new HashMap<>();
+            String context = "{\"function\":\"F100015\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"accout\":\""+user.phone+"\",\"pwd\":\"" + user.pwd + "\"}}";
+            parms.put("jsonContent",context);
+            Log.d(TAG,"jsonContent:"+context);
+            String rs = my1.getContextByHttp(url,parms);
+            Log.d(TAG,"http请求结果"+rs);
         }
     }
 }

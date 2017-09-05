@@ -93,8 +93,7 @@ public class HJTest4B extends HJTest3{
             MyConnection my1  = new MyConnection();
             String url = Constant.URL;
             Map<String,String> parms = new HashMap<>();
-            String dou1 = "\"{\\\"accout\\\":\\\""+user.phone+"\\\",\\\"pwd\\\":\\\""+user.pwd+"\\\"}\"";
-            String context = "{\"function\":\"F100015\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":"+dou1+"}}";
+            String context = "{\"function\":\"F100015\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"accout\":\""+user.phone+"\",\"pwd\":\"" + user.pwd + "\"}}";
             parms.put("jsonContent",context);
             Log.d(TAG,"jsonContent:"+context);
             String rs = my1.getContextByHttp(url,parms);
