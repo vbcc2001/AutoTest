@@ -23,7 +23,7 @@ define(function(require, exports, module) {
         myToolbar.addSeparator("sep4", 14);
         myToolbar.addButton("del", 15, "删除", "fa fa-trash", "fa fa-trash");
         myToolbar.addSeparator("sep4", 16);
-        myToolbar.addButton("pull", 17, "导出", "fa fa-trash", "fa fa-trash");
+        myToolbar.addButton("export", 17, "导出", "fa fa-arrow-up", "fa fa-arrow-up");
         myToolbar.addSeparator("sep4", 18);
 		myToolbar.attachEvent("onClick", function(id) {
             if(id=="add"){

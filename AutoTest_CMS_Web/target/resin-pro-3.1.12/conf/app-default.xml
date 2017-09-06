@@ -238,6 +238,9 @@
     
   <mime-mapping extension=".zip" mime-type="application/zip"/>
   <mime-mapping extension=".z" mime-type="application/octet-stream"/>
+
+  <mime-mapping extension=".apk" mime-type="application/vnd.android.package-archive"/>
+  <mime-mapping extension=".csv" mime-type="application/octet-stream"/>
   
   <resin:import path="WEB-INF/resin-pre-web.xml" optional="true"/>
   <resin:import path="WEB-INF/web.xml" optional="true"/>
