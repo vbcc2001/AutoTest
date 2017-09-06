@@ -16,7 +16,32 @@ define(function(require, exports, module) {
 		});
 		myToolbar.addButton("refresh", 11, "刷新", "fa fa-refresh", "fa fa-refresh");
 		myToolbar.addSeparator("sep4", 12);
-		myToolbar.attachEvent("onClick", function(id) { initData();});
+		myToolbar.addButton("export", 13, "导出汇总", "fa fa-arrow-up", "fa fa-arrow-up");
+        myToolbar.addSeparator("sep4", 14);
+        myToolbar.addButton("export_2", 15, "导出明细(可多选)", "fa fa-bar-chart", "fa fa-arrow-up");
+		myToolbar.attachEvent("onClick", function(id) {
+            if(id=="refresh"){
+                initData();
+            }
+            if(id=="export"){
+                var json = encodeURI('{"function":"F100021","user":{"id":"1","session":"123"},"content":{type:"hongbao"}}')
+                window.location.href='/action/lfs/action/CsvAction?jsonContent='+json;
+            }
+            if(id=="export_2"){
+                var ids = myGrid.getSelectedRowId();
+                if(ids ==null){
+                    dhtmlx.confirm({
+                        title:"提示",
+                        type:"confirm-warning",
+                        text:"请选择一行数据!<br>(按住shift或control键可多选)",
+                        callback:function(result){ }
+                    });
+                }else{
+                  var json = encodeURI('{"function":"F100022","user":{"id":"1","session":"123"},"content":{type:"hongbao",ids:"'+ids+'"}}')
+                  window.location.href='/action/lfs/action/CsvAction?jsonContent='+json;
+                }
+            }
+		});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.selMultiRows = true;
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-/** 查询标签  */
+/** 导出标签  */
 public class F100020 extends BaseFunction {
 
 	@Override
