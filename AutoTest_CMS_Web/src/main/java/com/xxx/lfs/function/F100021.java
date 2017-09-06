@@ -7,6 +7,7 @@ import com.xxx.web.jdbc.DBConfigure;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,10 +28,12 @@ public class F100021 extends BaseFunction {
 		}
 		DataRow dataRow = new DataRow();
 		dataRow.set("csv",csv);
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		String dateString = df.format(new Date().getTime()+1000*60*60*8);
 		if("sun".equals(type)){
-			dataRow.set("file_name","阳光汇总信息");
+			dataRow.set("file_name","阳光汇总信息_"+dateString);
 		}else{
-			dataRow.set("file_name","豆汇总信息");
+			dataRow.set("file_name","豆汇总信息_"+dateString);
 		}
 		response.getList().add(dataRow);
 		return response;
