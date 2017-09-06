@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 
 /**
@@ -76,6 +77,7 @@ public class CsvAction extends BaseAction {
 			if("".equals(responseParameter.getErrorNo())){
 				String csv = responseParameter.getDataRow().getString("csv");
 				String file_name = responseParameter.getDataRow().getString("file_name");
+				file_name = URLEncoder.encode(file_name,"utf-8");
 				response.setContentType("application/octet-stream; charset=UTF-8");
 				response.setHeader("Content-disposition", "attachment; filename="+file_name+".csv");
 				response.getWriter().print(csv);

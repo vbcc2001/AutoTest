@@ -39,6 +39,10 @@ define(function(require, exports, module) {
             if(id=="pull"){
                 delData();
             }
+            if(id=="export"){
+                var json = encodeURI('{"function":"F100020","user":{"id":"1","session":"123"},"content":{}}')
+                window.location.href='/action/lfs/action/CsvAction?jsonContent='+json;
+            }
 		});
 		myGrid = new dhtmlXGridObject('main_gridbox');
 		myGrid.selMultiRows = true;
