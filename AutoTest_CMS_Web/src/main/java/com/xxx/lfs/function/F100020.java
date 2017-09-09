@@ -16,7 +16,7 @@ public class F100020 extends BaseFunction {
 	@Override
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
 		List<DataRow> list = query();
-		String csv = "";
+		String csv = "序号,更新日期,机器编号,机器标签,,\r\n";
 		for(DataRow dataRow: list){
 			String row ="";
 			for(String key: dataRow.keySet()){

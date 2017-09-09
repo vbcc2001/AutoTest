@@ -79,6 +79,7 @@ public class CsvAction extends BaseAction {
 				String file_name = responseParameter.getDataRow().getString("file_name");
 				file_name = URLEncoder.encode(file_name,"utf-8");
 				response.setContentType("application/octet-stream; charset=UTF-8");
+				response.setCharacterEncoding("GBK");
 				response.setHeader("Content-disposition", "attachment; filename="+file_name+".csv");
 				response.getWriter().print(csv);
 				response.getWriter().flush();

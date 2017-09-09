@@ -20,11 +20,16 @@ public class F100022 extends BaseFunction {
 		String ids = requestParameter.getContent().get("ids");
 		ids = "'"+ids.replaceAll(",","','")+"'";
 		List<DataRow> list = query(type,ids);
-		String csv = "";
+		String csv = "序号,机器编号,手机号,机器标签,总数,花椒号,更新日期,\r\n";
 		for(DataRow dataRow: list){
 			String row ="";
 			for(String key: dataRow.keySet()){
-				row = row+dataRow.getString(key)+",";
+				if(dataRow.getString(key)==null){
+					row = row+",";
+				}else{
+					row = row+dataRow.getString(key)+",";
+				}
+
 			}
 			csv = csv +row+"\r\n";
 		}

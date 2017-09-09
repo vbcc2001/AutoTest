@@ -18,7 +18,7 @@ public class F100021 extends BaseFunction {
 	public ResponseParameter execute(RequestParameter requestParameter) throws Exception {
 		String type = requestParameter.getContent().get("type");
 		List<DataRow> list = query(type);
-		String csv = "";
+		String csv = "序号,机器编号,账号数,机器标签,总数,\r\n";
 		for(DataRow dataRow: list){
 			String row ="";
 			for(String key: dataRow.keySet()){
@@ -73,12 +73,14 @@ public class F100021 extends BaseFunction {
 		}
 		DataRow sum = new DataRow();
 		sum.set("number",i++);
-		sum.set("id","sum");
 		sum.set("phone","");
 		sum.set("tag","汇总");
 		sum.set("count",sum_accout);
-		sum.set("sun",sum_sun);
-		sum.set("dou",sum_dou);
+		if("sun".equals(type)){
+			sum.set("sun",sum_sun);
+		}else{
+			sum.set("dou",sum_dou);
+		}
 		list.add(sum);
 		return list;
 	}
