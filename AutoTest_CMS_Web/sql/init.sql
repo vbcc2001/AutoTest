@@ -89,6 +89,16 @@
       state varchar(100) DEFAULT NULL COMMENT '账号状态',
       PRIMARY KEY (id)
     );
+  --DROP TABLE IF EXISTS t_user;
+    CREATE TABLE t_user (
+      id int(10) NOT NULL AUTO_INCREMENT COMMENT '编号',
+      accout varchar(20)  NULL COMMENT '账号',
+      pwd varchar(100) DEFAULT NULL COMMENT '登录密码',
+      update_time  timestamp  NULL   COMMENT '更新时间',
+      state varchar(100) DEFAULT NULL COMMENT '账号状态',
+      type varchar(100) DEFAULT NULL COMMENT '账号类型',
+      PRIMARY KEY (id)
+    );
 
 select sum(dou) from t_count where dou>0 ;
 
@@ -103,6 +113,11 @@ select * from t_accout where phone='c4c8ba9f4fd2'
 select * from t_code
 
 select * from t_accout t where type = 'hongbao' and phone in('11f55ec4f3f2','14d96b41deb6')
+
+SELECT * FROM t_user order by id
+
+SELECT 1 FROM t_user where accout = '123' and pwd = '202cb962ac59075b964b07152d234b70'
+
 --delete from t_code
 --delete from t_register---
 --delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;

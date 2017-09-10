@@ -34,13 +34,34 @@ define(function(require, exports, module) {
         if(name=="Submit"){
             var account = myForm.getInput("account");
             var pwd = myForm.getInput("pwd");
-            if(account.value=="huajiao" && pwd.value=="huajiao"){
-                Cookies.set('_is_login', "true");
-                window.location.href="/main.html";
-            };
-//            myForm.send("php/mirror.php", function(loader, response){
-//                alert(response);
-//            });
+            var req = {jsonContent:'{"function":"F100030","user":{"id":"'+account.value+'","password":"'+pwd.value+'"},"content":{}}'};
+            $.ajax({
+                type: "POST",
+                url: "/action/lfs/action/FunctionAction",
+                data: req,
+                dataType: "json",
+                success: function (message) {
+                    if(message.head.errorNo==""){
+                        Cookies.set('_is_login', "true");
+                        window.location.href="/main.html";
+                    }else{
+                        dhtmlx.confirm({
+                            title:"登录错误！",
+                            type:"confirm-warning",
+                            text:message.head.errorNo+":"+message.head.errorInfo,
+                            callback:function(result){ }
+                        });
+                    }
+                },
+                error: function (message) {
+                    dhtmlx.confirm({
+                        title:"登录错误！",
+                        type:"confirm-warning",
+                        text:"网络错误！",
+                        callback:function(result){ }
+                    });
+                }
+            });
         }
         if(name=="Reset"){
             var account = myForm.getInput("account");
