@@ -19,7 +19,7 @@ define(function(require, exports, module) {
 		});
 		myToolbar.addButton("refresh", 11, "刷新", "fa fa-refresh", "fa fa-refresh");
 		myToolbar.addSeparator("sep4", 12);
-		myToolbar.addButton("add", 13, "添加", "fa fa-plus", "fa fa-plus");
+		myToolbar.addButton("add", 13, "添加标签", "fa fa-plus", "fa fa-plus");
         myToolbar.addSeparator("sep4", 14);
         myToolbar.addButton("del", 15, "删除", "fa fa-trash", "fa fa-trash");
         myToolbar.addSeparator("sep4", 16);
@@ -103,15 +103,16 @@ define(function(require, exports, module) {
 
         var formData = [
             {type: "settings", position: "label-left", labelWidth: 100, inputWidth: 260},
-            {type: "fieldset", label: "", inputWidth: 520, list:[
-                    {type: "input", offsetLeft: 60,name:"version" , label: "版本", value: ""},
+            {type: "fieldset", label: "<b style='color:'><font color='#FF0000'>注意：先上传文件后，在添加标签</font></b>", inputWidth: 520, list:[
+                    {type: "input", offsetLeft: 60,name:"version" , label: "文件名", value: ""},
                     {type: "select", offsetLeft: 60,name: "type",label: "分类", inputWidth: 260, options:[
                         {value: "助手", text: "助手", selected: true},
                         {value: "流程", text: "流程"},
                         {value: "其他", text: "其他"}
                     ]},
                     {type: "input", offsetLeft: 60,name:"remark" , label: "说明", value: ""},
-                    {type: "input", offsetLeft: 60,name:"url" , label: "下载地址", value: ""},
+                    //{type: "input", offsetLeft: 60,name:"url" , label: "下载地址", value: ""},
+                    //{type: "file", offsetLeft: 60,name:"file" ,label: "上传文件"},
                     {type: "label", label: "",list:[
                                         {type: "button", name:"Submit" ,value: "添加", offsetLeft: 150, offsetTop: 10, inputWidth: 50},
                                         {type: "newcolumn"},
@@ -129,7 +130,10 @@ define(function(require, exports, module) {
         if(name=="Submit"){
             var version = $.trim(myForm.getInput("version").value);
             var remark = $.trim(myForm.getInput("remark").value);
-            var url = $.trim(myForm.getInput("url").value);
+
+            var url = window.location.protocol+"//"+window.location.host+"/download/"+version;
+            //myForm.getInput("url").value=url;
+            //var url = $.trim(myForm.getInput("url").value);
             var type = $.trim(myForm.getSelect("type").value);
             if(version!="" && remark!= "" && url!="" ){
                 var req = {jsonContent:'{"function":"F100013","user":{"id":"1","session":"123"},"content":{"version":"'+version+'","remark":"'+remark+'","url":"'+url+'","type":"'+type+'"}}'};
@@ -177,7 +181,7 @@ define(function(require, exports, module) {
         if(name=="Reset"){
             myForm.getInput("version").value="";
             myForm.getInput("remark").value="";
-            myForm.getInput("url").value="";
+            //myForm.getInput("url").value="";
         }
     }
 

@@ -71,6 +71,11 @@ public class UploadAction extends BaseAction {
 							File file = new File(servletContext.getRealPath("/download"), item.getName());
 							item.write(file);
 							logger.info("upload.message:上传文件成功！");
+							response.setContentType("text/json; charset=UTF-8");
+							String str = "{state:true,name:\""+item.getName()+"\",extra:{info:\"成功\",param:\"参数1\"}}";
+							response.getWriter().print(str);
+							response.getWriter().flush();
+							response.getWriter().close();
 						} else {
 							logger.info("upload.message:没有选择上传文件！");
 						}
@@ -86,6 +91,7 @@ public class UploadAction extends BaseAction {
 		} else {
 			logger.error("the enctype must be multipart/form-data");
 		}
+
 		return null;
 	}
 }
