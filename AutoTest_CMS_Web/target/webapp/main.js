@@ -36,11 +36,9 @@ define(function(require, exports, module) {
 	/**-------------------------------------创建主窗口---------------------------------------*/
 	function createMainWindow(user_name){
 		dhxLayout=new dhtmlXLayoutObject(document.body,"2U");
-		var str  ="<div style='float: left;' >当前：<span style='color: #4B08D2;' >"+user_name+"</span></div>"
+		var str  ="<div style='float: left;' >用户：<span style='color: #4B08D2;' >"+user_name+"</span></div>"
 					+"<div  style='float:right; '>"+
-							"<a id='user_quit' href='javascript:void();'>" +
-								"<img src='img/logout.png' style='width: 18px;height: 18px;vertical-align:middle' alt='登出' />" +
-							"</a>"
+							"<a id='user_quit' href='javascript:void();'><i class='fa fa-sign-out' aria-hidden='true'></i></a>"
 					+"</div>";
 		dhxLayout.cells("a").setText(str);
 		$("#user_quit").on("click",function(){ //绑定退出按钮

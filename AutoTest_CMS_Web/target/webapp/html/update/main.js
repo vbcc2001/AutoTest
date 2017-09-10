@@ -23,6 +23,8 @@ define(function(require, exports, module) {
         myToolbar.addSeparator("sep4", 14);
         myToolbar.addButton("del", 15, "删除", "fa fa-trash", "fa fa-trash");
         myToolbar.addSeparator("sep4", 16);
+        myToolbar.addButton("upload", 17, "上传文件", "fa fa-cloud-upload", "fa fa-cloud-upload");
+        myToolbar.addSeparator("sep4", 18);
 		myToolbar.attachEvent("onClick", function(id) {
             if(id=="add"){
                 openAddWindow();
@@ -34,8 +36,8 @@ define(function(require, exports, module) {
             if(id=="del"){
                 delData();
             }
-            if(id=="pull"){
-                delData();
+            if(id=="upload"){
+                upload();
             }
 		});
 		myGrid = new dhtmlXGridObject('main_gridbox');
@@ -222,5 +224,16 @@ define(function(require, exports, module) {
                 }
             });
         }
+    }
+    function upload(){
+        var id = "uploadWindow";
+        var w = 535;
+        var h = 310;
+        var x = 100;
+        var y = 100;
+        uploadWindow = dhxWins.createWindow(id, x, y, w, h);
+        uploadWindow.setText("添加标签");
+        t={"parent":"vaultObj","uploadUrl":"/action/lfs/action/UploadAction","swfUrl":"/action/lfs/action/UploadAction","slUrl":"/action/lfs/action/UploadAction","swfPath":"dhxvault.swf","slXap":"dhxvault.xap","maxFileSize":104857600}
+        myVault = uploadWindow.attachVault(t);
     }
 });
