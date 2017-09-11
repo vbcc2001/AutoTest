@@ -117,10 +117,11 @@ select * from t_accout t where type = 'hongbao' and phone in('11f55ec4f3f2','14d
 SELECT * FROM t_user order by id
 
 SELECT 1 FROM t_user where accout = '123' and pwd = '202cb962ac59075b964b07152d234b70'
-
+--INSERT INTO t_user(accout,pwd,state,update_time) VALUES ('123','202cb962ac59075b964b07152d234b70','1',now());
 --delete from t_code
 --delete from t_register---
 --delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;
+
 --commit;
 --SELECT (@i:=@i+1) as id , phone , count(phone) count,sum(sun) sun ,sum(dou) dou FROM t_count t ,(select @i:= 0 ) as it group by t.phone order by t.phone;
 --select accout,c from (select accout ,count(accout) as c from t_accout where type='hongbao' group by accout )  as a where a.c>=2
