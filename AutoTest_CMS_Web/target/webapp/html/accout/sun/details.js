@@ -22,7 +22,7 @@ define(function(require, exports, module) {
 		myGrid.setImagePath("plugins/dhtmlxSuite_v51_std/codebase/imgs/");
 		myGrid.setHeader("编号,机器编号,机器标签,账号,更新时间,阳光数,阳光更新时间");
 		myGrid.setColumnIds("number,phone,tag,accout,update_time,sun,sun_update_time");
-		myGrid.setInitWidths("40,220,220,220,220,220,220");
+		myGrid.setInitWidths("50,160,120,160,220,80,220");
 		myGrid.setColAlign("left,left,left,left,left,left,left");
 		myGrid.setColTypes("txt,txt,txt,txt,txt,txt,txt");
 		myGrid.setColSorting("int,str,str,str,date,int,date");

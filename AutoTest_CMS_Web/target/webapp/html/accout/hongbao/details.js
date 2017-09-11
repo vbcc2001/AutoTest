@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 
         myGrid.setHeader("编号,机器编号,机器标签,账号,花椒号,更新时间,豆数,豆更新时间");
         myGrid.setColumnIds("number,phone,tag,accout,pwd,update_time,dou,dou_update_time");
-        myGrid.setInitWidths("40,220,220,220,220,220,220,220");
+        myGrid.setInitWidths("50,160,120,160,160,220,80,220");
         myGrid.setColAlign("left,left,left,left,left,left,left,left");
         myGrid.setColTypes("txt,txt,txt,txt,txt,txt,txt,txt");
         myGrid.setColSorting("int,str,str,str,str,date,int,date");
