@@ -39,7 +39,7 @@ public class HJTest3{
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
     boolean is4X=Constant.IS_4X;
-    String citys[] = new String[]{"最新","北京","上海","广州","深圳","黑龙江","吉林","辽宁"};
+    String citys[] = new String[]{"北京","上海","广州","深圳","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
     @Before
     public void setUp() throws RemoteException {
@@ -91,7 +91,7 @@ public class HJTest3{
             mContext.sendBroadcast(intent);
             int num =0;
             for(User user:list) {
-                changeIP();
+                //changeIP();
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
                 Log.d(TAG, user.pwd + "---");
@@ -104,7 +104,7 @@ public class HJTest3{
                 list = sqlUtil.selectHongbaoFailUser();
                 num = 0;
                 for(User user:list) {
-                    changeIP();
+                    //changeIP();
                     num++;
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
@@ -479,7 +479,7 @@ public class HJTest3{
             UiObject2 city_ui = mUIDevice.findObject(By.text(city));
 
             if (city_ui==null){
-                for(int i=1;i<citys.length;i++){
+                for(int i=0;i<citys.length;i++){
                     Log.d(TAG,"-------查看城市----------"+citys[i]);
                     city_ui = mUIDevice.findObject(By.text(citys[i]));
                     if (city_ui!=null){
@@ -616,7 +616,7 @@ public class HJTest3{
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
                 if(Constant.IS_HSM){
-                    list.swipeUp(100);
+                    list.swipeUp(50);
                 }else{
                     list.swipeUp(50);
                 }
