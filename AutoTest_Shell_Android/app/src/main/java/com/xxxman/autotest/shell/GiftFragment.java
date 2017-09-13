@@ -24,18 +24,21 @@ import java.util.List;
 
 public class GiftFragment extends Fragment {
 
-
+    Button runBtn3;
+    Button runBtn4;
     Button runBtn5;
     Button runBtn6;
     Button runBtn7;
     EditText idEdit ;
+    EditText huajiaoEdit_sun ;
+    EditText startAccoutEdit_sun;
+    EditText hotTimeEdit;
+    CheckBox isTalkCheckBox;
+    TextView douView;
     EditText huajiaoEdit ;
     EditText perDouEdit ;
     EditText maxDouEdit ;
     EditText startAccoutEdit;
-    EditText hotTimeEdit;
-    CheckBox isTalkCheckBox;
-    TextView douView;
     SQLUtil sqlUtil = new SQLUtil();
 
     private static final String TAG = GiftFragment.class.getName();
@@ -53,7 +56,8 @@ public class GiftFragment extends Fragment {
     @Override
     public void onViewCreated(View view,Bundle bundle){
 
-
+        runBtn3 = (Button) view.findViewById(R.id.runBtn5_sun);
+        runBtn4 = (Button) view.findViewById(R.id.runBtn6_sun);
         runBtn5 = (Button) view.findViewById(R.id.runBtn5);
         runBtn6 = (Button) view.findViewById(R.id.runBtn6);
         runBtn7 = (Button) view.findViewById(R.id.runBtn7);
@@ -61,17 +65,33 @@ public class GiftFragment extends Fragment {
         idEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         huajiaoEdit = (EditText) view.findViewById(R.id.huajiaoEdit);
         huajiaoEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        huajiaoEdit_sun = (EditText) view.findViewById(R.id.huajiaoEdit_sun);
+        huajiaoEdit_sun.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         perDouEdit = (EditText) view.findViewById(R.id.perDouEdit);
         perDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         maxDouEdit = (EditText) view.findViewById(R.id.maxDouEdit);
         maxDouEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         startAccoutEdit =(EditText) view.findViewById(R.id.startAccoutEdit);
         startAccoutEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        startAccoutEdit_sun =(EditText) view.findViewById(R.id.startAccoutEdit_sun);
+        startAccoutEdit_sun.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         hotTimeEdit =(EditText) view.findViewById(R.id.hotTimeEdit);
         hotTimeEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         isTalkCheckBox =(CheckBox) view.findViewById(R.id.isTalkCheckBox);
 
         douView =(TextView) view.findViewById(R.id.dou_view);
+        runBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                songSun (view);
+            }
+        });
+        runBtn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                before_sun (view);
+            }
+        });
         //绑定运行按钮
         runBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +144,7 @@ public class GiftFragment extends Fragment {
         if(is_code){
             try {
                 String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-                List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
+                List<User> list = FileUtil.ReadTxtFile(path+"/bh_NumberList.txt");
                 SQLUtil2 sqlUtil2 = new SQLUtil2();
                 if (!sqlUtil2.tabbleIsExist("dou")){
                     sqlUtil2.createTableDou();
@@ -213,6 +233,70 @@ public class GiftFragment extends Fragment {
         }
     }
 
+    public void songSun(View v)  {
+        if(is_code){
+            try {
+                String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                List<User> list = FileUtil.ReadTxtFile(path+"/NumberList.txt");
+                SQLUtil9 sqlUtil9 = new SQLUtil9();
+                if (!sqlUtil9.tabbleIsExist("sun")){
+                    sqlUtil9.createTableSun();
+                }
+                if (!sqlUtil9.tabbleIsExist("order_sun")){
+                    sqlUtil9.createTableOrder();
+                }
+                String huajiao_id_string = huajiaoEdit_sun.getText().toString().trim();
+                String begin_accout_string = startAccoutEdit_sun.getText().toString().trim();
+                if(huajiao_id_string.isEmpty()){
+                    Toast.makeText(this.getContext(), "没输入花椒号!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Order order = new Order();
+                int huajiao_id = Integer.parseInt(huajiao_id_string);
+                order.id =huajiao_id;
+                order.huajiao_id =huajiao_id;
+                order.max_dou =999999;
+                if(begin_accout_string.isEmpty()){
+                    order.begin_accout =1;
+                }else{
+                    int begin_accout = Integer.parseInt(begin_accout_string);
+                    order.begin_accout =begin_accout;
+                }
+                sqlUtil9.inserOrder(order);
+                List<User> list2 = sqlUtil9.selectSunUser(order);
+                if(list2.size()==0){
+                    sqlUtil9.inserSun(list,order);
+                }
+                if (list.size()>0 ) {
+                    if (huajiao_id>0 ){
+                        UiautomatorThread9 thread9 = new UiautomatorThread9();
+                        Log.i(TAG, "runMyUiautomator9: ");
+                    }else{
+                        Toast.makeText(this.getContext(), "任务数据输入错误!", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(this.getContext(), "未找到该用户！", Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this.getContext(), "读取用户文件出错！", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(this.getContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void before_sun(View v) {
+        if(is_code){
+            SQLUtil9 sqlUtil9 = new SQLUtil9();
+            Order order = sqlUtil9.selectOrder();
+            huajiaoEdit_sun.setText(""+order.huajiao_id);
+            if(order.begin_accout!=1){
+                startAccoutEdit_sun.setText(""+order.begin_accout);
+            }
+        }else {
+            Toast.makeText(this.getContext(), "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
     public void getBefore(View v) {
         if(is_code){
             SQLUtil2 sqlUtil2 = new SQLUtil2();
@@ -243,6 +327,7 @@ public class GiftFragment extends Fragment {
             Toast.makeText(this.getContext(), "请先注册！", Toast.LENGTH_LONG).show();
         }
     }
+
     public void setNull(View v) {
         if(is_code){
             idEdit.setText("");
@@ -267,6 +352,19 @@ public class GiftFragment extends Fragment {
             //super.run();
             String command = "am instrument --user 0 -w -r -e debug false -e class " +
                     "com.xxxman.autotest.shell.HJTest5 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    class UiautomatorThread9 extends BaseThread {
+        public UiautomatorThread9() {
+            super("HJTest9", false);
+        }
+        @Override
+        public void process() {
+            //super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest9 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
             ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }

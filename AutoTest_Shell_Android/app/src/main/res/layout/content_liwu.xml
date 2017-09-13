@@ -30,11 +30,89 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="5、暖场+送豆"/>
+                    android:text="1、送阳光"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="320dp"
+                android:layout_height="120dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+                        <EditText
+                            android:id="@+id/huajiaoEdit_sun"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="主播花椒号"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
+                        <EditText
+                            android:id="@+id/startAccoutEdit_sun"
+                            android:layout_width="match_parent"
+                            android:minWidth="180dp"
+                            android:layout_height="40dp"
+                            android:hint="开始账号(默认从第1个开始)"
+                            android:textSize="14sp"
+                            android:digits="1234567890"
+                            android:imeActionId="@+id/login"
+                            android:inputType="text" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/runBtn5_sun"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/btn_selector"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="开始" />
+                    <Button
+                        android:id="@+id/runBtn6_sun"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/btn_selector"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="上次信息" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="#C8C8C8"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="2、暖场+送豆"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="280dp"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"

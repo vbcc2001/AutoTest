@@ -233,14 +233,16 @@ public class HJTest5 {
         Thread.sleep(500);
         UiObject sousuo = mUIDevice.findObject(new UiSelector().text("搜索"));
         sousuo.click();
-
+        Thread.sleep(1000);
+        sousuo.click();
+        Thread.sleep(3000);
         UiObject2 guangzhu = mUIDevice.findObject(By.res("com.huajiao:id/focus_iv"));
         if(guangzhu!=null){
             guangzhu.click();
         }
         UiObject touxiang = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/search_item_user_icon"));
         touxiang.click();
-
+        Thread.sleep(2000);
         UiObject2 zhibozhong = mUIDevice.findObject(By.res("com.huajiao:id/icon_view"));
         if(zhibozhong!=null){
             zhibozhong.click();

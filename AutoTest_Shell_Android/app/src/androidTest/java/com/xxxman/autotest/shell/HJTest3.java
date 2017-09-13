@@ -180,9 +180,10 @@ public class HJTest3{
                 }
                 fail_count = 0;
                 login(user);
-                if(Constant.IS_HSM){
-                    Thread.sleep(3000);
-                }
+                Thread.sleep(3000);
+                mUIDevice.pressBack();
+                Thread.sleep(3000);
+                mUIDevice.pressBack();
                 for (int i = 0; i < 30; i++) {
                     try {
                         if(Constant.IS_HSM){
