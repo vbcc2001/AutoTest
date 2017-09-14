@@ -39,7 +39,7 @@ public class HJTest3{
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
     boolean is4X=Constant.IS_4X;
-    String citys[] = new String[]{"北京","上海","广州","深圳","黑龙江","吉林","辽宁","浙江"};
+    String citys[] = new String[]{"深圳","北京","上海","广州","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
     @Before
     public void setUp() throws RemoteException {
@@ -91,7 +91,11 @@ public class HJTest3{
             mContext.sendBroadcast(intent);
             int num =0;
             for(User user:list) {
-                //changeIP();
+                if(Constant.IS_HSM){
+                    //changeIP();
+                }else{
+                    changeIP();
+                }
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
                 Log.d(TAG, user.pwd + "---");
@@ -631,7 +635,7 @@ public class HJTest3{
                 money.click();
                 Thread.sleep(1500);
                 share();
-                for(int j =0 ;j < 30 ;j++){
+                for(int j =0 ;j < 50 ;j++){
                     if(is4X){
                         mUIDevice.click(954,1367);
                     }else{
@@ -644,12 +648,7 @@ public class HJTest3{
                         count_get_hongbao++;
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
                         kaihongbao.click();
-                        Thread.sleep(1000);
-//                        if(Constant.IS_4X){
-//                            Thread.sleep(1000);
-//                        }else{
-//                            Thread.sleep(4000);
-//                        }
+                        Thread.sleep(2500);
                         if(is4X){
                             mUIDevice.click(990,1843);
                             mUIDevice.click(990,1843);
@@ -657,9 +656,6 @@ public class HJTest3{
                             mUIDevice.click(660,1228);
                             mUIDevice.click(660,1228);
                         }
-//                        if(!Constant.IS_4X){
-//                            Thread.sleep(1000);
-//                        }
                         break;
                     }else{
                         //情况2：失败
