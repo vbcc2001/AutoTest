@@ -92,8 +92,10 @@ public class HJTest3{
             int num =0;
             for(User user:list) {
                 if(Constant.IS_HSM){
+                    Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
                     //changeIP();
                 }else{
+                    Log.d(TAG,"准备换iP-------------------------");
                     changeIP();
                 }
                 //执行任务
@@ -108,7 +110,13 @@ public class HJTest3{
                 list = sqlUtil.selectHongbaoFailUser();
                 num = 0;
                 for(User user:list) {
-                    //changeIP();
+                    if(Constant.IS_HSM){
+                        Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
+                        //changeIP();
+                    }else{
+                        Log.d(TAG,"准备换iP-------------------------");
+                        changeIP();
+                    }
                     num++;
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
