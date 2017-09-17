@@ -41,6 +41,7 @@ public class HJTest3{
     boolean is4X=Constant.IS_4X;
     String citys[] = new String[]{"深圳","北京","上海","广州","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
+    int quit_count = 0;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -163,6 +164,23 @@ public class HJTest3{
                 UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
                 if(conn!=null){
                     conn.click();
+                }
+                if(quit_count<2){
+                    mUIDevice.pressBack();
+                    Thread.sleep(500);
+                    UiObject2 quit = mUIDevice.findObject(By.text("确认"));
+                    quit.click();
+                    quit_count++;
+                    Thread.sleep(1500);
+
+                    mContext.startActivity(myIntent1);
+                    mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                    Thread.sleep(5000);
+                    UiObject2 login1 = mUIDevice.findObject(By.text("立即登录"));
+                    if(login1!=null){
+                        login1.click();
+                        Thread.sleep(5000);
+                    }
                 }
             }
             Thread.sleep(5000);
