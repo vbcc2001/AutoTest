@@ -121,7 +121,10 @@ SELECT 1 FROM t_user where accout = '123' and pwd = '202cb962ac59075b964b07152d2
 --delete from t_code
 --delete from t_register---
 --delete from t_count where phone ='c4c8ba9f4fd2'; where  phone = '' ;
-
+SELECT *,(select tag from t_register where phone=t.phone) as tag,
+(select dou from t_count where account=t.accout) as dou,
+(select dou_update_time from t_count where account=t.accout) as dou_update_time
+from t_accout t where type = 'hongbao' and phone='e2d7275df4f0' order by number;
 --commit;
 --SELECT (@i:=@i+1) as id , phone , count(phone) count,sum(sun) sun ,sum(dou) dou FROM t_count t ,(select @i:= 0 ) as it group by t.phone order by t.phone;
 --select accout,c from (select accout ,count(accout) as c from t_accout where type='hongbao' group by accout )  as a where a.c>=2

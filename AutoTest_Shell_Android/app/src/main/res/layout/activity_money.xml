@@ -80,7 +80,27 @@
                     android:text="2、充值并关闭账号保护"
                     android:textStyle="bold" />
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/close_in_button_1"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="3、关闭账号保护"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/close_in_button_2"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="4、打开账号保护"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

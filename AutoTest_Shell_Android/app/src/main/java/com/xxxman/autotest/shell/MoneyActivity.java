@@ -67,8 +67,24 @@ public class MoneyActivity extends AppCompatActivity {
                 goMoney(view,true);
             }
         });
-
-
+        Button closeInButton_1 = (Button) findViewById(R.id.close_in_button_1);
+        closeInButton_1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                close_1(view);
+            }
+        });
+        Button closeInButton_2 = (Button) findViewById(R.id.close_in_button_2);
+        closeInButton_2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                close_2(view);
+            }
+        });
+        //创建表
+        if (!sqlUtil.tabbleIsExist("money")){
+            sqlUtil.createTableMoney();
+        }
         //判断是否注册
         String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
                 "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +
@@ -97,10 +113,6 @@ public class MoneyActivity extends AppCompatActivity {
     }
 
     private void goMoney(View v,boolean is_close) {
-        //创建表
-        if (!sqlUtil.tabbleIsExist("money")){
-            sqlUtil.createTableMoney();
-        }
 
         if(is_code){
             String number_string = mEmailView.getText().toString().trim();
@@ -125,6 +137,22 @@ public class MoneyActivity extends AppCompatActivity {
         }
     }
 
+    private void close_1(View v) {
+        if(is_code){
+            UiautomatorThread10 thread = new UiautomatorThread10();
+            Log.i(TAG, "runMyUiautomator: ");
+        }else {
+            Toast.makeText(this, "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
+    private void close_2(View v) {
+        if(is_code){
+            UiautomatorThread11 thread = new UiautomatorThread11();
+            Log.i(TAG, "runMyUiautomator: ");
+        }else {
+            Toast.makeText(this, "请先注册！", Toast.LENGTH_LONG).show();
+        }
+    }
     static class UiautomatorThread3 extends BaseThread {
 
         public UiautomatorThread3() {
@@ -154,6 +182,32 @@ public class MoneyActivity extends AppCompatActivity {
             Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
         }
 
+    }
+    static class UiautomatorThread10 extends BaseThread {
+        public UiautomatorThread10() {
+            super("HJTest8", false);
+        }
+        @Override
+        public void process() {
+            //super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest10 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
+    }
+    static class UiautomatorThread11 extends BaseThread {
+        public UiautomatorThread11() {
+            super("HJTest8", false);
+        }
+        @Override
+        public void process() {
+            //super.run();
+            String command = "am instrument --user 0 -w -r -e debug false -e class " +
+                    "com.xxxman.autotest.shell.HJTest11 com.xxxman.autotest.shell.test/android.support.test.runner.AndroidJUnitRunner";
+            ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+            Log.i(TAG, "run: " + rs.result + "-------" + rs.responseMsg + "-------" + rs.errorMsg);
+        }
     }
 }
 
