@@ -156,20 +156,20 @@ public class HJTest3{
                 mContext.startActivity(myIntent1);
                 mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
                 Thread.sleep(5000);
-                UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
-                if(login!=null){
-                    login.click();
-                    Thread.sleep(5000);
-                }
-                UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
-                if(conn!=null){
-                    conn.click();
-                }
                 if(quit_count<2){
                     mUIDevice.pressBack();
                     Thread.sleep(500);
                     UiObject2 quit = mUIDevice.findObject(By.text("确认"));
-                    quit.click();
+                    if(quit!=null){
+                        quit.click();
+                    }
+                    Thread.sleep(500);
+                    mUIDevice.pressBack();
+                    Thread.sleep(500);
+                    UiObject2 quit1 = mUIDevice.findObject(By.text("确认"));
+                    if(quit1!=null){
+                        quit1.click();
+                    }
                     quit_count++;
                     Thread.sleep(1500);
 
@@ -180,6 +180,16 @@ public class HJTest3{
                     if(login1!=null){
                         login1.click();
                         Thread.sleep(5000);
+                    }
+                }else{
+                    UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
+                    if(login!=null){
+                        login.click();
+                        Thread.sleep(5000);
+                    }
+                    UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+                    if(conn!=null){
+                        conn.click();
                     }
                 }
             }
