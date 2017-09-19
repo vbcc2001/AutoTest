@@ -34,7 +34,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -69,6 +69,16 @@
                             android:digits="1234567890"
                             android:imeActionId="@+id/login"
                             android:inputType="text" />
+                        <CheckBox
+                            android:id="@+id/sunCheckBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="送阳光" />
+                        <CheckBox
+                            android:id="@+id/xrkCheckBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="送向日葵" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
