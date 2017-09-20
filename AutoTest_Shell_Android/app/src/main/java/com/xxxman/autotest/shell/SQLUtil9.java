@@ -18,7 +18,8 @@ public class SQLUtil9 {
     SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(db_path,null);
     String TAG = SQLUtil9.class.getName();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
-
+    SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMdd");
+    String dateString = formatter1.format(new Date());
     public boolean tabbleIsExist(String tableName){
         boolean result = false;
         if(tableName == null){
@@ -54,7 +55,7 @@ public class SQLUtil9 {
     //送红包order表
     public  void createTableOrder() {
         //创建表SQL语句
-        String stu_table = "create table order_sun(id integer primary key autoincrement,day string,wait_time int DEFAULT 0,begin_accout int DEFAULT 1,is_talk int DEFAULT 0," +
+        String stu_table = "create table order_sun(id integer primary key autoincrement,day string,wait_time int DEFAULT 0,begin_accout int DEFAULT 1,is_talk int DEFAULT 0,is_sun int DEFAULT 0,is_xrk int DEFAULT 0," +
                 "order_id int,huajiao_id int,per_sun int,max_sun int )";
         //执行SQL语句
         db.execSQL(stu_table);
@@ -74,11 +75,17 @@ public class SQLUtil9 {
         if(order.is_talk){
             cv.put("is_talk",1);
         }
+        if(order.is_sun){
+            cv.put("is_sun",1);
+        }
+        if(order.is_xrk){
+            cv.put("is_xrk",1);
+        }
         db.insert("order_sun",null,cv);//执行插入操作
     }
     //查询order
     public Order selectOrder(){
-        String sql = "select order_id,huajiao_id,per_sun,max_sun,wait_time,begin_accout,is_talk from order_sun order by id desc LIMIT 1 ";
+        String sql = "select order_id,huajiao_id,per_sun,max_sun,wait_time,begin_accout,is_talk,is_sun,is_xrk from order_sun order by id desc LIMIT 1 ";
         Order order = new Order();
         Cursor c = db.rawQuery(sql, null);
 
@@ -91,6 +98,12 @@ public class SQLUtil9 {
             order.begin_accout = c.getInt(c.getColumnIndex("begin_accout"));
             if(c.getInt(c.getColumnIndex("is_talk"))==1){
                 order.is_talk = true;
+            }
+            if(c.getInt(c.getColumnIndex("is_sun"))==1){
+                order.is_sun = true;
+            }
+            if(c.getInt(c.getColumnIndex("is_xrk"))==1){
+                order.is_xrk = true;
             }
         }
         Log.i(TAG, "order:" + order);

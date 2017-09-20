@@ -248,4 +248,27 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
+    public static void writeSendSun(User user,Order order,String path,String name) {
+        String filePath = path;
+        String fileName = name;
+        //生成文件夹之后，再生成文件，不然会出错
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+            file = new File(filePath +"/"+ fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            String content = order.id+","+user.number+","+user.phone+","+user.pwd+","+user.send_dou+","+user.dou+"\r\n";
+            raf.write(content.getBytes());
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

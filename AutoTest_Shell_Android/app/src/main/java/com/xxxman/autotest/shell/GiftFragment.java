@@ -34,6 +34,8 @@ public class GiftFragment extends Fragment {
     EditText startAccoutEdit_sun;
     EditText hotTimeEdit;
     CheckBox isTalkCheckBox;
+    CheckBox isSunCheckBox;
+    CheckBox isXrkCheckBox;
     TextView douView;
     EditText huajiaoEdit ;
     EditText perDouEdit ;
@@ -78,7 +80,8 @@ public class GiftFragment extends Fragment {
         hotTimeEdit =(EditText) view.findViewById(R.id.hotTimeEdit);
         hotTimeEdit.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         isTalkCheckBox =(CheckBox) view.findViewById(R.id.isTalkCheckBox);
-
+        isSunCheckBox =(CheckBox) view.findViewById(R.id.sunCheckBox);
+        isXrkCheckBox =(CheckBox) view.findViewById(R.id.xrkCheckBox);
         douView =(TextView) view.findViewById(R.id.dou_view);
         runBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +250,7 @@ public class GiftFragment extends Fragment {
                 }
                 String huajiao_id_string = huajiaoEdit_sun.getText().toString().trim();
                 String begin_accout_string = startAccoutEdit_sun.getText().toString().trim();
+                boolean is_sun = isSunCheckBox.isChecked();
                 if(huajiao_id_string.isEmpty()){
                     Toast.makeText(this.getContext(), "没输入花椒号!", Toast.LENGTH_LONG).show();
                     return;
@@ -256,6 +260,8 @@ public class GiftFragment extends Fragment {
                 order.id =huajiao_id;
                 order.huajiao_id =huajiao_id;
                 order.max_dou =999999;
+                order.is_sun = isSunCheckBox.isChecked();
+                order.is_xrk = isXrkCheckBox.isChecked();
                 if(begin_accout_string.isEmpty()){
                     order.begin_accout =1;
                 }else{

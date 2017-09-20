@@ -12,6 +12,9 @@ public class Order {
     public int wait_time = 0;
     //是否聊天
     public boolean is_talk = false;
-
+    //是否送阳光
+    public boolean is_sun = false;
+    //是否送向日葵
+    public boolean is_xrk = false;
     public Order(){}
 }

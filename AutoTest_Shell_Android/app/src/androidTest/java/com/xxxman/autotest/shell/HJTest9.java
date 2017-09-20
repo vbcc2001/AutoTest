@@ -2,6 +2,7 @@ package com.xxxman.autotest.shell;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
@@ -19,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
@@ -65,25 +67,31 @@ public class HJTest9 {
         Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
         mContext.startActivity(myIntent);
         mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
-        order = sqlUtil9.selectOrder();
-        List<User> list = sqlUtil9.selectSunUser(order);
-        //从指定账号开始，跳过以前的账号
-        for(int j = 0;j<order.begin_accout-1;j++) {
-            list.remove(0);
+        try {
+            order = sqlUtil9.selectOrder();
+            List<User> list = sqlUtil9.selectSunUser(order);
+            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            FileUtil.writehengxian(list.size(),path,"send_sun_"+sqlUtil9.dateString+".txt");
+            //从指定账号开始，跳过以前的账号
+            for(int j = 0;j<order.begin_accout-1;j++) {
+                list.remove(0);
+            }
+            for(int i = 0; i<list.size(); i++){
+                User user = list.get(i);
+                Intent intent = new Intent();
+                intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
+                intent.putExtra("name", "送阳光任务开启("+(i+1)+"／"+list.size()+"个)，任务编号" +order.id);
+                mContext.sendBroadcast(intent);
+                //执行任务
+                test_for(user);
+                intent.putExtra("name", "送阳光任务完成。");
+                mContext.sendBroadcast(intent);
+                Log.d(TAG, "送阳光任务完成。");
+            }
+            mUIDevice.pressHome();  //按home键
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        for(int i = 0; i<list.size(); i++){
-            User user = list.get(i);
-            Intent intent = new Intent();
-            intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
-            intent.putExtra("name", "送阳光任务开启("+(i+1)+"／"+list.size()+"个)，任务编号" +order.id);
-            mContext.sendBroadcast(intent);
-            //执行任务
-            test_for(user);
-            intent.putExtra("name", "送阳光任务完成。");
-            mContext.sendBroadcast(intent);
-            Log.d(TAG, "送阳光任务完成。");
-        }
-        mUIDevice.pressHome();  //按home键
     }
 
     public void test_for(User user) {
@@ -99,7 +107,7 @@ public class HJTest9 {
                 mUIDevice.pressBack();
                 search(""+order.huajiao_id,user);
                 songSun(user);
-                quit();
+                quit(user);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +138,7 @@ public class HJTest9 {
         my.click();
         UiObject2 login = mUIDevice.findObject(By.text("手机号登录"));
         if(login==null){
-            quit();
+            quit(user);
             my = mUIDevice.findObject(new UiSelector().text("我的"));
             my.click();
             UiObject2 login1 = mUIDevice.findObject(By.text("手机号登录"));
@@ -152,14 +160,17 @@ public class HJTest9 {
         logining.click();
     }
     //退出流程
-    public void quit() throws Exception {
+    public void quit(User user) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
         my.click();
-        //UiObject my_page = mUIDevice.findObject(new UiSelector().text("我的主页"));
-        //my_page.click();
-
+        UiObject2 huajiao_id = mUIDevice.findObject(By.res("com.huajiao:id/number_view"));
+        if(huajiao_id!=null){
+            user.pwd = huajiao_id.getText();
+            String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+            FileUtil.writeSendSun(user,order,path,"send_sun_"+sqlUtil9.dateString+".txt");
+        }
         UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipe_target"));
         home.flingForward();
         //mUIDevice.swipe(100, 1676, 100, 600, 20);
@@ -219,8 +230,16 @@ public class HJTest9 {
             }
             Thread.sleep(500);
             UiObject doushu = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/tv_text_num_sun"));
+            //第一次记录下送阳光数
+            if(j==0){
+                if(order.is_sun){
+                    user.send_dou = (Integer.valueOf(doushu.getText())/100)*100;
+                }else if(order.is_xrk){
+                    user.send_dou = (Integer.valueOf(doushu.getText())/1800)*1800;
+                }
+            }
             user.dou = Integer.valueOf(doushu.getText());
-            if((user.dou/1800)>=1){
+            if((user.dou/1800)>=1 && order.is_xrk){
                 //先送一个
                 UiObject2 liwu = mUIDevice.findObject(By.text("1800阳光"));
                 if(!liwu.getParent().isSelected()){
@@ -240,17 +259,7 @@ public class HJTest9 {
                         mUIDevice.click(80,832);
                     }
                 }
-//            }else if((user.dou/400)>=1){
-//                UiObject2 liwu = mUIDevice.findObject(By.text("100阳光"));
-//                if(!liwu.getParent().isSelected()){
-//                    liwu.click();
-//                }
-//                for(int i = 0 ;i<(user.dou/400);i++){
-//                    UiObject2 send = mUIDevice.findObject(By.text("发送"));
-//                    send.click();
-//                    Thread.sleep(500);
-//                }
-            }else if((user.dou/100)>=1){
+            }else if((user.dou/100)>=1 && order.is_sun){
                 UiObject2 liwu = mUIDevice.findObject(By.text("100阳光"));
                 if(!liwu.getParent().isSelected()){
                     liwu.click();
@@ -271,6 +280,7 @@ public class HJTest9 {
             }
             //mUIDevice.pressBack();
             Thread.sleep(1000);
+
         }
         //关闭直播
         if(Constant.IS_4X){
