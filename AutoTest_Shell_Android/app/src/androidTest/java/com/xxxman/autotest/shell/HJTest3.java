@@ -39,9 +39,10 @@ public class HJTest3{
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
     boolean is4X=Constant.IS_4X;
-    String citys[] = new String[]{"深圳","北京","上海","广州","黑龙江","吉林","辽宁","浙江"};
+    String citys[] = new String[]{"最新","深圳","北京","上海","广州","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
     int quit_count = 0;
+    int hava_count = 0;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -94,7 +95,7 @@ public class HJTest3{
             for(User user:list) {
                 if(Constant.IS_HSM){
                     Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                    //changeIP();
+                    changeIP();
                 }else{
                     Log.d(TAG,"准备换iP-------------------------");
                     changeIP();
@@ -113,7 +114,7 @@ public class HJTest3{
                 for(User user:list) {
                     if(Constant.IS_HSM){
                         Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                        //changeIP();
+                        changeIP();
                     }else{
                         Log.d(TAG,"准备换iP-------------------------");
                         changeIP();
@@ -219,6 +220,7 @@ public class HJTest3{
                     hongbao_count_two = Constant.HONGBAO_COUNT - Constant.HONGBAO_COUNT_ONE;
                 }
                 fail_count = 0;
+                hava_count = 0;
                 login(user);
                 Thread.sleep(3000);
                 mUIDevice.pressBack();
@@ -283,6 +285,9 @@ public class HJTest3{
                         break;
                     }
                     if (fail_count>=3){
+                        break;
+                    }
+                    if ( Constant.IS_HSM && hava_count>=3){
                         break;
                     }
                     //提醒
@@ -520,7 +525,7 @@ public class HJTest3{
             UiObject2 city_ui = mUIDevice.findObject(By.text(city));
 
             if (city_ui==null){
-                for(int i=0;i<citys.length;i++){
+                for(int i=1;i<citys.length;i++){
                     Log.d(TAG,"-------查看城市----------"+citys[i]);
                     city_ui = mUIDevice.findObject(By.text(citys[i]));
                     if (city_ui!=null){
@@ -657,7 +662,7 @@ public class HJTest3{
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
                 if(Constant.IS_HSM){
-                    list.swipeUp(50);
+                    list.swipeUp(65);
                 }else{
                     list.swipeUp(50);
                 }
@@ -668,6 +673,7 @@ public class HJTest3{
             UiObject2 money = mUIDevice.findObject(By.res("com.huajiao:id/hongbao"));
             if(money!=null){
                 Log.d(TAG,"youhongbao");
+                hava_count++;
                 money.click();
                 Thread.sleep(1500);
                 share();
@@ -684,7 +690,7 @@ public class HJTest3{
                         count_get_hongbao++;
                         user.hongbao = sqlUtil.updateHongbaoCount(user);
                         kaihongbao.click();
-                        Thread.sleep(2500);
+                        Thread.sleep(6000);
                         if(is4X){
                             mUIDevice.click(990,1843);
                             mUIDevice.click(990,1843);
