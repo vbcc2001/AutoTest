@@ -95,7 +95,7 @@ public class HJTest3{
             for(User user:list) {
                 if(Constant.IS_HSM){
                     Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                    changeIP();
+                    //changeIP();
                 }else{
                     Log.d(TAG,"准备换iP-------------------------");
                     changeIP();
@@ -114,7 +114,7 @@ public class HJTest3{
                 for(User user:list) {
                     if(Constant.IS_HSM){
                         Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                        changeIP();
+                        //changeIP();
                     }else{
                         Log.d(TAG,"准备换iP-------------------------");
                         changeIP();
@@ -133,7 +133,7 @@ public class HJTest3{
 
         try {
             Thread.sleep(5000);
-            if(Constant.IS_HSM){
+            if( "hsm".equals(Constant.TAG) && Constant.IS_HSM){
                 Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("org.wuji");  //启动app
                 mContext.startActivity(myIntent1);
                 mUIDevice.waitForWindowUpdate("org.wuji", 5 * 2000);
@@ -683,7 +683,11 @@ public class HJTest3{
                     }else{
                         mUIDevice.click(640,910);
                     }
-                    Thread.sleep(1000);
+                    if(Constant.IS_HSM){
+                        Thread.sleep(4000);
+                    }else {
+                        Thread.sleep(1000);
+                    }
                     UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
                     //情况1：成功
                     if(kaihongbao!=null){
