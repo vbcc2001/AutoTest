@@ -4,3 +4,7 @@
 .DS_Store
 .DS_Store
 AutoTest_CMS_Web/logs/app.log
+AutoTest_CMS_Web/.idea/workspace.xml
+AutoTest_CMS_Web/src/main/resources/datasource.xml
+AutoTest_CMS_Web/target/webapp/WEB-INF/classes/datasource.xml
+AutoTest_Shell_Android/.idea/misc.xml
