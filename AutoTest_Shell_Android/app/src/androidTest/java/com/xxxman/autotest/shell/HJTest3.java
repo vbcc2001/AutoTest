@@ -43,6 +43,7 @@ public class HJTest3{
     int next_city = 0;
     int quit_count = 0;
     int hava_count = 0;
+    boolean is_frist_login = false;
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -93,6 +94,7 @@ public class HJTest3{
             mContext.sendBroadcast(intent);
             int num =0;
             for(User user:list) {
+                is_frist_login = true;
                 if(Constant.IS_HSM){
                     Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
                     //changeIP();
@@ -109,6 +111,7 @@ public class HJTest3{
                 test_for(user);
             }
             for(int i = 0 ;i<100;i++){
+                is_frist_login = false;
                 list = sqlUtil.selectHongbaoFailUser();
                 num = 0;
                 for(User user:list) {
@@ -295,6 +298,11 @@ public class HJTest3{
                     intent.setAction("com.xxxman.autotest.shell.MyBroadCastReceiver");
                     intent.putExtra("name", "当前为第"+user.number+"用户,已刷新第"+(i+1)+"次，已抢红包"+count_get_hongbao+"个");
                     mContext.sendBroadcast(intent);
+                }
+                if(!Constant.IS_HSM && is_frist_login){
+                    goZhiBo();
+                    getSunshine(user);
+                    closeZhiBo();
                 }
                 quit(user);
             }
@@ -807,6 +815,61 @@ public class HJTest3{
         UiObject qq_back = mUIDevice.findObject(new UiSelector().text("返回花椒直播"));
         qq_back.click();  //点击按键
 
+    }
+
+
+
+    //进入直播
+    public void goZhiBo() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject remen =  mUIDevice.findObject(new UiSelector().text("热门"));
+        remen.click();
+        Thread.sleep(3000);
+        UiObject zhibozhong = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/icon_view"));
+        zhibozhong.click();
+    }
+    //退出直播
+    public void closeZhiBo() throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject close = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_live_close"));
+        //close.click();  //点击按键
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(990,1842);
+        }else{
+            mUIDevice.click(660,1228);
+        }
+    }
+    public void getSunshine(User user) throws Exception {
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
+                +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
+        UiObject sun =mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/sun_task_tip"));
+        //sun.click();
+        Thread.sleep(1000);
+        if(is4X){
+            mUIDevice.click(976,390);
+        }else{
+            mUIDevice.click(651,268);
+        }
+        UiObject2 get = mUIDevice.findObject(By.text("分享直播(3/3)"));
+        if(get!=null){
+            UiObject2 get_ = get.getParent().findObject(By.text("领取"));
+            get_.click();
+            //sqlUtil.updateSuccessCount(user);
+            //Log.i(TAG,"count_get_sun:"+count_get_sun);
+        }else{
+            UiObject2 list = mUIDevice.findObject(By.res("com.huajiao:id/list_view"));
+            list.scroll(Direction.DOWN, 0.8f);
+            UiObject2 get1 = mUIDevice.findObject(By.text("分享直播(3/3)"));
+            UiObject2 end = get1.getParent().findObject(By.text("已完成"));
+            //if(end != null){
+                //sqlUtil.updateSuccessCount(user);
+                //Log.i(TAG,"count_get_sun:"+count_get_sun);
+           // }
+        }
+        mUIDevice.pressBack();
     }
 }
 
