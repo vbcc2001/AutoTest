@@ -66,7 +66,7 @@ public class HJTest4B extends HJTest3{
                 for(User user:list){
                     try{
                         login(user);
-                        quit(user);
+                        quit2(user);
                     }catch (Exception e){
                         e.printStackTrace();
                         reboot();
@@ -79,7 +79,7 @@ public class HJTest4B extends HJTest3{
         }
     }
     //退出流程
-    public void quit(User user) throws Exception {
+    public void quit2(User user) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
