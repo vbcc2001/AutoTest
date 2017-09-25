@@ -3,7 +3,7 @@ ulimit -n 357353
 PROJECT_PATH=/srv/AutoTest/AutoTest_CMS_Web/
 APP_NAME=AutoTest_CMS_Web
 APP_HOME=$PROJECT_PATH/target/
-JAVA_HOME=$PROJECT_PATH/target/jdk1.8.0_121/jre
+JAVA_HOME=$PROJECT_PATH/target/jdk1.8.0_144/jre
 JAVA=$JAVA_HOME/bin/java
 export JAVA_HOME
 RESIN_HOME=$PROJECT_PATH/target/resin-pro-3.1.12
