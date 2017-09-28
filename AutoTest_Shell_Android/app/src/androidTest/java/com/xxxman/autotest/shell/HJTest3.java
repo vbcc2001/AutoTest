@@ -109,6 +109,7 @@ public class HJTest3{
                 intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第1次循环）");
                 mContext.sendBroadcast(intent);
                 test_for(user);
+                FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
             }
             for(int i = 0 ;i<100;i++){
                 is_frist_login = false;
@@ -126,6 +127,7 @@ public class HJTest3{
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
                     test_for(user);
+                    FileUtil.writeHongbao(user,path,"hongbao_"+sqlUtil.dateString+".txt");
                 }
             }
         } catch (IOException e) {
@@ -208,7 +210,6 @@ public class HJTest3{
                 e1.printStackTrace();
             }
         }
-
     }
     //@Test
     public void test_for(User user){
