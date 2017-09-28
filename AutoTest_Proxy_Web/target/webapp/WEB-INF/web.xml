@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PUBLIC>
+<web-app>
+	<display-name>web</display-name>
+	<!--************************************** listener **************************************-->
+    <listener>
+        <listener-class>com.xxx.web.http.listener.Listener</listener-class>
+    </listener>
+    <!--************************************** filter **************************************-->
+    <filter>
+        <filter-name>Encoding</filter-name>
+        <filter-class>com.xxx.web.http.filter.Encoding</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--************************************** servlet **************************************-->
+    <servlet>
+    <servlet-name>Servlet</servlet-name>
+        <servlet-class>com.xxx.web.http.servlet.Servlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping> 
+	<!--************************************** index page  **************************************-->  
+	<welcome-file-list><welcome-file>index.html</welcome-file></welcome-file-list>
+	<error-page><error-code>404</error-code><location>/sun/404.html</location></error-page>
+    <error-page><error-code>500</error-code><location>/sun/500.html</location></error-page>
+    <error-page><exception-type>java.lang.Exception</exception-type><location>500.html</location></error-page>
+</web-app>
