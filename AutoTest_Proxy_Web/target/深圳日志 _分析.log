@@ -14,76 +14,170 @@
         "offset":"21",
         "more":false,
         "feeds":[
-                    {
-                    "feed"{
-                        "title":"\u65e9\u5b89\u8fd8\u662f\u665a\u5b89", //早安还是晚安
-                        "tags":[],
-                        "image":"http:\/\/image.huajiao.com\/6d6ff1fa74383c8f3e9b5f6d146f86ca-320_320.jpg",
-                        "publishtime":"2017-09-29 08:49:46",
-                        "location":"\u5e7f\u4e1c \u6df1\u5733" //广东 深圳
-                        point":{"lat":"22.60","lon":"114.04"},
-                        "width":504,
-                        "height":896,
-                        "sn":"_LC_XY0_non_5997616215066461841703730_OX",
-                        "is_vr":"N",
-                        "origin_status":1,
-                        "replay_status":0,
-                        "is_privacy":"N",
-                        "labels":["\u95f7\u9a9a","\u5973\u795e","\u5927\u957f\u817f"], //"闷骚","女神","大长腿"
-                        "sn_ext":"_LC_XY0_non_5997616215066461841703730_OX",
-                        "is_link_sn":"N",
-                        "master":0,
-                        "live_cate":"",
-                        "cate_icon":"",
-                        "is_link":"N",
-                        "is_game":"N",
-                        "game":"",
-                        "special_room":0,
-                        "is_outdoors":"N",
-                        "sign":[],
-                        "relateid":159488316,
-                        "feedid":155764661,
-                        "favorited":false,
-                        "praises":190,
-                        "watches":93,
-                        "reposts":0,
-                        "replies":0,
-                        "feedCache":0,
-                        "share_redpacket":"N",
-                        "small_videos":"0"
-                        },
-                    "author":{
-                        "uid":"59976162",
-                        "nickname":"\u4e48\u4e48\u5218", //么么刘
-                        "avatar":"http:\/\/image.huajiao.com\/6d6ff1fa74383c8f3e9b5f6d146f86ca-100_100.jpg",
-                        "followed":true,
-                        "verified":true,
-                        "verifiedinfo":{
-                            "credentials":"\u6211\u7231\u6545\u6211\u5728", //我爱故我在
-                            "type":1,
-                            "realname":"\u4e48\u4e48\u5218", //么么刘
-                            "status":3,
-                            "error":"",
-                            "official":false
-                            },
-                        "exp":12674938,
-                        "level":37,
-                        "authorexp":6396,
-                        "authorlevel":8,
-                        "is_author_task":1,
-                        "medal":[{"kind":"tuhao","medal":"6"}],
-                        "gender":"F",
-                        "astro":"\u91d1\u725b\u5ea7","userCache":1506646696
-                        },
+            {
+            "feed"{
+                "title":"\u65e9\u5b89\u8fd8\u662f\u665a\u5b89", //早安还是晚安
+                "tags":[],
+                "image":"http:\/\/image.huajiao.com\/6d6ff1fa74383c8f3e9b5f6d146f86ca-320_320.jpg",
+                "publishtime":"2017-09-29 08:49:46",
+                "location":"\u5e7f\u4e1c \u6df1\u5733" //广东 深圳
+                point":{"lat":"22.60","lon":"114.04"},
+                "width":504,
+                "height":896,
+                "sn":"_LC_XY0_non_5997616215066461841703730_OX",
+                "is_vr":"N",
+                "origin_status":1,
+                "replay_status":0,
+                "is_privacy":"N",
+                "labels":["\u95f7\u9a9a","\u5973\u795e","\u5927\u957f\u817f"], //"闷骚","女神","大长腿"
+                "sn_ext":"_LC_XY0_non_5997616215066461841703730_OX",
+                "is_link_sn":"N",
+                "master":0,
+                "live_cate":"",
+                "cate_icon":"",
+                "is_link":"N",
+                "is_game":"N",
+                "game":"",
+                "special_room":0,
+                "is_outdoors":"N",
+                "sign":[],
+                "relateid":159488316,
+                "feedid":155764661,
+                "favorited":false,
+                "praises":190,
+                "watches":93,
+                "reposts":0,
+                "replies":0,
+                "feedCache":0,
+                "share_redpacket":"N",
+                "small_videos":"0"
+                },
+            "author":{
+                "uid":"59976162",
+                "nickname":"\u4e48\u4e48\u5218", //么么刘
+                "avatar":"http:\/\/image.huajiao.com\/6d6ff1fa74383c8f3e9b5f6d146f86ca-100_100.jpg",
+                "followed":true,
+                "verified":true,
+                "verifiedinfo":{
+                    "credentials":"\u6211\u7231\u6545\u6211\u5728", //我爱故我在
                     "type":1,
-                    "creatime":"2017-09-29 08:49:46",
-                    "relay":{"usign":"f9df192f4c57feb0f1931903fcf41537",
-                        "usign_ext":"f9df192f4c57feb0f1931903fcf41537",
-                        "channel":"live_huajiao_v2"
-                        },
-                    "distance":"8.0"
+                    "realname":"\u4e48\u4e48\u5218", //么么刘
+                    "status":3,
+                    "error":"",
+                    "official":false
+                    },
+                "exp":12674938,
+                "level":37,
+                "authorexp":6396,
+                "authorlevel":8,
+                "is_author_task":1,
+                "medal":[{"kind":"tuhao","medal":"6"}],
+                "gender":"F",
+                "astro":"\u91d1\u725b\u5ea7","userCache":1506646696
+                },
+            "type":1,
+            "creatime":"2017-09-29 08:49:46",
+            "relay":{"usign":"f9df192f4c57feb0f1931903fcf41537",
+                "usign_ext":"f9df192f4c57feb0f1931903fcf41537",
+                "channel":"live_huajiao_v2"
+                },
+            "distance":"8.0"
 
-                    }
-                ]
-        }
+            }
+            ],
+        "oldOffset":null,
+        "cursor":null,
+        "count":null,
+        "realoffset":0,
+        "cachekey":"feeds_latest6_0_50_llatest6"
+    }
 }
+
+
+{
+    "errno":0,
+    "errmsg":"",
+    "consume":8,
+    "time":1506667574,
+    "md5":"89daa944ddc66acaed4ad7ca7a4b2028",
+    "data":{
+        "name":"latest6",
+        "settings":{"is_wide":false},
+        "total":385,
+        "offset":"50",
+        "more":true,
+        "feeds":[
+                {
+                "feed":{
+                    "title":"\u5403\u996d\u4e86\u5417(\u0e51\u00b4\u3142`\u0e51)",
+                    "tags":[],
+                    "image":"http:\/\/image.huajiao.com\/a5cad0f17c41b0669576e9688f265c57-320_320.jpg",
+                    "publishtime":"2017-09-29 14:20:07",
+                    "location":"\u6c5f\u82cf \u65e0\u9521",
+                    "point":{"lat":"31.58","lon":"120.23"},
+                    "width":360,"height":640,
+                    "sn":"_LC_XY0_non_3633260915066660041321190_SX",
+                    "is_vr":"N",
+                    "origin_status":1,
+                    "replay_status":0,
+                    "is_privacy":"N",
+                    "labels":["\u5b66\u751f","\u53ef\u7231","\u6e29\u67d4","\u5c0f\u4ed9\u5973"],
+                    "sn_ext":"_LC_XY0_non_3633260915066660041321190_SX",
+                    "is_link_sn":"N",
+                    "master":0,
+                    "live_cate":"\u989c\u503c",
+                    "cate_icon":"http:\/\/img.s3.huajiao.com\/Object.access\/hj-img\/cGhwNWFLdVUw",
+                    "is_link":"N",
+                    "is_game":"N",
+                    "game":"",
+                    "special_room":0,
+                    "is_outdoors":"N",
+                    "sign":[],
+                    "relateid":159564538,
+                    "feedid":155840883,
+                    "favorited":false,
+                    "praises":217,
+                    "watches":171,
+                    "reposts":0,
+                    "replies":0,
+                    "feedCache":0,
+                    "share_redpacket":"N",
+                    "small_videos":"0"
+                    },
+                "author":{
+                    "uid":"36332609",
+                    "nickname":"\u4f60\u7684\u5927\u9b54\u738b-Vicky",
+                    "avatar":"http:\/\/image.huajiao.com\/a5cad0f17c41b0669576e9688f265c57-100_100.jpg",
+                    "followed":true,
+                    "verified":false,
+                    "verifiedinfo":{
+                        "credentials":"97\u5e74\u91d1\u725b\u5ea7  \n
+                            \u8eab\u9ad8172\u4f53\u91cd105\u4e09\u56f4\u4e0d\u8bf4 \u6709\u9a6c\u7532\u7ebf\n
+                            \u5728\u4e92\u76f8\u5c0a\u91cd\u7684\u524d\u63d0\u4e0b\u6211\u662f\u6781\u5176\u6e29\u67d4\u7684\u5c0f\u53ef\u7231\ud83d\ude0a\n
+                            \u62a4\u80a4\u7f8e\u5986\u5065\u8eab\u7a7f\u642d\u90fd\u4f1a\u4e00\u70b9\n
+                            \u52b1\u5fd7\u505a\u4e00\u4e2a\u6bdb\u7ec6\u8840\u7ba1\u90fd\u9576\u94bb\u7684\u7cbe\u81f4\u5973\u5b69\ud83d\udc67",
+                        "type":0,
+                        "realname":"\u4f60\u7684\u5927\u9b54\u738b-Vicky",
+                        "status":0,
+                        "error":"",
+                        "official":false
+                        },
+                    "exp":5555,
+                    "level":7,
+                    "authorexp":1666,
+                    "authorlevel":4,
+                    "is_author_task":1,
+                    "medal":[],
+                    "gender":"F",
+                    "astro":"\u91d1\u725b\u5ea7",
+                    "userCache":1506667570,
+                    "option_student":"Y",
+                    "vs_status":2,
+                    "vs_realname":"\u59da\u5b87",
+                    "vs_school":"\u65e0\u9521\u592a\u6e56\u5b66\u9662"},
+                "type":1,
+                "creatime":"2017-09-29 14:20:07",
+                "relay":{"usign":"8e05ec11a318e05fe66bb1908adcb7fc","usign_ext":"8e05ec11a318e05fe66bb1908adcb7fc","channel":"live_huajiao_v2"},
+                "distance":"1178.9"
+                }
+                ],
