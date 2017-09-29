@@ -39,6 +39,20 @@ public class Servlet extends HttpServlet{
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+
+        if("/feed/getFeeds".equals(request.getRequestURI())){
+            String s1 = request.getRequestURL().toString();
+            String s6 = request.getQueryString();
+            String s=HttpRequest.sendGet(s1, s6);
+            System.out.println("httpRequest请求处理后返回的信息为：");
+            System.out.println("-------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------");
+            System.out.println(s);
+            System.out.println("-------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------");
+        }
+        /*
+
         System.out.println("1、===================================================================");
         String s1 = request.getRequestURL().toString();//http://localhost:8080/CarsiLogCenter_new/idpstat.jsp
         String s3 = request.getRequestURI();//CarsiLogCenter_new/idpstat.jsp
@@ -61,8 +75,12 @@ public class Servlet extends HttpServlet{
         System.out.println("===================================================================");
         //发送 GET 请求
         String s=HttpRequest.sendGet(s1, s6);
-        System.out.println("httpRequest请求处理后返回的信息为："+s);
-
+        System.out.println("httpRequest请求处理后返回的信息为：");
+        System.out.println("-------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------");
+        System.out.println(s);
+        System.out.println("-------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------");
         //发送 POST 请求
         //String sr=HttpRequest.sendPost("http:/live.huajiao.com/feed/getFeeds", s6);
         //System.out.println(sr);
@@ -74,5 +92,6 @@ public class Servlet extends HttpServlet{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 }
