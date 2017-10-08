@@ -97,7 +97,7 @@ public class HJTest3{
                 is_frist_login = true;
                 if(Constant.IS_HSM){
                     Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                    //changeIP();
+                    changeIP();
                 }else{
                     Log.d(TAG,"准备换iP-------------------------");
                     changeIP();
@@ -300,7 +300,7 @@ public class HJTest3{
                     intent.putExtra("name", "当前为第"+user.number+"用户,已刷新第"+(i+1)+"次，已抢红包"+count_get_hongbao+"个");
                     mContext.sendBroadcast(intent);
                 }
-                if(!Constant.IS_HSM && is_frist_login){
+                if(is_frist_login){
                     goZhiBo();
                     getSunshine(user);
                     closeZhiBo();
