@@ -25,9 +25,9 @@ public class Listener implements ServletContextListener{
 		logger.info(  "系统配置信息初始化开始...");
 		new Configure().loadConfig();
 		logger.info(  "系统配置信息初始化结束...");	
-		//logger.info(  "系统初始化数据源开始...");
-		//new DBConfigure().loadConfig();
-		//logger.info(  "系统初始化数据源结束...");
+		logger.info(  "系统初始化数据源开始...");
+		new DBConfigure().loadConfig();
+		logger.info(  "系统初始化数据源结束...");
 	}
 	/**
 	 * 在系统停止时调用
@@ -36,6 +36,6 @@ public class Listener implements ServletContextListener{
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		//关闭数据源的连接
-		//new DBConfigure().destroyDataSource();
+		new DBConfigure().destroyDataSource();
 	}	
 }

@@ -4,8 +4,6 @@ package com.xxx.web.function;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.xxx.lfs.object.User;
-
 /**
  * 请求参数的服务类
  * @author 门士松  20151031

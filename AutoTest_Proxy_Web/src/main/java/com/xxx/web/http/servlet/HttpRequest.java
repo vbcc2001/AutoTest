@@ -45,17 +45,18 @@ public class HttpRequest {
 
             InputStream is = connection.getInputStream();
             GZIPInputStream gis = new GZIPInputStream(is);
-            byte data[] = new byte[1024];
-            while ((gis.read(data, 0, 1024)) != -1) {
-                result = result+new String(data);
-                data = new byte[1024];
-            }
-//            in = new BufferedReader(new InputStreamReader( connection.getInputStream()));
-//            in = new BufferedReader(new InputStreamReader( connection.getInputStream(),"UTF-8"));
-//            String line;
-//            while ((line = in.readLine()) != null) {
-//                result += line;
+//            byte data[] = new byte[1024];
+//            while ((gis.read(data, 0, 1024)) != -1) {
+//                result = result+new String(data);
+//                data = new byte[1024];
 //            }
+            ByteArrayOutputStream result1 = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = gis.read(buffer)) != -1) {
+                result1.write(buffer, 0, length);
+            }
+            result =  result1.toString("UTF-8");
         } catch (Exception e) {
             System.out.println("发送GET请求出现异常！" + e);
             e.printStackTrace();

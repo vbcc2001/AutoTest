@@ -31,7 +31,6 @@ public class Configure{
     }
     /**
      * 根据datasource.xml文件中,得到对应的数据源对象
-     * @param name 
      * @return 数据源
      */
     public static Element  getConfig(){

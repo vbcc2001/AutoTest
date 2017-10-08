@@ -1,4 +1,4 @@
-package com.xxx.lfs.object;
+package com.xxx.web.function;
 
 import java.util.Date;
 import java.util.HashMap;

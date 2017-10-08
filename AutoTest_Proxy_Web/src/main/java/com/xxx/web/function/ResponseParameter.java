@@ -91,7 +91,7 @@ public class ResponseParameter {
 	}
 	/**
 	 * 添加结果
-	 * @param list
+	 * @param dataRow
 	 */
 	public void addDataRow(DataRow dataRow) {
 			this.list.add(dataRow);
