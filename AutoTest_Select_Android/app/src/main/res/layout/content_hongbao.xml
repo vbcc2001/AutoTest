@@ -16,7 +16,6 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:gravity="center"
@@ -28,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="1、自动抢红包"/>
+                android:text="1、自动刷红包"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
@@ -42,7 +41,56 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/hongbao_view"
+                    android:id="@+id/hongbaoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.84"
+                    android:lineSpacingExtra="10dp"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/runBtn"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开始" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@color/lightgray"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="2、自动抢红包"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/hongbaoView1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.84"
@@ -57,7 +105,7 @@
                 android:padding="10dp"
                 android:orientation="vertical">
                 <Button
-                    android:id="@+id/runBtn"
+                    android:id="@+id/runBtn1"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_selector"

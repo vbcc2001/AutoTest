@@ -71,6 +71,7 @@ public class SelectHB {
                     if (city_ui!=null){
                         if(!city_ui.isSelected()){
                             city_ui.click();
+                            Thread.sleep(1000);
                         }
                         Thread.sleep(1000);
                         city_ui.click();
@@ -98,9 +99,11 @@ public class SelectHB {
         }
     }
     public void find_money(String menu) throws Exception {
-
+        Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
+        Log.d(TAG,"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject new_list = mUIDevice.findObject(new UiSelector().text(menu));
         new_list.click();
+        Thread.sleep(1000);
         int c = 18;
         if(!menu.equals("最新")){
             c = 12;
