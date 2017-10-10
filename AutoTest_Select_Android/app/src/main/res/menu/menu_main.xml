@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/login_menu"
+        android:orderInCategory="100"
+        android:title="手机注册"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/udate_menu"
+        android:orderInCategory="100"
+        android:title="软件更新"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/money_menu"
+        android:orderInCategory="100"
+        android:title="花椒充值"
+        app:showAsAction="never" />
+</menu>
