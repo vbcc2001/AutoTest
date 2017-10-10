@@ -6,5 +6,6 @@ CREATE TABLE t_hongbao_info (
   PRIMARY KEY (id)
 );
 
-select * from t_hongbao_info
+select * from t_hongbao_info order by id desc
+
 --delete from t_hongbao_info

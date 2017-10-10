@@ -40,8 +40,12 @@ public class SelectHB {
             mUIDevice.pressBack();
             Thread.sleep(3000);
             mUIDevice.pressBack();
-            for (int i = 0; i < 3000; i++) {
-                selectCity();
+            for (int i = 0; i < 9999; i++) {
+                try {
+                    selectCity();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
