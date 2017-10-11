@@ -40,5 +40,13 @@ public class HongbaoFragment extends Fragment {
                 UiautomatorThread thread = new UiautomatorThread("SelectHB");
             }
         });
+        Button runBtn1 = (Button) view.findViewById(R.id.runBtn1);
+        //绑定运行按钮
+        runBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UiautomatorThread thread = new UiautomatorThread("ClickHB");
+            }
+        });
     }
 }

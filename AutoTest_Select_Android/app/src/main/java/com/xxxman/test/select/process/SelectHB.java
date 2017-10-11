@@ -15,6 +15,7 @@ import android.support.test.uiautomator.UiWatcher;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
+import com.xxxman.test.select.Constant;
 import com.xxxman.test.select.util.UiautomatorThread;
 
 import org.junit.Before;
@@ -75,7 +76,7 @@ public class SelectHB {
                         }
                         Thread.sleep(1000);
                         city_ui.click();
-                        if("深圳".equals(city)){
+                        if(Constant.LO_CITY.equals(city)){
                             city =city +" (当前定位地区)";
                         }
                         city_ui = mUIDevice.findObject(By.text(city));

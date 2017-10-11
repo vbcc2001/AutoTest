@@ -13,7 +13,10 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
 
+import com.xxxman.test.select.object.HttpRequest;
+import com.xxxman.test.select.object.HttpResult;
 import com.xxxman.test.select.util.Connection;
+import com.xxxman.test.select.util.HttpUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,13 +42,13 @@ public class ClickHB {
             Thread.sleep(3000);
             mUIDevice.pressBack();
             for (int i = 0; i < 9999; i++) {
-                Connection my  = new Connection();
-                String url = "http://ite.zbqhb.com:3000/action/lfs/action/FunctionAction";
-                Map<String,String> parms = new HashMap<>();
-                String context = "{\"function\":\"F100005\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"count\":}}";
-                parms.put("jsonContent",context);
-                String rs = my.getContextByHttp(url,parms);
-                Log.d(TAG,"http请求结果"+rs);
+                HttpResult httpResult = HttpUtil.post("F100005");
+                if("".equals(httpResult.getErrorNo())) {
+
+                }else{
+                    Log.e(TAG,"获取用户信息失败："+httpResult.getErrorInfo());
+                    Thread.sleep(5000);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
