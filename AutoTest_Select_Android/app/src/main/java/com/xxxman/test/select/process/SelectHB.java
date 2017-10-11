@@ -147,4 +147,11 @@ public class SelectHB {
             close.click();
         }
     }
+    //重启
+    public void reboot() {
+        Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(APP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mContext.startActivity(intent);
+        mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
+    }
 }
