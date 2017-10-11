@@ -39,6 +39,10 @@ public class DataRow extends HashMap<String,Object> {
         Object obj = this.get(name);
         if(obj instanceof Integer){
             return (Integer)obj;
+        }else if (obj instanceof Float) {
+            return ((Float) obj).intValue();
+        }else if (obj instanceof Double) {
+            return ((Double) obj).intValue();
         }else{
             if(obj==null){
                 return null;
@@ -56,6 +60,8 @@ public class DataRow extends HashMap<String,Object> {
         Object obj = this.get(name);
         if(obj instanceof Float){
             return (Float)obj;
+        }else if (obj instanceof Double) {
+            return ((Double) obj).floatValue();
         }else{
             if(obj==null){
                 return null;

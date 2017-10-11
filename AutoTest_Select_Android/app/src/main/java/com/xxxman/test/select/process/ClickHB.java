@@ -13,15 +13,22 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
 
+import com.xxxman.test.select.Constant;
+import com.xxxman.test.select.object.DataRow;
 import com.xxxman.test.select.object.HttpRequest;
 import com.xxxman.test.select.object.HttpResult;
+import com.xxxman.test.select.object.Task;
+import com.xxxman.test.select.sql.TaskSQL;
 import com.xxxman.test.select.util.Connection;
 import com.xxxman.test.select.util.HttpUtil;
+import com.xxxman.test.select.util.SQLUtil;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +38,7 @@ public class ClickHB {
     int log_count = 0;
     UiDevice mUIDevice = null;
     Context mContext = null;
+    String taskType = "hongbao";
     @Test
     public void test() {
         mUIDevice.pressHome();  //按home键
@@ -41,13 +49,44 @@ public class ClickHB {
             mUIDevice.pressBack();
             Thread.sleep(3000);
             mUIDevice.pressBack();
-            for (int i = 0; i < 9999; i++) {
-                HttpResult httpResult = HttpUtil.post("F100005");
-                if("".equals(httpResult.getErrorNo())) {
-
-                }else{
-                    Log.e(TAG,"获取用户信息失败："+httpResult.getErrorInfo());
-                    Thread.sleep(5000);
+            if(!SQLUtil.tabbleIsExist(TaskSQL.table)){
+                TaskSQL.createTableTask();
+            }
+            if(TaskSQL.selectTaskCount(taskType)==0){
+                for (int i = 0; i < 10; i++) {
+                    Map<String,String> para = new HashMap<>();
+                    para.put("phone","c4c8ba9f4fd2");
+                    para.put("type","hongbao");
+                    HttpResult httpResult = HttpUtil.post("F100010",para);
+                    if("".equals(httpResult.getErrorNo())) {
+                        List<Task> list = new ArrayList<Task>();
+                        List<DataRow> list_dataRow =  httpResult.getList();
+                        for(DataRow dataRow : list_dataRow){
+                            Task task = new Task();
+                            task.setNumber(dataRow.getInt("number"));
+                            task.setUid(0);
+                            task.setPhone(dataRow.getString("accout"));
+                            task.setPwd(dataRow.getString("pwd"));
+                            task.setDay("");
+                            task.setTask_count(Constant.HONGBAO_COUNT);
+                            task.setSuccess_count(0);
+                            task.setType(taskType);
+                            list.add(task);
+                        }
+                        TaskSQL.inserTask(list,taskType);
+                        break;
+                    }else{
+                        Log.e(TAG,"获取用户信息失败："+httpResult.getErrorInfo());
+                        Thread.sleep(5000);
+                    }
+                    List<Task> list = TaskSQL.selectTask(taskType);
+                    if(list.size()>0){
+                        for (int j = 0; i < 100; i++) {
+                            for(Task task :list){
+                                qiangHongBao(task);
+                            }
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -86,5 +125,16 @@ public class ClickHB {
             Log.d(TAG,"有广告");
             close.click();
         }
+    }
+    //进入直播
+    public void qiangHongBao(Task task) throws Exception {
+        goZhiBo();
+        closeZhiBo();
+    }
+    //进入直播
+    public void goZhiBo() throws Exception {
+    }
+    //退出直播
+    public void closeZhiBo() throws Exception {
     }
 }

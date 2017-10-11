@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class HttpResult<E> {
+public class HttpResult {
     private Map<String, String> head = new HashMap<String, String>(); //头标签
     private List<DataRow> list = new ArrayList<DataRow>(); //返回数据
 

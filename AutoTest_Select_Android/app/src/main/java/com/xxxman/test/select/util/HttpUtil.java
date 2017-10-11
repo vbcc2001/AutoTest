@@ -7,14 +7,21 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.xxxman.test.select.Constant;
 import com.xxxman.test.select.object.DataRow;
 import com.xxxman.test.select.object.HttpRequest;
 import com.xxxman.test.select.object.HttpResult;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class HttpUtil  {
@@ -33,6 +40,12 @@ public class HttpUtil  {
         httpRequest.setContent(map);
         return post(httpRequest);
     }
+    public static HttpResult post(String function,Map<String,String> para){
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setFunction(function);
+        httpRequest.setContent(para);
+        return post(httpRequest);
+    }
     public static HttpResult post(HttpRequest httpRequest){
         Connection my  = new Connection();
         String url = Constant.URL;
@@ -47,7 +60,7 @@ public class HttpUtil  {
         Log.d(TAG, "http请求结果" + rs);
 
         try{
-            httpResult = (HttpResult) gson.fromJson(rs, new TypeToken<HttpResult<Map<String,String>>>() {}.getType());
+            httpResult = (HttpResult) gson.fromJson(rs, new TypeToken<HttpResult>() {}.getType());
             Log.d(TAG, "error" + httpResult.getErrorNo()+":"+httpResult.getErrorInfo());
             Log.d(TAG, "list" + "("+httpResult.getList().size()+"):"+httpResult.getList());
         }catch (Exception e){
