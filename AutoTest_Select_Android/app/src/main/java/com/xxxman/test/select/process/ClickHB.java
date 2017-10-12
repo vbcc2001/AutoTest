@@ -37,10 +37,12 @@ public class ClickHB {
     private static final String TAG = SelectHB.class.getName();
     String APP = "com.huajiao";
     int log_count = 0;
+    int fail_count = 0;
     UiDevice mUIDevice = null;
     Context mContext = null;
     String taskType = "hongbao";
     boolean is4X = Constant.IS_4X;
+
     @Test
     public void test() {
         mUIDevice.pressHome();  //按home键
@@ -81,13 +83,13 @@ public class ClickHB {
                         Log.e(TAG,"获取用户信息失败："+httpResult.getErrorInfo());
                         Thread.sleep(5000);
                     }
-                    List<Task> list = TaskSQL.selectTask(taskType);
-                    if(list.size()>0){
-                        for (int j = 0; i < 100; i++) {
-                            for(Task task :list){
-                                qiangHongBao(task);
-                            }
-                        }
+                }
+            }
+            List<Task> list = TaskSQL.selectTask(taskType);
+            if(list.size()>0){
+                for (int j = 0; j < 100; j++) {
+                    for(Task task :list){
+                        qiangHongBao(task);
                     }
                 }
             }
@@ -170,12 +172,47 @@ public class ClickHB {
         logining.click();
     }
     //抢红包
-    public void qiangHongBao(Task task) throws Exception {
-        login(task);
-        goZhiBo(""+0);
-        share();
-        click();
-        closeZhiBo();
+    public void qiangHongBao(Task task)   {
+        try{
+            login(task);
+            for(int j=0;j<100;j++){
+                try{
+                    HttpResult httpResult = HttpUtil.post("F200101");
+                    if("".equals(httpResult.getErrorNo())) {
+                        List<DataRow> list_dataRow =  httpResult.getList();
+                        int size =5;
+                        if(list_dataRow.size()<size){
+                            size = list_dataRow.size();
+                        }
+                        for(int i=0;i<size;i++){
+                            try {
+                                String uid = list_dataRow.get(i).getString("uid");
+                                goZhiBo(uid);
+                                share();
+                                click();
+                                closeZhiBo();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                reboot();
+                            }
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    reboot();
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            reboot();
+        }
+    }
+    //重启
+    public void reboot() {
+        Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(APP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mContext.startActivity(intent);
+        mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
     }
     //进入直播
     public void goZhiBo(String uid) throws Exception {
@@ -209,59 +246,27 @@ public class ClickHB {
             }else{
                 mUIDevice.click(640,910);
             }
-            Thread.sleep(1000);
+            Thread.sleep(500);
             UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
             //情况1：成功
             if(kaihongbao!=null){
-                count_get_hongbao++;
-                user.hongbao = sqlUtil.updateHongbaoCount(user);
-                kaihongbao.click();
-                Thread.sleep(6000);
-                if(is4X){
-                    mUIDevice.click(990,1843);
-                    mUIDevice.click(990,1843);
-                }else{
-                    mUIDevice.click(660,1228);
-                    mUIDevice.click(660,1228);
-                }
                 break;
             }else{
                 //情况2：失败
                 UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
                 if(wuyuan!=null){
                     fail_count++;
-                    if(is4X){
-                        mUIDevice.click(990,1843);
-                        mUIDevice.click(990,1843);
-                    }else{
-                        mUIDevice.click(660,1228);
-                        mUIDevice.click(660,1228);
-                    }
                     break;
                 }else{
                     //情况3：失败
                     UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
                     if(meiyou!=null){
                         fail_count++;
-                        if(is4X){
-                            mUIDevice.click(990,1843);
-                            mUIDevice.click(990,1843);
-                        }else{
-                            mUIDevice.click(660,1228);
-                            mUIDevice.click(660,1228);
-                        }
                         break;
                     }else{
                         UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
                         if(yunqicha!=null){
                             fail_count++;
-                            if(is4X){
-                                mUIDevice.click(990,1843);
-                                mUIDevice.click(990,1843);
-                            }else{
-                                mUIDevice.click(660,1228);
-                                mUIDevice.click(660,1228);
-                            }
                             break;
                         }else{
                             //情况4：未完成
@@ -283,18 +288,8 @@ public class ClickHB {
                                         throw new Exception("未登录");
                                     }else{
                                         //没红包
-                                        //if(j>2){
-                                        if (is4X) {
-                                            mUIDevice.click(990, 1843);
-                                            mUIDevice.click(990, 1843);
-                                        } else {
-                                            mUIDevice.click(660, 1228);
-                                            mUIDevice.click(660, 1228);
-                                        }
                                         break;
-                                        //}
                                     }
-
                                 }
                             }
                         }
@@ -302,11 +297,19 @@ public class ClickHB {
                 }
             }
         }
-
-
     }
     //退出直播
     public void closeZhiBo() throws Exception {
+        if(is4X){
+            mUIDevice.click(990,1843);
+            mUIDevice.click(990,1843);
+        }else{
+            mUIDevice.click(660,1228);
+            mUIDevice.click(660,1228);
+        }
+        mUIDevice.pressBack();
+        mUIDevice.pressBack();
+        mUIDevice.pressBack();
     }
     public void share() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
@@ -322,16 +325,11 @@ public class ClickHB {
         }
         UiObject share_qq = mUIDevice.findObject(new UiSelector().text("发给QQ好友"));
         share_qq.click();
-
         UiObject my_compa = mUIDevice.findObject(new UiSelector().text("我的电脑"));
         my_compa.click();  //点击按键
-
         UiObject qq_sent = mUIDevice.findObject(new UiSelector().text("发送"));
         qq_sent.click();  //点击按键
-
         UiObject qq_back = mUIDevice.findObject(new UiSelector().text("返回花椒直播"));
         qq_back.click();  //点击按键
-
     }
-
 }
