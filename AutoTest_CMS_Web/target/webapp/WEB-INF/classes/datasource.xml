@@ -8,7 +8,7 @@
 <datasources default="huajiao">
 	<datasource id="huajiao" >
 		<property name="driver-name">com.mysql.jdbc.Driver</property>
-		<property name="url">jdbc:mysql://39.108.120.224:3306/huajiao</property>
+		<property name="url">jdbc:mysql://127.0.0.1:3306/huajiao</property>
 		<property name="user">huajiao</property>
 		<property name="password">huajiao</property>
 		<property name="initialPoolSize">1</property>
