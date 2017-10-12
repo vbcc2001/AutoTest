@@ -1,12 +1,5 @@
 package com.xxx.lfs.function;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.xxx.web.http.listener.Listener;
 import com.xxx.web.jdbc.DBConfigure;
 import com.xxx.web.jdbc.JdbcTemplate;
 import com.xxx.web.jdbc.Session;

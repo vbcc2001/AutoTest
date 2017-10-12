@@ -25,7 +25,7 @@ public class F200101 extends BaseFunction {
 
 		Object arg[] = new Object[1];
 		arg[0]=ts;
-		String	sql ="SELECT * FROM t_hongbao_info where update_time>? order by id desc ";
+		String	sql ="SELECT distinct uid,update_time,id,state FROM t_hongbao_info where update_time>? order by id desc limit 10 ";
 		List<DataRow> list = this.getNewJdbcTemplate().query(sql,arg);
 		return list;
 	}
