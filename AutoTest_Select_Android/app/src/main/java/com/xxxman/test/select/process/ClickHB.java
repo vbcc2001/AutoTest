@@ -38,6 +38,7 @@ public class ClickHB {
     String APP = "com.huajiao";
     int log_count = 0;
     int fail_count = 0;
+    int succ_count = 0;
     UiDevice mUIDevice = null;
     Context mContext = null;
     String taskType = "hongbao";
@@ -59,7 +60,7 @@ public class ClickHB {
             if(TaskSQL.selectTaskCount(taskType)==0){
                 for (int i = 0; i < 10; i++) {
                     Map<String,String> para = new HashMap<>();
-                    para.put("phone","c4c8ba9f4fd2");
+                    para.put("phone","ddbf44f57eb4");
                     para.put("type","hongbao");
                     HttpResult httpResult = HttpUtil.post("F100010",para);
                     if("".equals(httpResult.getErrorNo())) {
@@ -70,7 +71,8 @@ public class ClickHB {
                             task.setNumber(dataRow.getInt("number"));
                             task.setUid(0);
                             task.setPhone(dataRow.getString("accout"));
-                            task.setPwd(dataRow.getString("pwd"));
+                            //task.setPwd(dataRow.getString("pwd"));
+                            task.setPwd("qaz147258..");
                             task.setDay("");
                             task.setTask_count(Constant.HONGBAO_COUNT);
                             task.setSuccess_count(0);
@@ -175,12 +177,14 @@ public class ClickHB {
     public void qiangHongBao(Task task)   {
         try{
             login(task);
+            fail_count =0;
+            succ_count =task.getSuccess_count();
             for(int j=0;j<100;j++){
                 try{
                     HttpResult httpResult = HttpUtil.post("F200101");
                     if("".equals(httpResult.getErrorNo())) {
                         List<DataRow> list_dataRow =  httpResult.getList();
-                        int size =5;
+                        int size =2;
                         if(list_dataRow.size()<size){
                             size = list_dataRow.size();
                         }
@@ -196,10 +200,18 @@ public class ClickHB {
                                 reboot();
                             }
                         }
+                    }else{
+                        Thread.sleep(5000);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
                     reboot();
+                }
+                if(fail_count>=3){
+                    break;
+                }
+                if(succ_count>=3){
+                    break;
                 }
             }
         }catch (Exception e){
@@ -226,10 +238,6 @@ public class ClickHB {
         Thread.sleep(1000);
         sousuo.click();
         Thread.sleep(3000);
-        UiObject2 guangzhu = mUIDevice.findObject(By.res("com.huajiao:id/focus_iv"));
-        if(guangzhu!=null){
-            guangzhu.click();
-        }
         UiObject touxiang = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/search_item_user_icon"));
         touxiang.click();
         Thread.sleep(2000);
@@ -250,6 +258,7 @@ public class ClickHB {
             UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
             //情况1：成功
             if(kaihongbao!=null){
+                succ_count++;
                 break;
             }else{
                 //情况2：失败
