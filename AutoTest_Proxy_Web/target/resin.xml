@@ -41,7 +41,7 @@
 			<keepalive-timeout>15s</keepalive-timeout>
 		</server-default>
 		<!-- 定义服务器对集群的配置 -->
-		<server id="${app.name}" address="127.0.0.1" port="6810" />
+		<server id="${app.name}" address="127.0.0.1" port="6811" />
 		<!--配置独立服务器或者群集的持久化存储，专业版的功能 -->
 		<resin:if test="${resin.professional}">
 			<persistent-store type="cluster">
