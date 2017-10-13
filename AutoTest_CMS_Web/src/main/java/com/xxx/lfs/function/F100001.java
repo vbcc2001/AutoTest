@@ -1,18 +1,8 @@
 package com.xxx.lfs.function;
 
-import java.lang.reflect.Type;
-import java.util.Map;
 
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Table;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
-import com.xxx.web.http.listener.AWSConfig;
 import com.xxx.web.jdbc.DBConfigure;
 
 /** 添加或修改标签 */

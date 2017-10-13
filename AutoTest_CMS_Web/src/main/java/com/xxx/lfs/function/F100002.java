@@ -4,14 +4,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
 import com.xxx.web.function.DataRow;
 import com.xxx.web.function.RequestParameter;
 import com.xxx.web.function.ResponseParameter;
-import com.xxx.web.http.listener.AWSConfig;
 import com.xxx.web.jdbc.DBConfigure;
 
 
