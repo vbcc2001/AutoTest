@@ -29,7 +29,7 @@
 			<jvm-arg>-Dcom.sun.management.jmxremote</jvm-arg>
 			<!-- 监控进程的配置 -->
 			<watchdog-jvm-arg>-Dcom.sun.management.jmxremote</watchdog-jvm-arg>
-			<watchdog-port>6601</watchdog-port>
+			<watchdog-port>6602</watchdog-port>
 			<!-- 强制resin强制重起时的最小空闲内存 -->
 			<memory-free-min>1M</memory-free-min>
 			<!-- 最大线程数量. -->
