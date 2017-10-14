@@ -2,6 +2,7 @@ package com.xxxman.test.select.process;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
@@ -22,6 +23,8 @@ import com.xxxman.test.select.object.Task;
 import com.xxxman.test.select.sql.TaskSQL;
 import com.xxxman.test.select.util.Connection;
 import com.xxxman.test.select.util.HttpUtil;
+import com.xxxman.test.select.util.RSAUtils;
+import com.xxxman.test.select.util.SNUtil;
 import com.xxxman.test.select.util.SQLUtil;
 
 import org.junit.Before;
@@ -37,12 +40,12 @@ public class ClickHB {
     private static final String TAG = SelectHB.class.getName();
     String APP = "com.huajiao";
     int log_count = 0;
-    int fail_count = 0;
-    int succ_count = 0;
+    int vpn_quit_count = 0;
     UiDevice mUIDevice = null;
     Context mContext = null;
     String taskType = "hongbao";
     boolean is4X = Constant.IS_4X;
+    String sn_code = "";
 
     @Test
     public void test() {
@@ -60,7 +63,10 @@ public class ClickHB {
             if(TaskSQL.selectTaskCount(taskType)==0){
                 for (int i = 0; i < 10; i++) {
                     Map<String,String> para = new HashMap<>();
-                    para.put("phone","ddbf44f57eb4");
+                    SharedPreferences preferences= mContext.getSharedPreferences("sn_code", Context.MODE_PRIVATE);
+                    sn_code =preferences.getString("sn_code", "xxx");
+                    Log.d(TAG,"注册码为："+sn_code);
+                    para.put("phone",sn_code);
                     para.put("type","hongbao");
                     HttpResult httpResult = HttpUtil.post("F100010",para);
                     if("".equals(httpResult.getErrorNo())) {
@@ -74,7 +80,7 @@ public class ClickHB {
                             //task.setPwd(dataRow.getString("pwd"));
                             task.setPwd("qaz147258..");
                             task.setDay("");
-                            task.setTask_count(Constant.HONGBAO_COUNT);
+                            task.setTask_count(0);
                             task.setSuccess_count(0);
                             task.setType(taskType);
                             list.add(task);
@@ -89,9 +95,26 @@ public class ClickHB {
             }
             List<Task> list = TaskSQL.selectTask(taskType);
             if(list.size()>0){
-                for (int j = 0; j < 100; j++) {
+                for (int j = 0; j < 10; j++) {
                     for(Task task :list){
-                        qiangHongBao(task);
+                        Log.d(TAG,"开始执行第（"+task.getNumber()+"）任务："
+                                +"phone="+task.getPhone()
+                                +"，task_count="+task.getTask_count()
+                                +"，success_count="+task.getSuccess_count()
+                                +"，fail_count="+task.getFail_count());
+                        //没抢满红包
+                        if(task.getSuccess_count()<Constant.HONGBAO_COUNT ){
+                            //执行小于5次
+                            if( task.getTask_count()<5 ){
+                                //失败小于6次
+                                if( task.getFail_count()< 6 ){
+                                    //失败小于3次，或者失败小于6次但成功小于3次
+                                    if(task.getFail_count()< 3 || task.getSuccess_count()<3){
+                                        qiangHongBao(task);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -133,14 +156,29 @@ public class ClickHB {
         }
     }
     //退出流程
-    public void quit() throws Exception {
+    public void quit(Task task,boolean is_record_dou) throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
         Log.d(TAG,"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
         my.click();
         UiScrollable home = new UiScrollable(new UiSelector().resourceId("com.huajiao:id/swipeLayout"));
         home.scrollToEnd(1);
-        UiObject2 dou = mUIDevice.findObject(By.res("com.huajiao:id/hjd_num_tv"));
+        if(is_record_dou){
+            UiObject2 dou = mUIDevice.findObject(By.res("com.huajiao:id/hjd_num_tv"));
+            if (dou != null){
+                Log.d(TAG,"豆数为："+dou.getText()+"---------");
+                int dou_sum = Integer.valueOf(dou.getText());
+                if(dou_sum>0){
+                    Map<String,String> map = new HashMap<>();
+                    map.put("phone",sn_code);
+                    map.put("account",task.getPhone());
+                    map.put("state","1");
+                    map.put("pwd","*");
+                    map.put("dou",task.getPhone());
+                    HttpResult httpResult = HttpUtil.post("F100005",map);
+                }
+            }
+        }
         UiObject setting = mUIDevice.findObject(new UiSelector().text("设置"));
         setting.click();
         UiObject2 set = mUIDevice.findObject(By.res("android:id/content")).getChildren().get(0).getChildren().get(1);
@@ -158,7 +196,7 @@ public class ClickHB {
         my.click();
         UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
         if(login==null){
-            quit();
+            quit(task,false);
             my = mUIDevice.findObject(new UiSelector().text("我的"));
             my.click();
             UiObject2 login1 = mUIDevice.findObject(By.text("使用手机号登录"));
@@ -176,15 +214,15 @@ public class ClickHB {
     //抢红包
     public void qiangHongBao(Task task)   {
         try{
+            changeIP();
             login(task);
-            fail_count =0;
-            succ_count =task.getSuccess_count();
+            TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
             for(int j=0;j<100;j++){
                 try{
                     HttpResult httpResult = HttpUtil.post("F200101");
                     if("".equals(httpResult.getErrorNo())) {
                         List<DataRow> list_dataRow =  httpResult.getList();
-                        int size =2;
+                        int size =3;
                         if(list_dataRow.size()<size){
                             size = list_dataRow.size();
                         }
@@ -192,9 +230,13 @@ public class ClickHB {
                             try {
                                 String uid = list_dataRow.get(i).getString("uid");
                                 goZhiBo(uid);
+                                Thread.sleep(3000);
                                 share();
-                                click();
+                                click(task);
                                 closeZhiBo();
+                                if(task.getFail_count()>=3){
+                                    break;
+                                }
                             }catch (Exception e){
                                 e.printStackTrace();
                                 reboot();
@@ -207,13 +249,17 @@ public class ClickHB {
                     e.printStackTrace();
                     reboot();
                 }
-                if(fail_count>=3){
+                if(task.getFail_count()>=3){
                     break;
                 }
-                if(succ_count>=3){
+                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT_ONE && task.getTask_count()==0){
+                    break;
+                }
+                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT && task.getTask_count()>1){
                     break;
                 }
             }
+            quit(task,true);
         }catch (Exception e){
             e.printStackTrace();
             reboot();
@@ -247,7 +293,7 @@ public class ClickHB {
         }
     }
     //点击
-    public void click() throws Exception {
+    public void click(Task task) throws Exception {
         for(int j =0 ;j < 50 ;j++){
             if(is4X){
                 mUIDevice.click(954,1367);
@@ -258,24 +304,28 @@ public class ClickHB {
             UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
             //情况1：成功
             if(kaihongbao!=null){
-                succ_count++;
+                task.setSuccess_count(task.getSuccess_count()+1);
+                TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
                 break;
             }else{
                 //情况2：失败
                 UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
                 if(wuyuan!=null){
-                    fail_count++;
+                    task.setFail_count(task.getFail_count()+1);
+                    TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                     break;
                 }else{
                     //情况3：失败
                     UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
                     if(meiyou!=null){
-                        fail_count++;
+                        task.setFail_count(task.getFail_count()+1);
+                        TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                         break;
                     }else{
                         UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
                         if(yunqicha!=null){
-                            fail_count++;
+                            task.setFail_count(task.getFail_count()+1);
+                            TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                             break;
                         }else{
                             //情况4：未完成
@@ -340,5 +390,60 @@ public class ClickHB {
         qq_sent.click();  //点击按键
         UiObject qq_back = mUIDevice.findObject(new UiSelector().text("返回花椒直播"));
         qq_back.click();  //点击按键
+    }
+    public void changeIP(){
+        try {
+            Thread.sleep(5000);
+            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+            mContext.startActivity(myIntent1);
+            mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+            Thread.sleep(5000);
+            if(vpn_quit_count<2){
+                mUIDevice.pressBack();
+                Thread.sleep(500);
+                UiObject2 quit = mUIDevice.findObject(By.text("确认"));
+                if(quit!=null){
+                    quit.click();
+                }
+                Thread.sleep(500);
+                mUIDevice.pressBack();
+                Thread.sleep(500);
+                UiObject2 quit1 = mUIDevice.findObject(By.text("确认"));
+                if(quit1!=null){
+                    quit1.click();
+                }
+                vpn_quit_count++;
+                Thread.sleep(1500);
+
+                mContext.startActivity(myIntent1);
+                mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                Thread.sleep(5000);
+                UiObject2 login1 = mUIDevice.findObject(By.text("立即登录"));
+                if(login1!=null){
+                    login1.click();
+                    Thread.sleep(5000);
+                }
+            }else{
+                UiObject2 login = mUIDevice.findObject(By.text("立即登录"));
+                if(login!=null){
+                    login.click();
+                    Thread.sleep(5000);
+                }
+                UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+                if(conn!=null){
+                    conn.click();
+                }
+            }
+            Thread.sleep(5000);
+            reboot();
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 }

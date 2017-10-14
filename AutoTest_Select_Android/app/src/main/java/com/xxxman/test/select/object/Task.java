@@ -2,6 +2,7 @@ package com.xxxman.test.select.object;
 
 public class Task {
 
+    private int id=0;
     private int number=0;
     private int uid=0;
     private String phone="";
@@ -9,7 +10,16 @@ public class Task {
     private String day="";
     private int task_count=0;
     private int success_count=0;
+    private int fail_count=0;
     private String type="";
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getNumber() {
         return number;
@@ -65,6 +75,14 @@ public class Task {
 
     public void setSuccess_count(int success_count) {
         this.success_count = success_count;
+    }
+
+    public int getFail_count() {
+        return fail_count;
+    }
+
+    public void setFail_count(int fail_count) {
+        this.fail_count = fail_count;
     }
 
     public String getType() {
