@@ -3,16 +3,15 @@ ulimit -n 357353
 PROJECT_PATH=/srv/AutoTest/AutoTest_Proxy_Web/
 APP_NAME=AutoTest_Proxy_Web
 APP_HOME=$PROJECT_PATH/target/
+APP_PORT=80
 JAVA_HOME=$PROJECT_PATH/target/jdk1.8.0_144/jre
 JAVA=$JAVA_HOME/bin/java
 export JAVA_HOME
 RESIN_HOME=$PROJECT_PATH/target/resin-pro-3.1.12
-RESIN_CONF=$PROJECT_PATH/target/resin-liunx.xml
+RESIN_CONF=$PROJECT_PATH/target/resin.xml
 RESIN=$RESIN_HOME/lib/resin.jar
-LD_LIBRARY_PATH=$APP_HOME/WebRoot/WEB-INF/classes/:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH
 USER=root
-JAVA_CONF="-Dfile.encoding=UTF-8 -Dapp.home=$APP_HOME -Dapp.name=$APP_NAME  -jar $RESIN  -resin-home $RESIN_HOME -conf $RESIN_CONF  -server $APP_NAME "
+JAVA_CONF="-Dfile.encoding=UTF-8 -Dapp.home=$APP_HOME -Dapp.name=$APP_NAME  -Dapp.port=$APP_PORT -jar $RESIN  -resin-home $RESIN_HOME -conf $RESIN_CONF  -server $APP_NAME "
 case "$1" in
   start)
   echo -n "Starting resin:"
