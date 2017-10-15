@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".MyBroadCastReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="com.xxxman.test.select.MyBroadCastReceiver" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

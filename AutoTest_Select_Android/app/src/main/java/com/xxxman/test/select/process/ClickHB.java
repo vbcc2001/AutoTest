@@ -3,6 +3,8 @@ package com.xxxman.test.select.process;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
@@ -14,6 +16,9 @@ import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xxxman.test.select.Constant;
 import com.xxxman.test.select.object.DataRow;
@@ -26,6 +31,7 @@ import com.xxxman.test.select.util.HttpUtil;
 import com.xxxman.test.select.util.RSAUtils;
 import com.xxxman.test.select.util.SNUtil;
 import com.xxxman.test.select.util.SQLUtil;
+import com.xxxman.test.select.util.ToastUitl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +60,7 @@ public class ClickHB {
             Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
             mContext.startActivity(myIntent);
             mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
+            Thread.sleep(3000);
             mUIDevice.pressBack();
             Thread.sleep(3000);
             mUIDevice.pressBack();
@@ -95,7 +102,7 @@ public class ClickHB {
             }
             List<Task> list = TaskSQL.selectTask(taskType);
             if(list.size()>0){
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 6; j++) {
                     for(Task task :list){
                         Log.d(TAG,"开始执行第（"+task.getNumber()+"）任务："
                                 +"phone="+task.getPhone()
@@ -104,13 +111,21 @@ public class ClickHB {
                                 +"，fail_count="+task.getFail_count());
                         //没抢满红包
                         if(task.getSuccess_count()<Constant.HONGBAO_COUNT ){
-                            //执行小于5次
-                            if( task.getTask_count()<5 ){
+                            //执行小于6次
+                            if( task.getTask_count()<j+1 ){
                                 //失败小于6次
                                 if( task.getFail_count()< 6 ){
                                     //失败小于3次，或者失败小于6次但成功小于3次
                                     if(task.getFail_count()< 3 || task.getSuccess_count()<3){
+                                        //提醒
+                                        String info = "开始第（"+task.getNumber()+"）用户："
+                                                +"，第"+task.getTask_count()+"次执行,"
+                                                +"，已抢到"+task.getSuccess_count()+"次,"
+                                                +"，未抢到"+task.getFail_count()+"次；";
+                                        //提示
+                                        ToastUitl.sendBroadcast(mContext,info);
                                         qiangHongBao(task);
+
                                     }
                                 }
                             }
@@ -210,6 +225,7 @@ public class ClickHB {
         password.setText(task.getPwd());
         UiObject logining = mUIDevice.findObject(new UiSelector().text("登录"));
         logining.click();
+        ToastUitl.sendBroadcast(mContext,"正在登录第"+task.getNumber()+"个用户");
     }
     //抢红包
     public void qiangHongBao(Task task)   {
@@ -278,13 +294,16 @@ public class ClickHB {
         chaxun.click();
         UiObject huajiao_id = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/edit_keyword"));
         huajiao_id.setText(uid);
-        Thread.sleep(500);
+        Thread.sleep(1000);
         UiObject sousuo = mUIDevice.findObject(new UiSelector().text("搜索"));
         sousuo.click();
-        Thread.sleep(1000);
-        sousuo.click();
-        Thread.sleep(3000);
-        UiObject touxiang = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/search_item_user_icon"));
+        Thread.sleep(2000);
+        UiObject2 touxiang = mUIDevice.findObject(By.res("com.huajiao:id/search_item_user_icon"));
+        if(touxiang==null){
+            sousuo.click();
+            Thread.sleep(3000);
+            touxiang = mUIDevice.findObject(By.res("com.huajiao:id/search_item_user_icon"));
+        }
         touxiang.click();
         Thread.sleep(2000);
         UiObject2 zhibozhong = mUIDevice.findObject(By.res("com.huajiao:id/icon_view"));
@@ -301,9 +320,22 @@ public class ClickHB {
                 mUIDevice.click(640,910);
             }
             Thread.sleep(500);
+            UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
+            if(hongdou100!=null) {
+                if (is4X) {
+                    mUIDevice.click(990, 1770);
+                } else {
+                    mUIDevice.click(660, 1180);
+                }
+                continue;
+            }else{
+                Thread.sleep(2000);
+            }
             UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
             //情况1：成功
             if(kaihongbao!=null){
+                kaihongbao.click();
+                Thread.sleep(2000);
                 task.setSuccess_count(task.getSuccess_count()+1);
                 TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
                 break;
@@ -328,27 +360,17 @@ public class ClickHB {
                             TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                             break;
                         }else{
-                            //情况4：未完成
-                            UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
-                            if(hongdou100!=null){
-                                if(is4X){
-                                    mUIDevice.click(990,1770);
+                            //情况5：未实名
+                            UiObject2 renzheng = mUIDevice.findObject(By.text("实名认证提示"));
+                            if(renzheng!=null){
+                                throw new Exception("未实名认证");
+                            }else {
+                                UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+                                if(login!=null){
+                                    throw new Exception("未登录");
                                 }else{
-                                    mUIDevice.click(660,1180);
-                                }
-                            }else{
-                                //情况5：未实名
-                                UiObject2 renzheng = mUIDevice.findObject(By.text("实名认证提示"));
-                                if(renzheng!=null){
-                                    throw new Exception("未实名认证");
-                                }else {
-                                    UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
-                                    if(login!=null){
-                                        throw new Exception("未登录");
-                                    }else{
-                                        //没红包
-                                        break;
-                                    }
+                                    //没红包
+                                    break;
                                 }
                             }
                         }
@@ -374,7 +396,7 @@ public class ClickHB {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()
                 +"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
 
-        UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
+        //UiObject share = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/btn_share"));
         //share.click();
         Thread.sleep(2000);
         if(is4X){
@@ -394,11 +416,11 @@ public class ClickHB {
     public void changeIP(){
         try {
             Thread.sleep(5000);
-            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.photon.hybrid");  //启动app
             mContext.startActivity(myIntent1);
-            mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+            mUIDevice.waitForWindowUpdate("com.photon.hybrid", 5 * 2000);
             Thread.sleep(5000);
-            if(vpn_quit_count<2){
+            if(vpn_quit_count<0){
                 mUIDevice.pressBack();
                 Thread.sleep(500);
                 UiObject2 quit = mUIDevice.findObject(By.text("确认"));
@@ -429,7 +451,7 @@ public class ClickHB {
                     login.click();
                     Thread.sleep(5000);
                 }
-                UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+                UiObject2 conn = mUIDevice.findObject(By.res("com.photon.hybrid:id/apv_switch"));
                 if(conn!=null){
                     conn.click();
                 }
@@ -437,11 +459,11 @@ public class ClickHB {
             Thread.sleep(5000);
             reboot();
             Thread.sleep(5000);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 Thread.sleep(5000);
-            } catch (InterruptedException e1) {
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
