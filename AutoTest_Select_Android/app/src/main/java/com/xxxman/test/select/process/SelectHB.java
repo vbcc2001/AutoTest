@@ -46,6 +46,9 @@ public class SelectHB {
                     selectCity();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    reboot();
+                    Thread.sleep(3000);
+                    mUIDevice.pressBack();
                 }
             }
         } catch (Exception e) {

@@ -77,6 +77,8 @@ public class Servlet extends HttpServlet{
                 response.getWriter().print(s);
                 response.getWriter().flush();
                 response.getWriter().close();
+            }else{
+                response.sendError(404);
             }
         }catch (Exception e){
             e.printStackTrace();

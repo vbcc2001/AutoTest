@@ -236,7 +236,7 @@ public class ClickHB {
             for(int j=0;j<100;j++){
                 try{
                     HttpResult httpResult = HttpUtil.post("F200101");
-                    if("".equals(httpResult.getErrorNo())) {
+                    if("".equals(httpResult.getErrorNo()) && httpResult.getList().size()>0) {
                         List<DataRow> list_dataRow =  httpResult.getList();
                         int size =3;
                         if(list_dataRow.size()<size){
@@ -259,7 +259,7 @@ public class ClickHB {
                             }
                         }
                     }else{
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -415,12 +415,13 @@ public class ClickHB {
     }
     public void changeIP(){
         try {
+            String ip_app = "com.deruhai.guangzi.root";
             Thread.sleep(5000);
-            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.photon.hybrid");  //启动app
+            Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage(ip_app);  //启动app
             mContext.startActivity(myIntent1);
-            mUIDevice.waitForWindowUpdate("com.photon.hybrid", 5 * 2000);
+            mUIDevice.waitForWindowUpdate(ip_app, 5 * 2000);
             Thread.sleep(5000);
-            if(vpn_quit_count<0){
+            if(vpn_quit_count<2){
                 mUIDevice.pressBack();
                 Thread.sleep(500);
                 UiObject2 quit = mUIDevice.findObject(By.text("确认"));
@@ -438,7 +439,7 @@ public class ClickHB {
                 Thread.sleep(1500);
 
                 mContext.startActivity(myIntent1);
-                mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                mUIDevice.waitForWindowUpdate(ip_app, 5 * 2000);
                 Thread.sleep(5000);
                 UiObject2 login1 = mUIDevice.findObject(By.text("立即登录"));
                 if(login1!=null){
@@ -451,7 +452,7 @@ public class ClickHB {
                     login.click();
                     Thread.sleep(5000);
                 }
-                UiObject2 conn = mUIDevice.findObject(By.res("com.photon.hybrid:id/apv_switch"));
+                UiObject2 conn = mUIDevice.findObject(By.res(ip_app+":id/apv_switch"));
                 if(conn!=null){
                     conn.click();
                 }
