@@ -21,7 +21,7 @@ public class F200101 extends BaseFunction {
 	}
 	private List<DataRow> query() throws Exception {
 
-		Timestamp ts = new Timestamp(System.currentTimeMillis()-1000*60*5*12*24);
+		Timestamp ts = new Timestamp(System.currentTimeMillis()-1000*60*3);
 
 		Object arg[] = new Object[1];
 		arg[0]=ts;
