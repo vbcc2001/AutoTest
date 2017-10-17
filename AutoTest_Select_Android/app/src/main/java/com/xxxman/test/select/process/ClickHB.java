@@ -87,6 +87,9 @@ public class ClickHB {
                             task.setPhone(dataRow.getString("accout"));
                             //task.setPwd(dataRow.getString("pwd"));
                             task.setPwd("qaz147258..");
+                            if("86d9478e0a89".equals(sn_code)){
+                                task.setPwd("x12345678");
+                            }
                             task.setDay("");
                             task.setTask_count(0);
                             task.setSuccess_count(0);
@@ -143,19 +146,19 @@ public class ClickHB {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
         Log.d(TAG,"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
-//        mUIDevice.registerWatcher("notifation", new UiWatcher() {
-//            @Override
-//            public boolean checkForCondition() {
-//                // just press back
-//                Log.d(TAG,":进入Watcher");
-//                try {
-//                    closeAd();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                return false;
-//            }
-//        });
+        mUIDevice.registerWatcher("notifation", new UiWatcher() {
+            @Override
+            public boolean checkForCondition() {
+                // just press back
+                Log.d(TAG,":进入Watcher");
+                try {
+                    closeAd();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
         mContext = InstrumentationRegistry.getContext();
         if(!mUIDevice.isScreenOn()){  //唤醒屏幕
             mUIDevice.wakeUp();
@@ -305,8 +308,13 @@ public class ClickHB {
             Thread.sleep(3000);
             touxiang = mUIDevice.findObject(By.res("com.huajiao:id/search_item_user_icon"));
         }
+        if(touxiang==null){
+            sousuo.click();
+            Thread.sleep(3000);
+            touxiang = mUIDevice.findObject(By.res("com.huajiao:id/search_item_user_icon"));
+        }
         touxiang.click();
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         UiObject2 zhibozhong = mUIDevice.findObject(By.res("com.huajiao:id/icon_view"));
         if(zhibozhong!=null){
             zhibozhong.click();
@@ -330,7 +338,7 @@ public class ClickHB {
                 }
                 continue;
             }else{
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }
             UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
             //情况1：成功
@@ -371,7 +379,9 @@ public class ClickHB {
                                     throw new Exception("未登录");
                                 }else{
                                     //没红包
-                                    break;
+                                    if(j>3){
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -465,6 +475,7 @@ public class ClickHB {
         } catch (Exception e) {
             e.printStackTrace();
             try {
+                reboot();
                 Thread.sleep(5000);
             } catch (Exception e1) {
                 e1.printStackTrace();
