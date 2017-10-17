@@ -1,35 +1,32 @@
 package com.xxxman.test.select.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xxxman.test.select.R;
-import com.xxxman.test.select.util.BaseThread;
+import com.xxxman.test.select.menu.LoginActivity;
 import com.xxxman.test.select.util.RSAUtils;
 import com.xxxman.test.select.util.SNUtil;
 import com.xxxman.test.select.util.ShellUtil;
 import com.xxxman.test.select.util.ToastUitl;
 import com.xxxman.test.select.util.UiautomatorThread;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
-import static android.R.attr.name;
 
 public class HongbaoFragment extends Fragment {
 
     private static final String TAG = HongbaoFragment.class.getName();
-
+    private boolean is_register = false;
     public static HongbaoFragment newInstance() {
         HongbaoFragment fragment = new HongbaoFragment();
         return fragment;
@@ -46,7 +43,11 @@ public class HongbaoFragment extends Fragment {
         runBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if(is_register && ShellUtil.hasRootPermission()){
                 UiautomatorThread thread = new UiautomatorThread("SelectHB");
+            }else{
+                Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+            }
             }
         });
         Button runBtn1 = (Button) view.findViewById(R.id.runBtn1);
@@ -54,34 +55,49 @@ public class HongbaoFragment extends Fragment {
         runBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if(is_register && ShellUtil.hasRootPermission() ){
                 UiautomatorThread thread = new UiautomatorThread("ClickHB");
+            }else{
+                Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+            }
             }
         });
-
+        //注册程序
+        Button fab = (Button) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(HongbaoFragment.this.getActivity(), LoginActivity.class);
+                HongbaoFragment.this.getActivity().startActivity(intent);
+            }
+        });
+        //判断是否Root
+        if(ShellUtil.hasRootPermission()){
+            TextView rootTextView = (TextView)  view.findViewById(R.id.root_view);
+            rootTextView.setText("Root成功，" );
+            rootTextView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
+        }
         try {
             //判断是否注册
-            String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
-                    "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +
-                    "3/JLrJO9awN8Jn9BLMAeXCnpGfuGnzH9RSim9+uXpRBwjbly7YCbWZEY+5n18dDQlXP4QBOyh7jE" +
-                    "0pKYeXoLkSdgWPxOL5tfuiSjewG06xMW+e2OQDvRFUhOgQM41eP8qF9KFaFduUzEiiQ5zYHUHHxC" +
-                    "4sqrIHs1HzZJT6701bh4C3JYOAPo/j6qJw3nEtjb+Oo2AVqGcQr5PsGcH9bGoHSXYulrhyZCWQCq" +
-                    "ioZotQIDAQAB";
-            RSAUtils.loadPublicKey(pubkey);
             String sn = SNUtil.getuniqueId(this.getContext());
             String enctytCode = RSAUtils.encryptWithRSA(sn);
-            String code = null;
-            code = SNUtil.getMD5(enctytCode);
+            String code = SNUtil.getMD5(enctytCode);
             code = SNUtil.getMD5(code);
             code= code.substring(0,12);
             Log.d(TAG,code);
-
-            SharedPreferences sharedPreferences = this.getContext().getSharedPreferences("sn_code", this.getContext().MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("sn_code", code);//目前是保存在内存中，还没有保存到文件中
-            editor.commit();    //数据提交到xml文件中
-            //ToastUitl.toast(this.getContext(),"test");
+            SharedPreferences preferences= this.getContext().getSharedPreferences("sn_code", Context.MODE_PRIVATE);
+            String sn_code =preferences.getString("sn_code", "xxx");
+            if(code.equals(sn_code)){
+                is_register = true;
+                fab.setVisibility(View.GONE);
+                TextView snView =  (TextView)  view.findViewById(R.id.sn_view);
+                snView.setText("注册成功！("+code+")" );
+                snView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this.getActivity(), "注册失败，请检查是否授予获取手机信息的权限", Toast.LENGTH_LONG).show();
         }
 
     }

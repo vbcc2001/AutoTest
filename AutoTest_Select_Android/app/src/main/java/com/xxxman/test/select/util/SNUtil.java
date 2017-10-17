@@ -18,7 +18,7 @@ public class SNUtil {
 
     private static final String TAG = SNUtil.class.getName();
 
-    public static String getuniqueId(Context context){
+    public static String getuniqueId (Context context)throws SecurityException{
 
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         String wifiMac = wifi.getConnectionInfo().getMacAddress();

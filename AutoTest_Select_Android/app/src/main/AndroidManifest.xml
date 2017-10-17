@@ -32,6 +32,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".menu.LoginActivity"
+            android:label="注册">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".menu.UpdateActivity"
+            android:label="软件更新"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".menu.MoneyActivity"
+            android:label="花椒充值"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <receiver android:name=".MyBroadCastReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.xxxman.test.select.MyBroadCastReceiver" />

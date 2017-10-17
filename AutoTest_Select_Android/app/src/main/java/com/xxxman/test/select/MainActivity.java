@@ -50,13 +50,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent();
+        Log.d(TAG,"点击目录为："+item.getItemId());
+        Log.d(TAG,"点击目录为："+R.id.login_menu);
+        Log.d(TAG,"点击目录为："+R.id.udate_menu);
+        Log.d(TAG,"点击目录为："+R.id.money_menu);
         switch (item.getItemId()) {
             case R.id.login_menu:
                 intent.setClass(MainActivity.this, LoginActivity.class);
+                break;
             case R.id.udate_menu:
                 intent.setClass(MainActivity.this, UpdateActivity.class);
+                break;
             case R.id.money_menu:
                 intent.setClass(MainActivity.this, MoneyActivity.class);
+                break;
             default:
                 intent.setClass(MainActivity.this, LoginActivity.class);
         }

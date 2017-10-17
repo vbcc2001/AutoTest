@@ -69,10 +69,11 @@ public class ClickHB {
             }
             if(TaskSQL.selectTaskCount(taskType)==0){
                 for (int i = 0; i < 10; i++) {
-                    Map<String,String> para = new HashMap<>();
+
                     SharedPreferences preferences= mContext.getSharedPreferences("sn_code", Context.MODE_PRIVATE);
                     sn_code =preferences.getString("sn_code", "xxx");
                     Log.d(TAG,"注册码为："+sn_code);
+                    Map<String,String> para = new HashMap<>();
                     para.put("phone",sn_code);
                     para.put("type","hongbao");
                     HttpResult httpResult = HttpUtil.post("F100010",para);

@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xxxman.test.select.util.ToastUitl;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,37 +24,11 @@ public class MyBroadCastReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
         //接收特定键值的数据，实现广播接收器的基本功能
         String str=intent.getStringExtra("name");
-        toast(context,str);
+        ToastUitl.toast(context,str);
 //        Intent tIntent = new Intent(context, MyService.class);
 //        //启动指定Service
 //        context.startService(tIntent);
 
-    }
-    public void toast(Context context,String info){
-        Toast toast = Toast.makeText(context, info, Toast.LENGTH_LONG);
-        LinearLayout layout = (LinearLayout) toast.getView();
-        layout.setBackgroundColor(Color.parseColor("#000000"));
-        TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-        v.setTextColor(Color.RED);
-        v.setTextSize(16);
-        showMyToast(toast, 9000);
-    }
-
-    public void showMyToast(final Toast toast, final int cnt) {
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                toast.show();
-            }
-        }, 0, 3500);
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                toast.cancel();
-                timer.cancel();
-            }
-        }, cnt );
     }
 
 }

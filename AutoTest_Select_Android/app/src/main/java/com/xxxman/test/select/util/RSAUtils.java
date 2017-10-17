@@ -28,11 +28,15 @@ public class RSAUtils {
     private static RSAPublicKey publicKey = null;
     private static RSAPrivateKey privateKey = null;
     private static Cipher cipher = null;
+    private static String pubkey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2zmsLpmPmamWcjznviihheXtecRJCQXj" +
+            "n7rjq5OQscJvK+nK02SAjpSy1GBX4JNVJKLIC9XEtKHsB6pGMXK+C9mHSWYhgF2JwXqylDXPxBZR" +
+            "3/JLrJO9awN8Jn9BLMAeXCnpGfuGnzH9RSim9+uXpRBwjbly7YCbWZEY+5n18dDQlXP4QBOyh7jE" +
+            "0pKYeXoLkSdgWPxOL5tfuiSjewG06xMW+e2OQDvRFUhOgQM41eP8qF9KFaFduUzEiiQ5zYHUHHxC" +
+            "4sqrIHs1HzZJT6701bh4C3JYOAPo/j6qJw3nEtjb+Oo2AVqGcQr5PsGcH9bGoHSXYulrhyZCWQCq" +
+            "ioZotQIDAQAB";
     //随机生成密码对
     public static KeyPair generateRSAKeyPair(int keyLength) {
-        try
-        {
-
+        try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
             //KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", "BC");
             //kpg.initialize(256);
@@ -59,7 +63,7 @@ public class RSAUtils {
 
     /**************************** RSA 公钥加密解密**************************************/
     /** 从字符串中加载公钥,从服务端获取 */
-    public static void loadPublicKey(String pubKey) {
+    public static RSAPublicKey loadPublicKey(String pubKey) {
         try {
             byte[] buffer = Base64.decode(pubKey, Base64.DEFAULT);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -69,6 +73,11 @@ public class RSAUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return publicKey;
+    }
+    /** 从字符串中加载公钥,从本地端获取固定Key */
+    public static RSAPublicKey loadLocalPublicKey() {
+        return loadPublicKey(pubkey);
     }
     /** 从字符串中加载私钥, */
     public static void loadPrivateKey(String priKey) {
@@ -83,6 +92,18 @@ public class RSAUtils {
     }
     /** 公钥加密过程 */
     public static String encryptWithRSA(String plainData) throws Exception {
+
+        // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
+        //cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher = Cipher.getInstance("RSA/NONE/NoPadding");
+        cipher.init(Cipher.ENCRYPT_MODE, loadLocalPublicKey());
+        byte[] buffer = plainData.getBytes("utf-8");
+        byte[] output = cipher.doFinal(buffer);
+        Log.d(TAG,"加密后长度="+output.length);
+        return Base64.encodeToString(output, Base64.DEFAULT);
+    }
+    /** 公钥加密过程 */
+    public static String encryptWithRSA(String plainData,RSAPublicKey publicKey) throws Exception {
 
         // 此处如果写成"RSA"加密出来的信息JAVA服务器无法解析
         //cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
