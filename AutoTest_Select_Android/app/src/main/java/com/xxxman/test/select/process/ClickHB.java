@@ -143,19 +143,19 @@ public class ClickHB {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
         Log.d(TAG,"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
-        mUIDevice.registerWatcher("notifation", new UiWatcher() {
-            @Override
-            public boolean checkForCondition() {
-                // just press back
-                Log.d(TAG,":进入Watcher");
-                try {
-                    closeAd();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return false;
-            }
-        });
+//        mUIDevice.registerWatcher("notifation", new UiWatcher() {
+//            @Override
+//            public boolean checkForCondition() {
+//                // just press back
+//                Log.d(TAG,":进入Watcher");
+//                try {
+//                    closeAd();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                return false;
+//            }
+//        });
         mContext = InstrumentationRegistry.getContext();
         if(!mUIDevice.isScreenOn()){  //唤醒屏幕
             mUIDevice.wakeUp();
@@ -320,7 +320,7 @@ public class ClickHB {
             }else{
                 mUIDevice.click(640,910);
             }
-            Thread.sleep(500);
+            Thread.sleep(1000);
             UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
             if(hongdou100!=null) {
                 if (is4X) {
@@ -336,7 +336,7 @@ public class ClickHB {
             //情况1：成功
             if(kaihongbao!=null){
                 kaihongbao.click();
-                Thread.sleep(2000);
+                Thread.sleep(6000);
                 task.setSuccess_count(task.getSuccess_count()+1);
                 TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
                 break;
@@ -416,7 +416,8 @@ public class ClickHB {
     }
     public void changeIP(){
         try {
-            String ip_app = "com.deruhai.guangzi.root";
+            String ip_app = "com.photon.hybrid";
+            //String ip_app = "com.deruhai.guangzi.root";
             Thread.sleep(5000);
             Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage(ip_app);  //启动app
             mContext.startActivity(myIntent1);

@@ -158,9 +158,11 @@ public class HJTest3{
                     }
                 }
             }else{
-                Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("com.deruhai.guangzi.root");  //启动app
+                //String ip_app = "com.deruhai.guangzi.root";
+                String ip_app = "com.photon.hybrid";
+                Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage(ip_app);  //启动app
                 mContext.startActivity(myIntent1);
-                mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                mUIDevice.waitForWindowUpdate(ip_app, 5 * 2000);
                 Thread.sleep(5000);
                 if(quit_count<2){
                     mUIDevice.pressBack();
@@ -180,7 +182,7 @@ public class HJTest3{
                     Thread.sleep(1500);
 
                     mContext.startActivity(myIntent1);
-                    mUIDevice.waitForWindowUpdate("com.deruhai.guangzi.root", 5 * 2000);
+                    mUIDevice.waitForWindowUpdate(ip_app, 5 * 2000);
                     Thread.sleep(5000);
                     UiObject2 login1 = mUIDevice.findObject(By.text("立即登录"));
                     if(login1!=null){
@@ -193,7 +195,7 @@ public class HJTest3{
                         login.click();
                         Thread.sleep(5000);
                     }
-                    UiObject2 conn = mUIDevice.findObject(By.res("com.deruhai.guangzi.root:id/apv_switch"));
+                    UiObject2 conn = mUIDevice.findObject(By.res(ip_app+":id/apv_switch"));
                     if(conn!=null){
                         conn.click();
                     }
