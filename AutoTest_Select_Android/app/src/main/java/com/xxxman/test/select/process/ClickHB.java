@@ -50,7 +50,7 @@ public class ClickHB {
     UiDevice mUIDevice = null;
     Context mContext = null;
     String taskType = "hongbao";
-    boolean is4X = Constant.IS_4X;
+    boolean is4X = Constant.IS_4X();
     String sn_code = "";
 
     @Test

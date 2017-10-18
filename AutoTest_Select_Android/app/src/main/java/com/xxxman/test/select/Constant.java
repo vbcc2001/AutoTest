@@ -15,14 +15,14 @@ public class Constant {
 
     public static final String URL = "http://ite.zbqhb.com:3000/action/lfs/action/FunctionAction";
 
-    public static final boolean IS_4X = true;
-//    public static final boolean IS_4X = false;
-
+    public static final boolean IS_4X(){
+        boolean flag = true;
+        if("Redmi 4A".equals(android.os.Build.MODEL)){
+            flag =  false;
+        }
+        return flag;
+    }
     public static final String TAG = "ite";
 
     public static final String LO_CITY = "深圳";
-//    public static final String LO_CITY = "揭阳";
-
-    public static final boolean IS_HSM = false;
-//    public static final boolean IS_HSM = true;
 }
