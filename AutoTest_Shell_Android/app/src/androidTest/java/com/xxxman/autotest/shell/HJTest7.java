@@ -39,7 +39,7 @@ public class HJTest7 {
     int log_count = 0;
     SQLUtil7 sqlUtil = new SQLUtil7();
     boolean is_colse_ad = true;
-    boolean is4X=Constant.IS_4X;
+    boolean is4X=Constant.IS_4X();
     String password = "@456123";
     @Before
     public void setUp() throws RemoteException {

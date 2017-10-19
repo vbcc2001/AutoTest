@@ -118,7 +118,7 @@ public class UpdateActivity extends AppCompatActivity implements OnScrollListene
         public void run() {
             super.run();
             MyConnection my  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.URL();
             String context = "{\"function\":\"F100012\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{}}";
             Map<String, String> parms = new HashMap<>();
             parms.put("jsonContent", context);

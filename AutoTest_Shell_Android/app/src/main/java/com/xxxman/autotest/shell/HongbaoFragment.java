@@ -318,7 +318,7 @@ public class HongbaoFragment extends Fragment {
         public void run() {
             super.run();
             MyConnection my  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.URL();
             //更新到服务器
             String listStr = "[";
             for (User user : list) {

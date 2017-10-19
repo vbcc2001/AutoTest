@@ -91,7 +91,7 @@ public class HJTest4B extends HJTest3{
         if(acc!=null){
             user.pwd = acc.getText();
             MyConnection my1  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.URL();
             Map<String,String> parms = new HashMap<>();
             String context = "{\"function\":\"F100015\",\"user\":{\"id\":\"1\",\"session\":\"123\"},\"content\":{\"accout\":\""+user.phone+"\",\"pwd\":\"" + user.pwd + "\"}}";
             parms.put("jsonContent",context);

@@ -257,7 +257,7 @@ public class HJTest5 {
     public void songLiWu(User user) throws Exception {
 
         Thread.sleep(5000);
-        if(Constant.IS_4X){
+        if(Constant.IS_4X()){
             mUIDevice.click(540,1840);
         }else{
             //mUIDevice.click(560,1228);
@@ -288,7 +288,7 @@ public class HJTest5 {
             Thread.sleep(500);
             if(sum_dou<order.max_dou && user.send_dou < order.per_dou){
                 for(int j=0 ;j<user.dou ;j=j+dou){
-                    if(Constant.IS_4X){
+                    if(Constant.IS_4X()){
                         mUIDevice.click(990,1843);
                     }else{
                         mUIDevice.click(660,1228);
@@ -320,7 +320,7 @@ public class HJTest5 {
             intent.putExtra("name", "第"+user.number+"个账户送豆完成，送出"+(user.send_dou-before_send_dou)+"个，剩余"+(user.last_dou)+"个");
             mContext.sendBroadcast(intent);
             //关闭直播
-            if(Constant.IS_4X){
+            if(Constant.IS_4X()){
                 mUIDevice.click(30,70);
                 mUIDevice.click(30,70);
                 mUIDevice.click(990,1843);
@@ -338,7 +338,7 @@ public class HJTest5 {
     public void hot(User user) throws Exception {
         String[] talk_list = new String[]{"你好","截图给我看看","我关注了主播","偏偏靠才艺"};
         Thread.sleep(5000);
-        if(Constant.IS_4X){
+        if(Constant.IS_4X()){
             mUIDevice.click(88,1844);
         }else{
         }

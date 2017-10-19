@@ -23,7 +23,7 @@ import java.util.Map;
 public class HJTest6 extends  HJTest1{
 
     MyConnection my  = new MyConnection();
-    String url = Constant.URL;
+    String url = Constant.URL();
     String phone= "";
 
     public void test1(User user) throws Exception {

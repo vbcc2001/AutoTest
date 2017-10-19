@@ -45,10 +45,10 @@ public class HJTest1 {
     int count_get_sun = 0;
     SQLUtil sqlUtil = new SQLUtil();
     MyConnection my  = new MyConnection();
-    String url = Constant.URL;
+    String url = Constant.URL();
     String phone= "";
     boolean is_colse_ad = true;
-    boolean is4X=Constant.IS_4X;
+    boolean is4X=Constant.IS_4X();
     @Before
     public void setUp() throws RemoteException {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName()

@@ -219,7 +219,7 @@ public class HJTest9 {
 
         for(int j=0;j<10;j++){
             Thread.sleep(2000);
-            if(Constant.IS_4X){
+            if(Constant.IS_4X()){
                 mUIDevice.click(540,1840);
                 Thread.sleep(500);
                 mUIDevice.click(116,1242);
@@ -249,7 +249,7 @@ public class HJTest9 {
                     UiObject2 send = mUIDevice.findObject(By.text("发送"));
                     send.click();
                     Thread.sleep(5000);
-                    if(Constant.IS_4X){
+                    if(Constant.IS_4X()){
                         mUIDevice.click(540,1840);
                         Thread.sleep(500);
                         mUIDevice.click(116,1242);
@@ -267,7 +267,7 @@ public class HJTest9 {
                 UiObject2 send = mUIDevice.findObject(By.text("发送"));
                 send.click();
                 for(int i = 0 ;i<(user.dou/100);i++){
-                    if(Constant.IS_4X){
+                    if(Constant.IS_4X()){
                         mUIDevice.click(990,1843);
                     }else{
                         mUIDevice.click(660,1228);
@@ -283,7 +283,7 @@ public class HJTest9 {
 
         }
         //关闭直播
-        if(Constant.IS_4X){
+        if(Constant.IS_4X()){
             mUIDevice.click(30,70);
             mUIDevice.click(30,70);
             mUIDevice.click(990,1843);

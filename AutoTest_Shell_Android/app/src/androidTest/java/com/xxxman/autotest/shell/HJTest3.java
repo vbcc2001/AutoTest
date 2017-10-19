@@ -38,7 +38,7 @@ public class HJTest3{
     int count_get_hongbao = 0;
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
-    boolean is4X=Constant.IS_4X;
+    boolean is4X=Constant.IS_4X();
     String citys[] = new String[]{"最新","深圳","北京","上海","广州","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
     int quit_count = 0;
@@ -95,13 +95,6 @@ public class HJTest3{
             int num =0;
             for(User user:list) {
                 is_frist_login = true;
-                if(Constant.IS_HSM){
-                    Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                    changeIP();
-                }else{
-                    Log.d(TAG,"准备换iP-------------------------");
-                    changeIP();
-                }
                 //执行任务
                 sqlUtil.updateHongbaoTaskCount(user);
                 Log.d(TAG, user.pwd + "---");
@@ -116,13 +109,6 @@ public class HJTest3{
                 list = sqlUtil.selectHongbaoFailUser();
                 num = 0;
                 for(User user:list) {
-                    if(Constant.IS_HSM){
-                        Log.d(TAG,"IS_HSM，不需要换iP-------------------------");
-                        //changeIP();
-                    }else{
-                        Log.d(TAG,"准备换iP-------------------------");
-                        changeIP();
-                    }
                     num++;
                     intent.putExtra("name", "开始执行"+num+"/"+list.size()+"个任务（第"+(i+2)+"/100次循环）");
                     mContext.sendBroadcast(intent);
@@ -138,7 +124,8 @@ public class HJTest3{
 
         try {
             Thread.sleep(5000);
-            if( "hsm".equals(Constant.TAG) && Constant.IS_HSM){
+            if( "ab".equals(Constant.TAG)){
+                Log.d(TAG,"准备换无极VPN");
                 Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage("org.wuji");  //启动app
                 mContext.startActivity(myIntent1);
                 mUIDevice.waitForWindowUpdate("org.wuji", 5 * 2000);
@@ -158,6 +145,7 @@ public class HJTest3{
                     }
                 }
             }else{
+                Log.d(TAG,"准备换光子VPN");
                 //String ip_app = "com.deruhai.guangzi.root";
                 String ip_app = "com.photon.hybrid";
                 Intent myIntent1 = mContext.getPackageManager().getLaunchIntentForPackage(ip_app);  //启动app
@@ -215,7 +203,11 @@ public class HJTest3{
     }
     //@Test
     public void test_for(User user){
-
+        //IS_HSM，不需要换iP
+        if(!"hsm".equals(Constant.TAG)){
+            Log.d(TAG,"准备换iP-------------------------");
+            changeIP();
+        }
         //List<User> list = sqlUtil.selectLoginCount();
         try {
             if(user!=null) {
@@ -234,7 +226,7 @@ public class HJTest3{
                 mUIDevice.pressBack();
                 for (int i = 0; i < 30; i++) {
                     try {
-                        if(Constant.IS_HSM){
+                        if("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)){
                             //selectCityHSM(i,user);
                             selectCityHSM2(user);
                         }else{
@@ -283,7 +275,7 @@ public class HJTest3{
                             break;
                         }
                         reboot();
-                        if(Constant.IS_HSM){
+                        if("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)){
                             Thread.sleep(5000);
                         }
                     }
@@ -293,7 +285,7 @@ public class HJTest3{
                     if (fail_count>=3){
                         break;
                     }
-                    if ( Constant.IS_HSM && hava_count>=3){
+                    if ( ("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)) && hava_count>=3){
                         break;
                     }
                     //提醒
@@ -545,8 +537,8 @@ public class HJTest3{
                         }
                         Thread.sleep(1000);
                         city_ui.click();
-                        if(Constant.LO_CITY.equals(city)){
-                            city =city +" (当前定位地区)";
+                        if(!"hd".equals(Constant.TAG) && "深圳".equals(city)){
+                                city =city +" (当前定位地区)";
                         }
                         city_ui = mUIDevice.findObject(By.text(city));
                         if (city_ui==null){
@@ -631,7 +623,7 @@ public class HJTest3{
             Log.d(TAG,dou.getText()+"---------");
             user.dou = Integer.valueOf(dou.getText());
             MyConnection my1  = new MyConnection();
-            String url = Constant.URL;
+            String url = Constant.URL();
             Map<String,String> parms = new HashMap<>();
             String phone = sqlUtil.selectCode();
             if (phone.length()==13){
@@ -672,12 +664,11 @@ public class HJTest3{
         for(int i =0 ;i < c ;i++){
             if(i>0){
                 UiObject list = mUIDevice.findObject(new UiSelector().resourceId("com.huajiao:id/listview"));
-                if(Constant.IS_HSM){
+                if("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)){
                     list.swipeUp(65);
                 }else{
                     list.swipeUp(50);
                 }
-
                 Log.d(TAG,"-----");
                 Thread.sleep(1000);
             }
@@ -694,7 +685,7 @@ public class HJTest3{
                     }else{
                         mUIDevice.click(640,910);
                     }
-                    if(Constant.IS_HSM){
+                    if("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)){
                         Thread.sleep(4000);
                     }else {
                         Thread.sleep(1000);
