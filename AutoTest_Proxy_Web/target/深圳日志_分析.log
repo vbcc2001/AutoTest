@@ -181,3 +181,24 @@
                 "distance":"1178.9"
                 }
                 ],
+
+
+
+
+
+
+
+                [2017.10.21 00:29:04.478]http://passport.huajiao.com/task/watch
+                [2017.10.21 00:29:04.478]userid=130531377&deviceid=7aa379c0fe4c61d167ec9fc3cbceb1bf&platform=android&network=wifi&version=5.0.7.1023&rand=0.5973622464274368&netspeed=1024&time=1508516943&channel=shoujizhushou&dui=7aa379c0fe4c61d167ec9fc3cbceb1bf&imei=865684030809698&guid=6213ed1e6675571eb1c3d3000b1b62f5&device=mido&devicebrand=xiaomi&devicemanufacturer=Xiaomi&model=redmi+note+4x&androidversion=7.0&androidversioncode=24&lng=114.00799561&lat=22.53398705&province=%E5%B9%BF%E4%B8%9C%E7%9C%81&city=%E6%B7%B1%E5%9C%B3%E5%B8%82&town=%E7%A6%8F%E7%94%B0%E5%8C%BA&smid=20170704152403e6b5026ee405a980d72d498deff47c9baec1ec611d1d9aa55
+                [2017.10.21 00:29:04.479]request is Post
+                [2017.10.21 00:29:04.481]POST http://passport.huajiao.com/task/watch catestr=1,3&channel=shoujizhushou&imei=865684030809698&androidversion=7.0&netspeed=1024&guid=6213ed1e6675571eb1c3d3000b1b62f5&ticket=dXNlcmlkPTEzMDUzMTM3NyZ0YXNraWQ9MzImbnVtPTEmdGltZT0xNTA4NTE2NzY0.2257cd7adf9a2bd78d48e1d3f83f892e.1508531164&time=1508516943&uid=130531377&town=福田区&device=mido&version=5.0.7.1023&lat=22.53398705&taskid=32&ext={"rooms":[{"duration":60,"roomid":"167790880"}]}&lng=114.00799561&userid=130531377&devicemanufacturer=Xiaomi&rand=0.5973622464274368&model=redmi note 4x&city=深圳市&network=wifi&province=广东省&devicebrand=xiaomi&deviceid=7aa379c0fe4c61d167ec9fc3cbceb1bf&platform=android&smid=20170704152403e6b5026ee405a980d72d498deff47c9baec1ec611d1d9aa55&androidversioncode=24&dui=7aa379c0fe4c61d167ec9fc3cbceb1bf&roomids=167790880,167802145,167802608,167804678,167805475
+
+
+
+                [2017.10.21 00:29:04.937]post 返回-------------{"errno":0,"errmsg":"\u64cd\u4f5c\u6210\u529f","consume":9,"time":1508516945,"md5":"2a0124e18185c160c52a054cbf318948","data":{"uid":"130531377","ticket":"dXNlcmlkPTEzMDUzMTM3NyZ0YXNraWQ9MzImbnVtPTEmdGltZT0xNTA4NTE2OTQ1.637e2b69b6b4ec69e36e5e2b77e86d52.1508531345","level":11,"exp":29808,"authorexp":1082,"authorlevel":3,"states":{},"progress":[],"starttime":"00:29:05"}}
+
+
+
+                分享成功
+
+                [2017.10.21 01:44:13.556]post 返回--------------{"errno":0,"errmsg":"\u64cd\u4f5c\u6210\u529f","consume":11,"time":1508521453,"md5":"395a9d8920962830dab1d82c5d4b0a77","data":{"uid":"58980603","nickname":"\ud83d\udc51\u4f9d\u6db5\u5bb6\u306e\u4e09\u8c50\ud83d\udc51","avatar":"http:\/\/image.huajiao.com\/8e52a95ea29301342af1c5d04ff6ed50-100_100.jpg","avatar_m":"http:\/\/image.huajiao.com\/8e52a95ea29301342af1c5d04ff6ed50-324_324.jpg","avatar_l":"http:\/\/image.huajiao.com\/8e52a95ea29301342af1c5d04ff6ed50-640_640.jpg","avatar_o":"http:\/\/image.huajiao.com\/8e52a95ea29301342af1c5d04ff6ed50.jpg","signature":"\u7231\u60c5\u6700\u7f8e\u7684\u4e0d\u4e00\u5b9a\u662f\u7ec8\u70b9\uff5e\u65c5\u9014\u4e00\u8d77\u8d70\u8fc7\u4e5f\u5df2\u4e0d\u8d1f\u4e00\u751f\uff01","gender":"M","astro":"\u5929\u874e\u5ea7","location":"\u5317\u4eac \u671d\u9633","lives":0,"watches":0,"praises":"18095","followings":"59","followers":"843","verified":true,"verifiedinfo":{"credentials":"\u7231\u60c5\u6700\u7f8e\u7684\u4e0d\u4e00\u5b9a\u662f\u7ec8\u70b9\uff5e\u65c5\u9014\u4e00\u8d77\u8d70\u8fc7\u4e5f\u5df2\u4e0d\u8d1f\u4e00\u751f\uff01","type":1,"realname":"\ud83d\udc51\u4f9d\u6db5\u5bb6\u306e\u4e09\u8c50\ud83d\udc51","status":3,"error":"","official":false},"vrid":"","isbindvr":false,"source":"wx","forbidden":false,"exp":9826298,"authorexp":8558,"level":35,"authorlevel":9,"medal":[{"kind":"tuhao","medal":"5"}],"cached":true,"cachetime":1508514320,"addtime":1470386143,"apc":false,"iscert":true,"isadult":true,"iden_source":"\u5e73\u53f0","iden_source_ext":"","mbregion":"\u4e2d\u56fd","mbcode":"+86","lng":0,"lat":0,"lasttime":1508516865,"online":1,"birthday":"","display_uid":"","is_modify_gender":true,"followed":false,"blocked":false,"effect":"","is_author_task":1,"is_welfare":0,"since_reg":442,"isfriend":false,"online_duration":"","distance":"","feeds":"25","tags":{"live":["\u6237\u5916\u751f\u6d3b"],"makings":["\u6696\u7537"],"occupation":["\u81ea\u7531\u804c\u4e1a"],"impressions":["\u6696\u7537","\u5927\u53d4","\u4e2d\u4e8c"]}}}

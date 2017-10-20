@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletConfig;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet基础类：用来地址转发
@@ -45,9 +46,52 @@ public class Servlet extends HttpServlet{
 //            System.out.println(request.getRequestURI());//CarsiLogCenter_new/idpstat.jsp
 //            System.out.println(request.getContextPath());//CarsiLogCenter_new
 //            System.out.println(request.getServletPath());//idpstat.jsp
-//            System.out.println(request.getQueryString());//action=idp.sptopn
+            System.out.println(request.getQueryString());//action=idp.sptopn
+            System.out.println("进入处理流程-----------------------------");
 
-            if("/feed/getFeeds".equals(request.getRequestURI())){
+            //http://passport.huajiao.com/task/watch 处理
+            if("/task/watch".equals(request.getRequestURI())
+                    || "/user/encryptToken".equals(request.getRequestURI())
+                    || "/user/getUserInfo".equals(request.getRequestURI())
+                    || "/api/getUserMenu".equals(request.getRequestURI())
+                    || "/user/me".equals(request.getRequestURI())
+
+                    ){
+                String method = request.getMethod();
+                if ("POST".equalsIgnoreCase(method)){
+                    System.out.println("request is Post");
+                    Map<String, String[]> params = request.getParameterMap();
+                    String queryString = "";
+                    for (String key : params.keySet()) {
+                        String[] values = params.get(key);
+                        for (int i = 0; i < values.length; i++) {
+                            String value = values[i];
+                            queryString += key + "=" + value + "&";
+                        }
+                    }
+                    // 去掉最后一个空格
+                    queryString = queryString.substring(0, queryString.length() - 1);
+                    System.out.println("POST 请求 " + request.getRequestURL() + " " + queryString);
+                    String s1 = request.getRequestURL().toString();
+                    String s6 = request.getQueryString();
+                    String s=HttpRequest.sendPost(s1+"?"+s6, queryString);
+                    System.out.println("post 返回--------------"+s);
+                    System.out.println("**-------------------------------------------------------------------");
+                    response.getWriter().print(s);
+                    response.getWriter().flush();
+                    response.getWriter().close();
+                }else{
+                    System.out.println("request is get");
+                    String s1 = request.getRequestURL().toString();
+                    String s6 = request.getQueryString();
+                    String s=HttpRequest.sendGet(s1, s6);
+                    System.out.println("get 返回--------------"+s);
+                    response.getWriter().print(s);
+                    response.getWriter().flush();
+                    response.getWriter().close();
+
+                }
+            }else if("/feed/getFeeds".equals(request.getRequestURI())){
                 String s1 = request.getRequestURL().toString();
                 String s6 = request.getQueryString();
                 String s=HttpRequest.sendGet(s1, s6);
@@ -78,12 +122,25 @@ public class Servlet extends HttpServlet{
                 response.getWriter().flush();
                 response.getWriter().close();
             }else{
-                response.sendError(404);
+                String r = request.getRequestURI();
+                r = r.substring(r.length()-4,r.length());
+                if(".flv".equals(r)){
+                    System.out.println("**请求匹配.flv");
+                    request.getRequestDispatcher("/XY0.flv").forward(request, response);
+                }else{
+                    response.sendError(404);
+                }
+
             }
         }catch (Exception e){
             e.printStackTrace();
             response.sendError(404);
         }
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
     }
     private int insert(String uid) throws Exception {
 
