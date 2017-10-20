@@ -263,6 +263,7 @@ public class ClickHB {
                             }
                         }
                     }else{
+                        ToastUitl.sendBroadcast(mContext,"没差到红包，休息10秒中");
                         Thread.sleep(10000);
                     }
                 }catch (Exception e){
@@ -283,6 +284,12 @@ public class ClickHB {
         }catch (Exception e){
             e.printStackTrace();
             reboot();
+            try {
+                Thread.sleep(1000);
+                quit(task,true);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         }
     }
     //重启
@@ -379,7 +386,7 @@ public class ClickHB {
                                     throw new Exception("未登录");
                                 }else{
                                     //没红包
-                                    if(j>3){
+                                    if(j>10){
                                         break;
                                     }
                                 }
