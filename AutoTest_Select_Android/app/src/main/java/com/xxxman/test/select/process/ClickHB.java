@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.Direction;
@@ -87,7 +88,7 @@ public class ClickHB {
                             task.setPhone(dataRow.getString("accout"));
                             //task.setPwd(dataRow.getString("pwd"));
                             task.setPwd("qaz147258..");
-                            if("86d9478e0a89".equals(sn_code)){
+                            if("86d9478e0a89".equals(sn_code) || "c4c8ba9f4fd2".equals(sn_code)){
                                 task.setPwd("x12345678");
                             }
                             task.setDay("");
@@ -168,11 +169,7 @@ public class ClickHB {
     public void closeAd() throws Exception {
         Log.d(TAG,(log_count++)+":开始方法："+new Exception().getStackTrace()[0].getMethodName());
         Log.d(TAG,"@上级方法："+new Exception().getStackTrace()[1].getMethodName());
-        UiObject2 close = mUIDevice.findObject(By.res("com.huajiao:id/img_close"));
-        if(close!=null){
-            Log.d(TAG,"有广告");
-            close.click();
-        }
+
     }
     //退出流程
     public void quit(Task task,boolean is_record_dou) throws Exception {
@@ -234,7 +231,7 @@ public class ClickHB {
     //抢红包
     public void qiangHongBao(Task task)   {
         try{
-            changeIP();
+            //changeIP();
             login(task);
             TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
             for(int j=0;j<100;j++){

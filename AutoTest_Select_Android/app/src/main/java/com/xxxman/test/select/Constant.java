@@ -6,6 +6,7 @@ package com.xxxman.test.select;
 
 public class Constant {
 
+    public static final String APP_NAME = "com.huajiao";
     //总红包任务数
     public static final int HONGBAO_COUNT = 6;
     //第一次红包任务数
