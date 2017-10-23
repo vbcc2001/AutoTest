@@ -41,47 +41,48 @@ public class S04_Qiang {
             }else{
                 Thread.sleep(1000);
             }
-            UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
-            //情况1：成功
-            if(kaihongbao!=null){
-                kaihongbao.click();
-                Thread.sleep(2000);
-                task.setSuccess_count(task.getSuccess_count()+1);
-                TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
-                break;
+            UiObject2 hongbao = mUIDevice.findObject(By.res("com.huajiao:id/android:id/content"));
+            if(hongbao==null){
+                //没红包
+                if(j>2){break;}
             }else{
-                //情况2：失败
-                UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
-                if(wuyuan!=null){
-                    task.setFail_count(task.getFail_count()+1);
-                    TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
+                UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
+                //情况1：成功
+                if(kaihongbao!=null){
+                    kaihongbao.click();
+                    Thread.sleep(2000);
+                    task.setSuccess_count(task.getSuccess_count()+1);
+                    TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
                     break;
                 }else{
-                    //情况3：失败
-                    UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
-                    if(meiyou!=null){
+                    //情况2：失败
+                    UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
+                    if(wuyuan!=null){
                         task.setFail_count(task.getFail_count()+1);
                         TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                         break;
                     }else{
-                        UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
-                        if(yunqicha!=null){
+                        //情况3：失败
+                        UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
+                        if(meiyou!=null){
                             task.setFail_count(task.getFail_count()+1);
                             TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                             break;
                         }else{
-                            //情况5：未实名
-                            UiObject2 renzheng = mUIDevice.findObject(By.text("实名认证提示"));
-                            if(renzheng!=null){
-                                throw new Exception("未实名认证");
-                            }else {
-                                UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
-                                if(login!=null){
-                                    throw new Exception("未登录");
-                                }else{
-                                    //没红包
-                                    if(j>2){
-                                        break;
+                            UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
+                            if(yunqicha!=null){
+                                task.setFail_count(task.getFail_count()+1);
+                                TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
+                                break;
+                            }else{
+                                //情况5：未实名
+                                UiObject2 renzheng = mUIDevice.findObject(By.text("实名认证提示"));
+                                if(renzheng!=null){
+                                    throw new Exception("未实名认证");
+                                }else {
+                                    UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+                                    if(login!=null){
+                                        throw new Exception("未登录");
                                     }
                                 }
                             }
