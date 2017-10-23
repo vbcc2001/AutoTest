@@ -35,6 +35,7 @@ public class S00_Get_Task {
         if(TaskSQL.selectTaskCount(taskType)==0){
             for (int i = 0; i < 10; i++) {
                 String sn_code = S00_Get_Sn_Code.getCode();
+                sn_code = "c4c8ba9f4fd2";
                 Map<String,String> para = new HashMap<>();
                 para.put("phone",sn_code);
                 para.put("type","hongbao");

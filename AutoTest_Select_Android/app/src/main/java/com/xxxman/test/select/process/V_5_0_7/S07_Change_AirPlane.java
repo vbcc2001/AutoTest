@@ -40,6 +40,7 @@ public class S07_Change_AirPlane {
             }
             Thread.sleep(1000);
             check2.get(0).click();
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

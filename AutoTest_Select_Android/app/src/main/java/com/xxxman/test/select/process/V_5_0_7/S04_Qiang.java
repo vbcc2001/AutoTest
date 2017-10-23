@@ -21,6 +21,7 @@ public class S04_Qiang {
 
     public static void start(Task task) throws Exception{
         UiDevice mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        mUIDevice.removeWatcher("close_ad");
         boolean is4X = Constant.IS_4X();
         for(int j =0 ;j < 50 ;j++){
             if(is4X){
@@ -44,7 +45,7 @@ public class S04_Qiang {
             //情况1：成功
             if(kaihongbao!=null){
                 kaihongbao.click();
-                Thread.sleep(6000);
+                Thread.sleep(2000);
                 task.setSuccess_count(task.getSuccess_count()+1);
                 TaskSQL.updateTaskCount(task.getId(),"success_count",task.getSuccess_count());
                 break;
@@ -79,7 +80,7 @@ public class S04_Qiang {
                                     throw new Exception("未登录");
                                 }else{
                                     //没红包
-                                    if(j>10){
+                                    if(j>2){
                                         break;
                                     }
                                 }

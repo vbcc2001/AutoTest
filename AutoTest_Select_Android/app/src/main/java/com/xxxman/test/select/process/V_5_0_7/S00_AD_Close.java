@@ -16,12 +16,15 @@ public class S00_AD_Close {
 
     private static final String TAG = S00_AD_Close.class.getName();
 
-    public static void start() {
+    public static boolean start() {
         UiDevice mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject2 close = mUIDevice.findObject(By.res("com.huajiao:id/img_close"));
         if(close!=null){
             Log.d(TAG,"有广告");
             close.click();
+            return true;
+        }else{
+            return false;
         }
     }
 }

@@ -41,6 +41,8 @@ public class M01_QiangHB {
     //抢红包
     private void qiangHongBao(Task task)   {
         try{
+            S07_Change_AirPlane.start();
+            S00_App_Reboot.start();
             S01_Login.start(task);
             TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
             for(int j=0;j<100;j++){
@@ -55,6 +57,7 @@ public class M01_QiangHB {
                         for(int i=0;i<size;i++){
                             try {
                                 String uid = list_dataRow.get(i).getString("uid");
+                                mUIDevice.runWatchers();
                                 S02_Go_Zhibo.start(uid);
                                 Thread.sleep(3000);
                                 S03_Share.start();
@@ -146,14 +149,16 @@ public class M01_QiangHB {
     @Before
     public void before() throws RemoteException {
         mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());  //获得device对象
-        mUIDevice.registerWatcher("notifation", new UiWatcher() {
+        mUIDevice.registerWatcher("close_ad", new UiWatcher() {
             @Override
             public boolean checkForCondition() {
                 // just press back
-                Log.d(TAG,":进入Watcher");
+                Log.d(TAG,":进入Watcher-close_ad");
                 try {
-                    S00_AD_Close.start();
+                    return  S00_AD_Close.start();
+                    //Thread.sleep(1000);
                 } catch (Exception e) {
+                    Log.d(TAG,":关闭广告失败");
                     e.printStackTrace();
                 }
                 return false;
