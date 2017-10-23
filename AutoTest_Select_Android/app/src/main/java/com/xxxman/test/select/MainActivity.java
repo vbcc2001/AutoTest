@@ -80,11 +80,9 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment ;
             if(position ==0 ){
                 fragment = HongbaoFragment.newInstance();
-            }
-            if(position ==1 ){
+            }else if(position ==1 ){
                 fragment = SunFragment.newInstance();
-            }
-            if(position ==2 ){
+            }else if(position ==2 ){
                 fragment = GiftFragment.newInstance();
             }else{
                 fragment = HongbaoFragment.newInstance();
