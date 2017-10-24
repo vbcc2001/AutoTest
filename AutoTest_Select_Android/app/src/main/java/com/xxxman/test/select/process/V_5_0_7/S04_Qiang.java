@@ -5,6 +5,7 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
+import android.util.Log;
 
 import com.xxxman.test.select.Constant;
 import com.xxxman.test.select.object.Task;
@@ -41,14 +42,20 @@ public class S04_Qiang {
             }else{
                 Thread.sleep(1000);
             }
-            UiObject2 hongbao = mUIDevice.findObject(By.res("com.huajiao:id/android:id/content"));
+            UiObject2 hongbao = mUIDevice.findObject(By.res("android:id/content"));
             if(hongbao==null){
+                Log.d(TAG,"没红包~"+task);
                 //没红包
-                if(j>2){break;}
+                if(j>1){
+                    Log.d(TAG,"没红包2~"+task);
+                    break;
+                }
             }else{
+                Log.d(TAG,"有红包~"+task);
                 UiObject2 kaihongbao = mUIDevice.findObject(By.res("com.huajiao:id/pre_btn_open"));
                 //情况1：成功
                 if(kaihongbao!=null){
+                    Log.d(TAG,"开红包成功~"+task);
                     kaihongbao.click();
                     Thread.sleep(2000);
                     task.setSuccess_count(task.getSuccess_count()+1);
@@ -59,6 +66,7 @@ public class S04_Qiang {
                     UiObject2 wuyuan = mUIDevice.findObject(By.text("和红包无缘相遇，期待下次好运吧~"));
                     if(wuyuan!=null){
                         task.setFail_count(task.getFail_count()+1);
+                        Log.d(TAG,"和红包无缘相遇，期待下次好运吧~"+task);
                         TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                         break;
                     }else{
@@ -66,12 +74,14 @@ public class S04_Qiang {
                         UiObject2 meiyou = mUIDevice.findObject(By.text("没抢到红包，肯定是抢的姿势不对~"));
                         if(meiyou!=null){
                             task.setFail_count(task.getFail_count()+1);
+                            Log.d(TAG,"没抢到红包，肯定是抢的姿势不对~"+task);
                             TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                             break;
                         }else{
                             UiObject2 yunqicha = mUIDevice.findObject(By.text("运气不佳，没抢到红包~"));
                             if(yunqicha!=null){
                                 task.setFail_count(task.getFail_count()+1);
+                                Log.d(TAG,"运气不佳，没抢到红包~---更新"+task);
                                 TaskSQL.updateTaskCount(task.getId(),"fail_count",task.getFail_count());
                                 break;
                             }else{
@@ -85,6 +95,7 @@ public class S04_Qiang {
                                         throw new Exception("未登录");
                                     }
                                 }
+                                break;
                             }
                         }
                     }

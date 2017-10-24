@@ -19,9 +19,9 @@ public class SQLUtil {
 
     private static String  db_path = Environment.getDataDirectory()+"/data/com.xxxman.test.select/hj.db";
     private static String TAG = SQLUtil.class.getName();
-
+    private static SQLiteDatabase db = null;
     public static boolean tabbleIsExist(String tableName){
-        SQLiteDatabase db= SQLiteDatabase.openOrCreateDatabase(db_path,null);
+        db= SQLUtil.getDB();
         boolean result = false;
         Cursor cursor = null;
         if(tableName == null){
@@ -44,7 +44,10 @@ public class SQLUtil {
         }
     }
     public static SQLiteDatabase getDB(){
-        return SQLiteDatabase.openOrCreateDatabase(db_path,null);
+        if(db==null) {
+           db = SQLiteDatabase.openOrCreateDatabase(db_path,null);
+        }
+        return db ;
     }
     public static String getDayString(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

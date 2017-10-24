@@ -90,5 +90,6 @@ public class TaskSQL  {
         ContentValues cv = new ContentValues();
         cv.put(name, value);
         SQLUtil.getDB().update(table, cv, "id = ?", new String[] { ""+id });
+        Log.i(TAG, "更新任务:" +id+"--"+name+"--"+value);
     }
 }

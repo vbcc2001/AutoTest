@@ -35,7 +35,7 @@ public class S00_Get_Task {
         if(TaskSQL.selectTaskCount(taskType)==0){
             for (int i = 0; i < 10; i++) {
                 String sn_code = S00_Get_Sn_Code.getCode();
-                sn_code = "c4c8ba9f4fd2";
+                sn_code = "ddbf44f57eb4";
                 Map<String,String> para = new HashMap<>();
                 para.put("phone",sn_code);
                 para.put("type","hongbao");
@@ -48,9 +48,8 @@ public class S00_Get_Task {
                         task.setNumber(dataRow.getInt("number"));
                         task.setUid(0);
                         task.setPhone(dataRow.getString("accout"));
-                        //task.setPwd(dataRow.getString("pwd"));
                         task.setPwd("qaz147258..");
-                        if("86d9478e0a89".equals(sn_code) || "c4c8ba9f4fd2".equals(sn_code)){
+                        if("86d9478e0a89".equals(sn_code) || "c4c8ba9f4fd2".equals(sn_code) || "dfee4b7043cb".equals(sn_code)||"xxx".equals(sn_code)){
                             task.setPwd("x12345678");
                         }
                         task.setDay("");

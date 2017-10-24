@@ -3,6 +3,7 @@ package com.xxxman.test.select.process.V_5_0_7;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
@@ -45,30 +46,34 @@ public class M01_QiangHB {
             S00_App_Reboot.start();
             S01_Login.start(task);
             TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
-            for(int j=0;j<100;j++){
+            for(int j=0;j<12;j++){
                 try{
                     HttpResult httpResult = HttpUtil.post("F200101");
                     if("".equals(httpResult.getErrorNo()) && httpResult.getList().size()>0) {
                         List<DataRow> list_dataRow =  httpResult.getList();
-                        int size =3;
+                        int size =2;
                         if(list_dataRow.size()<size){
                             size = list_dataRow.size();
                         }
                         for(int i=0;i<size;i++){
-                            try {
-                                String uid = list_dataRow.get(i).getString("uid");
-                                mUIDevice.runWatchers();
-                                S02_Go_Zhibo.start(uid);
-                                Thread.sleep(3000);
-                                S03_Share.start();
-                                S04_Qiang.start(task);
-                                S05_Close_Zhibo.start();
-                                if(task.getFail_count()>=3){
-                                    break;
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                                S00_App_Reboot.start();
+                            //提醒
+                            String info = "当前第（"+task.getNumber()+"）用户："
+                                    +"，第"+task.getTask_count()+"次执行,"
+                                    +"，已抢到"+task.getSuccess_count()+"次,"
+                                    +"，未抢到"+task.getFail_count()+"次；";
+                            //提示
+                            ToastUitl.sendBroadcast(mContext,info);
+                            Log.d(TAG,info);
+                            String uid = list_dataRow.get(i).getString("uid");
+                            mUIDevice.runWatchers();
+                            S02_Go_Zhibo.start(uid);
+                            Thread.sleep(3000);
+                            S03_Share.start();
+                            S04_Qiang.start(task);
+                            S05_Close_Zhibo.start();
+
+                            if(task.getFail_count()>=3){
+                                break;
                             }
                         }
                     }else{
@@ -77,6 +82,10 @@ public class M01_QiangHB {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    UiObject2 login = mUIDevice.findObject(By.text("使用手机号登录"));
+                    if (login!=null){
+                        break;
+                    }
                     S00_App_Reboot.start();
                 }
                 if(task.getFail_count()>=3){
@@ -92,6 +101,22 @@ public class M01_QiangHB {
             S01_Quit.start(task,true);
         }catch (Exception e){
             e.printStackTrace();
+            UiObject2 fenghao = mUIDevice.findObject(By.text("冤枉，我要申诉"));
+            if(fenghao!=null){
+                //记录
+            }
+            UiObject2 yanzhengma = mUIDevice.findObject(By.text("账号已被锁定，请通过短信验证码登录"));
+            if (yanzhengma!=null){
+                //记录
+            }
+            UiObject2 yanzhengma2 = mUIDevice.findObject(By.text("获取短信验证码"));
+            if (yanzhengma2!=null){
+                //记录
+            }
+            UiObject2 shiming = mUIDevice.findObject(By.text("实名认证提示"));
+            if (shiming!=null){
+                //记录
+            }
             S00_App_Reboot.start();
             try {
                 Thread.sleep(1000);

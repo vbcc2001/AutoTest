@@ -44,7 +44,7 @@ public class S01_Quit {
                     map.put("account",task.getPhone());
                     map.put("state","1");
                     map.put("pwd","*");
-                    map.put("dou",task.getPhone());
+                    map.put("dou",""+dou_sum);
                     HttpResult httpResult = HttpUtil.post("F100005",map);
                 }
             }
