@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xxxman.test.select">
 
@@ -13,11 +14,11 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <instrumentation
+        android:name="android.support.test.runner.AndroidJUnitRunner"
         android:functionalTest="false"
         android:handleProfiling="false"
         android:label="Tests for com.xxxman.test.select"
-        android:name="android.support.test.runner.AndroidJUnitRunner"
-        android:targetPackage="com.xxxman.test.select"/>
+        android:targetPackage="com.xxxman.test.select" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +30,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,21 +44,24 @@
         <activity
             android:name=".menu.UpdateActivity"
             android:label="软件更新"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".menu.MoneyActivity"
             android:label="花椒充值"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <receiver android:name=".MyBroadCastReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="com.xxxman.test.select.MyBroadCastReceiver" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".service.MyVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
-
-
-
-
-

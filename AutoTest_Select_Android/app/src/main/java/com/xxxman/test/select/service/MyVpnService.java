@@ -8,52 +8,47 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.xxxman.test.select.util.BaseThread;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class MyVpnService extends VpnService implements Handler.Callback,Runnable {
+public class MyVpnService extends VpnService implements Handler.Callback {
 
     private static final String TAG = MyVpnService.class.getName();
-    private Thread mThread;
+    private BaseThread thread;
     private Handler mHandler;
     private ParcelFileDescriptor pf;
-    public MyVpnService() {
-        Log.d(TAG,"BUILD VPN ");
-    }
-    /**
-     * 首次创建服务时，系统将调用此方法来执行一次性设置程序（在调用 onStartCommand() 或 onBind() 之前）。
-     * 如果服务已在运行，则不会调用此方法。该方法只被调用一次
-     */
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d(TAG,"START VPN  onCreate invoke");
-        Builder builder = new Builder();
-        builder.setMtu(1500);
-        builder.addAddress("192.168.1.2",24);
-        builder.addRoute("0.0.0.0",0);
-        builder.addDnsServer("114.114.114.114");
-        //builder.addSearchDomain(...);
-        builder.setSession("MyVpnService");
-        //builder.setConfigureIntent(...); //制定一个配置页面
-        ParcelFileDescriptor pf = builder.establish();
-        protect(8118);
-    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // The handler is only used to show messages.
         if (mHandler == null) {
             mHandler = new Handler(this);
         }
-        // Stop the previous session by interrupting the thread.
-        if (mThread != null) {
-            mThread.interrupt();
+        if (thread != null) {
+            thread.stop();
         }
-        // Start a new session by creating a new thread.
-        mThread = new Thread(this, "ToyVpnThread");
-        mThread.start();
+        thread = new BaseThread("VpnThread", false) {
+            @Override
+            public void process() {
+                Log.d(TAG,"running vpnService");
+                try {
+                    runVpnConnection();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        pf.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    pf = null;
+                    Log.d(TAG, "Exiting");
+                }
+            }
+        };
         return START_STICKY;
     }
     @Override
@@ -63,46 +58,34 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
         }
         return true;
     }
-    @Override
-    public synchronized void run() {
-        Log.i(TAG,"running vpnService");
-        try {
-            runVpnConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                pf.close();
-            } catch (Exception e) {
-                // ignore
-            }
-            pf = null;
-            Log.i(TAG, "Exiting");
-        }
-    }
 
     private boolean runVpnConnection() throws Exception {
-        configure();
+        //初始化pf
+        if (pf == null) {
+            Log.d(TAG,"Start VPN Configure");
+            Builder builder = new Builder();
+            builder.setMtu(1500);
+            builder.addAddress("192.168.1.2",24);
+            builder.addRoute("0.0.0.0",0);
+            builder.addDnsServer("114.114.114.114");
+            builder.setSession("MyVpnService");
+            //builder.addSearchDomain(...);
+            //builder.setConfigureIntent(...); //制定一个配置页面
+            pf = builder.establish();
+            //protect(8118);
+        }
         FileInputStream in = new FileInputStream(pf.getFileDescriptor());
         FileOutputStream out = new FileOutputStream(pf.getFileDescriptor());
         ByteBuffer packet = ByteBuffer.allocate(32767);//32KB-1
-//        try {
-//            int length = in.read(packet.array());
-//            Log.d(TAG,"length= "+length);
-//            Log.d(TAG,"ByteBuffer= "+packet);
-//            out.write(packet.array(), 0, length);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         while (true) {
             boolean idle = true;
             int length = in.read(packet.array());
             if (length > 0) {
-                Log.i(TAG,"************new packet");
+                Log.d(TAG,"************ new packet");
                 System.exit(-1);
                 while (packet.hasRemaining()) {
-                    Log.i(TAG,""+packet.get());
-                    //System.out.print((char) packet.get());
+                    Log.d(TAG,""+packet.get());
+                    System.out.print((char) packet.get());
                 }
                 packet.limit(length);
                 //  tunnel.write(packet);
@@ -113,25 +96,5 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
             }
             Thread.sleep(50);
         }
-    }
-    private void configure() throws Exception {
-        // If the old interface has exactly the same parameters, use it!
-        if (pf != null) {
-            Log.i(TAG, "Using the previous interface");
-            return;
-        }
-
-        // Configure a builder while parsing the parameters.
-        Builder builder = new Builder();
-        builder.setMtu(1500);
-        builder.addAddress("192.168.1.2",24);
-        builder.addRoute("0.0.0.0",0);
-        builder.addDnsServer("114.114.114.114");
-        try {
-            pf.close();
-        } catch (Exception e) {
-            // ignore
-        }
-        pf = builder.establish();
     }
 }
