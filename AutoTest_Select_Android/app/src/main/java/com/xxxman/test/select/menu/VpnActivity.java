@@ -38,16 +38,6 @@ public class VpnActivity extends AppCompatActivity {
         serverPort.setText(prefs.getString(Prefs.SERVER_PORT, ""));
         sharedSecret.setText(prefs.getString(Prefs.SHARED_SECRET, ""));
     }
-    @Override
-    protected void onActivityResult(int request, int result, Intent data) {
-        if (result == RESULT_OK) {
-          startService(getServiceIntent().setAction(MyVpnService.ACTION_MyCONNECT));
-        }
-    }
-    private Intent getServiceIntent() {
-        return new Intent(this, ToyVpnService.class);
-    }
-
     public void connect(View view){
         prefs.edit()
                 .putString(Prefs.SERVER_ADDRESS, serverAddress.getText().toString())
@@ -61,7 +51,17 @@ public class VpnActivity extends AppCompatActivity {
             onActivityResult(0, RESULT_OK, null);
         }
     }
+    @Override
+    protected void onActivityResult(int request, int result, Intent data) {
+        if (result == RESULT_OK) {
+            startService(getServiceIntent().setAction(ToyVpnService.ACTION_CONNECT));
+        }
+    }
     public void disconnect(View view){
         startService(getServiceIntent().setAction(ToyVpnService.ACTION_DISCONNECT));
+    }
+    private Intent getServiceIntent() {
+        return new Intent(this, MyVpnService.class);
+//        return new Intent(this, ToyVpnService.class);
     }
 }
