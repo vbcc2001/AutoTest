@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.xxxman.test.select.R;
+import com.xxxman.test.select.service.MyHttpService;
 import com.xxxman.test.select.service.MyVpnService;
 import com.xxxman.test.select.service.ToyVpnService;
 
@@ -64,7 +65,8 @@ public class VpnActivity extends AppCompatActivity {
         startService(getServiceIntent().setAction(ToyVpnService.ACTION_DISCONNECT));
     }
     private Intent getServiceIntent() {
-        return new Intent(this, MyVpnService.class);
+        //return new Intent(this, MyVpnService.class);
+        return new Intent(this, MyHttpService.class);
 //        return new Intent(this, ToyVpnService.class);
     }
 }

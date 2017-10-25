@@ -56,12 +56,17 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.MyVpnService"
+        <service
+            android:name=".service.MyVpnService"
             android:permission="android.permission.BIND_VPN_SERVICE">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+        <service
+            android:name=".service.MyHttpService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

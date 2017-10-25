@@ -43,6 +43,7 @@ public class M01_QiangHB {
     private void qiangHongBao(Task task)   {
         try{
             S07_Change_AirPlane.start();
+            //S08_Change_VPN.start();
             S00_App_Reboot.start();
             S01_Login.start(task);
             TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
