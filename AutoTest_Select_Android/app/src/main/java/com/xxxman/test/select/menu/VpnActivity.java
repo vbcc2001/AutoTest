@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.xxxman.test.select.service.ToyVpnService;
 
 public class VpnActivity extends AppCompatActivity {
 
+    private static final String TAG = VpnActivity.class.getName();
     private  TextView serverAddress ;
     private  TextView serverPort;
     private  TextView sharedSecret;
@@ -33,7 +35,7 @@ public class VpnActivity extends AppCompatActivity {
         serverAddress = (TextView) findViewById(R.id.address);
         serverPort = (TextView) findViewById(R.id.port);
         sharedSecret = (TextView) findViewById(R.id.secret);
-        SharedPreferences prefs = getSharedPreferences(Prefs.NAME, MODE_PRIVATE);
+        prefs = getSharedPreferences(Prefs.NAME, MODE_PRIVATE);
         serverAddress.setText(prefs.getString(Prefs.SERVER_ADDRESS, ""));
         serverPort.setText(prefs.getString(Prefs.SERVER_PORT, ""));
         sharedSecret.setText(prefs.getString(Prefs.SHARED_SECRET, ""));
@@ -45,6 +47,7 @@ public class VpnActivity extends AppCompatActivity {
                 .putString(Prefs.SHARED_SECRET, sharedSecret.getText().toString())
                 .commit();
         Intent intent = VpnService.prepare(VpnActivity.this);
+        Log.d(TAG,"==============intent != null:"+(intent != null));
         if (intent != null) {
             startActivityForResult(intent, 0);
         } else {

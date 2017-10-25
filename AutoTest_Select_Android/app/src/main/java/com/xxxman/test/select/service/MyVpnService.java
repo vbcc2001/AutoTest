@@ -35,8 +35,10 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
                 Builder builder = new Builder();
                 builder.setMtu(1500);
                 builder.addAddress("192.168.10.2",24);
-                builder.addRoute("0.0.0.0",0);
-                builder.addDnsServer("114.114.114.114");
+                builder.addRoute("192.168.10.1",32);
+                //builder.addRoute("0.0.0.0",0);
+                builder.addDnsServer("39.108.120.224");
+                //builder.addDnsServer("114.114.114.114");
                 builder.setSession("MyVpnService");
                 //builder.addSearchDomain(...);
                 //builder.setConfigureIntent(...); //制定一个配置页面
@@ -46,7 +48,8 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
             Log.d(TAG,"完成配置vpn...");
             FileInputStream in = new FileInputStream(pf.getFileDescriptor());
             FileOutputStream out = new FileOutputStream(pf.getFileDescriptor());
-            ByteBuffer packet = ByteBuffer.allocate(32767);
+
+            ByteBuffer packet = ByteBuffer.allocate(Short.MAX_VALUE);//MAX_VALUE = 32767;
 
             while (true) {
                 // Assume that we did not make any progress in this iteration.
@@ -54,20 +57,18 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
                 // Read the outgoing packet from the input stream.
                 int length = in.read(packet.array());
                 if (length > 0) {
-
-                    Log.i(TAG,"************new packet");
-                    //System.exit(-1);
+                    Log.i(TAG,"************new packet,length="+length);
                     while (packet.hasRemaining()) {
-                        Log.i(TAG,""+packet.get());
-                        //System.out.print((char) packet.get());
+                        //Log.i(TAG,""+packet.get());
+                        System.out.print((char) packet.get());
                     }
                     packet.limit(length);
-                    //  tunnel.write(packet);
+                    //tunnel.write(packet);
                     packet.clear();
-
                     // There might be more outgoing packets.
                     idle = false;
                 }
+                //out.write(packet.array(), 0, length);
                 Thread.sleep(50);
             }
         } catch (Exception e) {

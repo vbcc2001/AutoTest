@@ -100,8 +100,7 @@ public class ToyVpnConnection implements Runnable{
             Log.e(getTag(), "Connection failed, exiting", e);
         }
     }
-    private boolean run(SocketAddress server)
-            throws IOException, InterruptedException, IllegalArgumentException {
+    private boolean run(SocketAddress server) throws IOException, InterruptedException, IllegalArgumentException {
         ParcelFileDescriptor iface = null;
         boolean connected = false;
         // Create a DatagramChannel as the VPN tunnel.
