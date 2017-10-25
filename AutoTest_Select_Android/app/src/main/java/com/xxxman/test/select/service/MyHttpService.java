@@ -21,7 +21,7 @@ public class MyHttpService extends Service {
     public void onCreate() {
         //在这里开启HTTP Server。
         Log.d(TAG,"开始启动httpServer...");
-        mHttpServer = new NanoHttpServer(80);
+        mHttpServer = new NanoHttpServer(8089);
         try {
             mHttpServer.start();
         } catch (IOException e) {

@@ -18,6 +18,7 @@ import com.xxxman.test.select.R;
 import com.xxxman.test.select.menu.LoginActivity;
 import com.xxxman.test.select.util.RSAUtils;
 import com.xxxman.test.select.util.SNUtil;
+import com.xxxman.test.select.util.ServiceThread;
 import com.xxxman.test.select.util.ShellUtil;
 import com.xxxman.test.select.util.ToastUitl;
 import com.xxxman.test.select.util.UiautomatorThread;
@@ -60,6 +61,24 @@ public class HongbaoFragment extends Fragment {
             }else{
                 Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
             }
+            }
+        });
+        Button runBtn2 = (Button) view.findViewById(R.id.runBtn2);
+        //绑定运行按钮
+        runBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_register && ShellUtil.hasRootPermission() ){
+                    //UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M01_QiangHB");
+                    //ServiceThread thread = new ServiceThread("MyHttpService");
+                    String path = "com.xxxman.test.select";
+                    String name = "MyHttpService";
+                    String command = "am startservice --user 10 -n " +
+                            path+ "/"+path+".service."+name;
+                    ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+                }else{
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+                }
             }
         });
         //注册程序

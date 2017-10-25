@@ -113,6 +113,55 @@
                     android:text="开始" />
             </LinearLayout>
         </LinearLayout>
+        <!--*************3、飞行模式自动抢红包标题**********************************************************************************************-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@color/lightgray"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="3、切换飞行模式自动抢红包"/>
+        </LinearLayout>
+        <!--*************3、飞行模式自动抢红包内容**********************************************************************************************-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/hongbaoView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.84"
+                    android:lineSpacingExtra="10dp"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/runBtn2"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开始" />
+            </LinearLayout>
+        </LinearLayout>
         <!--*************注册和ROOT信息**********************************************************************************************-->
         <LinearLayout
             android:layout_width="fill_parent"
