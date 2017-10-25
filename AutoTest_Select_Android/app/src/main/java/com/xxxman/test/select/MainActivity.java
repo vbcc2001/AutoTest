@@ -17,8 +17,8 @@ import com.xxxman.test.select.fragment.GiftFragment;
 import com.xxxman.test.select.fragment.HongbaoFragment;
 import com.xxxman.test.select.fragment.SunFragment;
 import com.xxxman.test.select.menu.LoginActivity;
-import com.xxxman.test.select.menu.MoneyActivity;
 import com.xxxman.test.select.menu.UpdateActivity;
+import com.xxxman.test.select.menu.VpnActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent();
         Log.d(TAG,"点击目录为："+item.getItemId());
-        Log.d(TAG,"点击目录为："+R.id.login_menu);
-        Log.d(TAG,"点击目录为："+R.id.udate_menu);
-        Log.d(TAG,"点击目录为："+R.id.money_menu);
         switch (item.getItemId()) {
             case R.id.login_menu:
                 intent.setClass(MainActivity.this, LoginActivity.class);
@@ -61,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.udate_menu:
                 intent.setClass(MainActivity.this, UpdateActivity.class);
                 break;
-            case R.id.money_menu:
-                intent.setClass(MainActivity.this, MoneyActivity.class);
+            case R.id.vpn_menu:
+                intent.setClass(MainActivity.this, VpnActivity.class);
                 break;
             default:
                 intent.setClass(MainActivity.this, LoginActivity.class);

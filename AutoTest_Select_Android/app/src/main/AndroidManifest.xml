@@ -46,8 +46,8 @@
             android:label="软件更新"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".menu.MoneyActivity"
-            android:label="花椒充值"
+            android:name=".menu.VpnActivity"
+            android:label="Vpn连接"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".MyBroadCastReceiver">

@@ -21,7 +21,7 @@ public abstract class BaseThread implements Runnable {
         suspendFlag = suspend;
         this.name = name;
         mThread = new Thread(this, name);
-        System.out.println("new Thread: " + mThread);
+        Log.i(TAG, "开启新进程"+name + " :"+mThread);
         mThread.start();
     }
 
@@ -41,7 +41,7 @@ public abstract class BaseThread implements Runnable {
             e.printStackTrace();
             onDestory();
         }
-        Log.i(TAG, name + " exited");
+        Log.i(TAG, "进程："+name + " exited");
     }
 
     /**
@@ -98,7 +98,6 @@ public abstract class BaseThread implements Runnable {
      */
     public void onDestory()
     {
-        Log.i(TAG, name + " destory!");
+        Log.i(TAG, "进程："+name + " destory!");
     }
-
 }
