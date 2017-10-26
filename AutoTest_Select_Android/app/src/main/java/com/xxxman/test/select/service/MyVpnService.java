@@ -35,9 +35,10 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
                 Builder builder = new Builder();
                 builder.setMtu(1500);
                 builder.addAddress("192.168.10.2",24);
-                builder.addRoute("192.168.10.1",32);
+                builder.addRoute("192.168.10.3",32);
                 //builder.addRoute("0.0.0.0",0);
-                builder.addDnsServer("39.108.120.224");
+                //builder.addDnsServer("39.108.120.224");
+                builder.addDnsServer("120.78.152.136");
                 //builder.addDnsServer("114.114.114.114");
                 builder.setSession("MyVpnService");
                 //builder.addSearchDomain(...);
@@ -97,7 +98,7 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
             mHandler = new Handler(this);
         }
         if (mThread != null) {
-            mThread.stop();
+            mThread.interrupt();
         }
         //getLocalIpAddress();
         // Start a new session by creating a new thread.

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.xxxman.test.select.R;
 import com.xxxman.test.select.menu.LoginActivity;
+import com.xxxman.test.select.service.MyHttpService;
+import com.xxxman.test.select.service.MyVpnService;
 import com.xxxman.test.select.util.RSAUtils;
 import com.xxxman.test.select.util.SNUtil;
 import com.xxxman.test.select.util.ServiceThread;
@@ -69,13 +71,7 @@ public class HongbaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(is_register && ShellUtil.hasRootPermission() ){
-                    //UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M01_QiangHB");
-                    //ServiceThread thread = new ServiceThread("MyHttpService");
-                    String path = "com.xxxman.test.select";
-                    String name = "MyHttpService";
-                    String command = "am startservice --user 10 -n " +
-                            path+ "/"+path+".service."+name;
-                    ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+                    UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M01_QiangHB");
                 }else{
                     Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
                 }
@@ -89,6 +85,38 @@ public class HongbaoFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(HongbaoFragment.this.getActivity(), LoginActivity.class);
                 HongbaoFragment.this.getActivity().startActivity(intent);
+            }
+        });
+        //VPN程序
+        Button fab1 = (Button) view.findViewById(R.id.fab1);
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_register && ShellUtil.hasRootPermission() ){
+                    //开启vpn
+                    Intent intent = new Intent(HongbaoFragment.this.getActivity(), MyVpnService.class);
+                    HongbaoFragment.this.getActivity().startService(intent);
+                    //开启httpServer
+                    Intent intent1 = new Intent(HongbaoFragment.this.getActivity(), MyHttpService.class);
+                    HongbaoFragment.this.getActivity().startService(intent1);
+                    //将外网访问80端口的数据转发到8089端口
+                    String command = "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8089";
+                    ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+                    Log.d(TAG, "command: " + command );
+                    Log.d(TAG, "run: " + rs.result );
+                    Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                    Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                    //将本机访问80端口的转发到本机8089
+                    command = "iptables -t nat -A OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j DNAT --to 127.0.0.1:8089";
+                    rs = ShellUtil.execCommand(command, true);
+                    Log.d(TAG, "command: " + command );
+                    Log.d(TAG, "run: " + rs.result );
+                    Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                    Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                }else{
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         //判断是否Root

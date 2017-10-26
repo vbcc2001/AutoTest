@@ -1,6 +1,12 @@
 package com.xxxman.test.select.util;
 
 
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import fi.iki.elonen.NanoHTTPD;
 
 /**
@@ -9,29 +15,7 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class NanoHttpServer extends NanoHTTPD {
 
-    /*这类就是要自定义一些返回值，我在这里定义了700。都属于自定义*/
-//    public enum Status implements NanoHTTPD.Response.IStatus {
-//        SWITCH_PROTOCOL(101, "Switching Protocols"),
-//        NOT_USE_POST(700, "not use post");
-//
-//        private final int requestStatus;
-//        private final String description;
-//
-//        Status(int requestStatus, String description) {
-//            this.requestStatus = requestStatus;
-//            this.description = description;
-//        }
-//
-//        @Override
-//        public String getDescription() {
-//            return null;
-//        }
-//
-//        @Override
-//        public int getRequestStatus() {
-//            return 0;
-//        }
-//    }
+    private static final String TAG = NanoHttpServer.class.getName();
 
     public NanoHttpServer(int port) {
         super(port);
@@ -39,6 +23,30 @@ public class NanoHttpServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
+        Log.d(TAG,"进入NanoHttpServer，请求地址为："+session.getUri());
+        String r = session.getUri();
+        if(r.length()>=4){
+            r = r.substring(r.length()-4,r.length());
+            if(".flv".equals(r)){
+                Log.d(TAG,"*****请求匹配.flv*****:"+session.getUri());
+                try {
+                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                    FileInputStream fis = new FileInputStream(path+"/XY0.flv");
+                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "video/x-flv", fis,fis.available());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else if(".jpg".equals(r)){
+                Log.d(TAG,"*****请求匹配.jpg*****:"+session.getUri());
+                try {
+                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                    FileInputStream fis = new FileInputStream(path+"/XY0.jpg");
+                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "image/jpeg", fis,fis.available());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html><html><body>");
         builder.append("404 -- Sorry, Can't Found "+ session.getUri() + " !");

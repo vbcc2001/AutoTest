@@ -21,7 +21,7 @@
 		<root-directory>.</root-directory>
 		<server-default>
 			<!-- HTTP服务的端口 -->
-			<http address="*" port="80" />
+			<http address="*" port="3001" />
 			<!-- - JVM参数设置 -->
 			<jvm-arg>-Xmx256m</jvm-arg>
 			<jvm-arg>-Xss1m</jvm-arg>

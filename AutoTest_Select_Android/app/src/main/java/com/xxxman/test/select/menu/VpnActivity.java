@@ -65,8 +65,7 @@ public class VpnActivity extends AppCompatActivity {
         startService(getServiceIntent().setAction(ToyVpnService.ACTION_DISCONNECT));
     }
     private Intent getServiceIntent() {
-        //return new Intent(this, MyVpnService.class);
-        return new Intent(this, MyHttpService.class);
-//        return new Intent(this, ToyVpnService.class);
+        return new Intent(this, MyVpnService.class);
+        //return new Intent(this, ToyVpnService.class);
     }
 }
