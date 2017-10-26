@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.xxxman.test.select.object.HttpResult;
 import com.xxxman.test.select.util.Connection;
+import com.xxxman.test.select.util.FileUtil;
 import com.xxxman.test.select.util.RSAUtils;
 
 import org.junit.runner.RunWith;
@@ -56,7 +57,7 @@ public class SettingTest {
                     set.click();
                 }
                 Thread.sleep(1000);
-                for (int j = 0; j < 60; j++) {
+                for (int j = 0; j < 1000; j++) {
                     UiObject2 fenxin = mUIDevice.findObject(By.text("飞行模式"));
                     List<UiObject2> check2 = mUIDevice.findObjects(By.res("android:id/checkbox"));
                     ;
@@ -73,6 +74,7 @@ public class SettingTest {
                     Map<String, String> parms = new HashMap<>();
                     String rs = my.getContextByHttp("http://pv.sohu.com/cityjson", parms);
                     Log.d(TAG, "http请求结果" + rs);
+                    FileUtil.write("ip.txt",rs);
                     Thread.sleep(1000);
                 }
             } catch (InterruptedException e) {
