@@ -33,6 +33,7 @@ public class S04_Qiang {
             Thread.sleep(1000);
             UiObject2 hongdou100 = mUIDevice.findObject(By.text("给钱也不要"));
             if(hongdou100!=null) {
+                Log.d(TAG,"红包分享没满~"+task);
                 if (is4X) {
                     mUIDevice.click(990, 1770);
                 } else {
