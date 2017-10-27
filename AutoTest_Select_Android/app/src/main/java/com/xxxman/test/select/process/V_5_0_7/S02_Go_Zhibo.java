@@ -6,6 +6,7 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiSelector;
+import android.util.Log;
 
 /**
  * 进入直播
@@ -27,17 +28,22 @@ public class S02_Go_Zhibo {
         UiObject sousuo = mUIDevice.findObject(new UiSelector().text("搜索"));
         sousuo.click();
         Thread.sleep(2000);
+        Log.d(TAG,"准备查找直播id：com.huajiao:id/search_video_item_live_tv");
         UiObject2 zhibao = mUIDevice.findObject(By.res("com.huajiao:id/search_video_item_live_tv"));
         if(zhibao==null){
+            Log.d(TAG,"2次查找直播id：com.huajiao:id/search_video_item_live_tv");
             sousuo.click();
             Thread.sleep(3000);
             zhibao = mUIDevice.findObject(By.res("com.huajiao:id/search_video_item_live_tv"));
         }
         if(zhibao==null){
+            Log.d(TAG,"3次查找直播id：com.huajiao:id/search_video_item_live_tv");
             sousuo.click();
             Thread.sleep(3000);
             zhibao = mUIDevice.findObject(By.res("com.huajiao:id/search_video_item_live_tv"));
         }
+        Log.d(TAG,"点击直播id：com.huajiao:id/search_video_item_live_tv");
+        Log.d(TAG," zhibao.getText():"+ zhibao.getText());
         zhibao.click();
     }
 }

@@ -46,7 +46,9 @@ public class M01_QiangHB {
             //S08_Change_VPN.start();
             S00_App_Reboot.start();
             S01_Login.start(task);
-            TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count()+1);
+            task.setTask_count(task.getTask_count()+1);//更新任务数
+            TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count());
+
             for(int j=0;j<12;j++){
                 try{
                     HttpResult httpResult = HttpUtil.post("F200101");
@@ -78,7 +80,7 @@ public class M01_QiangHB {
                             }
                         }
                     }else{
-                        ToastUitl.sendBroadcast(mContext,"没差到红包，休息10秒中");
+                        ToastUitl.sendBroadcast(mContext,"没找到红包，休息10秒中");
                         Thread.sleep(10000);
                     }
                 }catch (Exception e){
@@ -89,13 +91,27 @@ public class M01_QiangHB {
                     }
                     S00_App_Reboot.start();
                 }
-                if(task.getFail_count()>=3){
+                //失败6次直接退出
+                if(task.getFail_count()>=6){
                     break;
                 }
-                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT_ONE && task.getTask_count()==0){
+                if(task.getTask_count()==1 && task.getFail_count()>=3){
                     break;
                 }
-                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT && task.getTask_count()>1){
+                if(task.getTask_count()==2 && task.getFail_count()>=4){
+                    break;
+                }
+                if(task.getTask_count()==3 && task.getFail_count()>=5){
+                    break;
+                }
+                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT_ONE  && task.getTask_count()<=1){
+                    break;
+                }
+                //成功6次，直接退出
+                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT){
+                    break;
+                }
+                if(task.getSuccess_count()>=Constant.HONGBAO_COUNT_ONE  && task.getTask_count()<=1){
                     break;
                 }
             }
