@@ -16,9 +16,9 @@ import java.util.List;
  * Created by tuzi on 2017/10/22.
  */
 
-public class S08_Change_VPN {
+public class S08_Change_VPN_APP {
 
-    private static final String TAG = S08_Change_VPN.class.getName();
+    private static final String TAG = S08_Change_VPN_APP.class.getName();
 
     public static void start() throws Exception{
         UiDevice mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());

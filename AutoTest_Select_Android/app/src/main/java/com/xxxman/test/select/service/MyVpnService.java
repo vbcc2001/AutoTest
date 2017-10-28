@@ -70,6 +70,8 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
                     idle = false;
                 }
                 //out.write(packet.array(), 0, length);
+
+
                 Thread.sleep(50);
             }
         } catch (Exception e) {

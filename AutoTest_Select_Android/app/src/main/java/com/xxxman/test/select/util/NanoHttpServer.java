@@ -4,8 +4,10 @@ package com.xxxman.test.select.util;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -27,25 +29,27 @@ public class NanoHttpServer extends NanoHTTPD {
         String r = session.getUri();
         if(r.length()>=4){
             r = r.substring(r.length()-4,r.length());
-            if(".flv".equals(r)){
-                Log.d(TAG,"*****请求匹配.flv*****:"+session.getUri());
-                try {
-                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-                    FileInputStream fis = new FileInputStream(path+"/XY0.flv");
-                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "video/x-flv", fis,fis.available());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }else if(".jpg".equals(r)){
+            if(".jpg".equals(r)){
                 Log.d(TAG,"*****请求匹配.jpg*****:"+session.getUri());
                 try {
-                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-                    FileInputStream fis = new FileInputStream(path+"/XY0.jpg");
+                    //String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                    //FileInputStream fis = new FileInputStream(path+"/XY0.jpg");
+                    InputStream fis  =  Base64JPG.toInputStream();
                     return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "image/jpeg", fis,fis.available());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+//            else if(".flv".equals(r)){
+//                Log.d(TAG,"*****请求匹配.flv*****:"+session.getUri());
+//                try {
+//                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+//                    FileInputStream fis = new FileInputStream(path+"/XY0.flv");
+//                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "video/x-flv", fis,fis.available());
+//                } catch (Exception e) {
+//                    //e.printStackTrace();
+//                }
+//            }
         }
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html><html><body>");

@@ -82,7 +82,7 @@ public class HongbaoFragment extends Fragment {
                     command = "iptables -t nat -A OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j DNAT --to 127.0.0.1:8089";
                     rs = ShellUtil.execCommand(command, true);
                     Log.d(TAG, "command 运行结果: " + rs );
-                    //开启httpServer
+                    // 开启httpServer
                     Intent intent1 = new Intent(HongbaoFragment.this.getActivity(), MyHttpService.class);
                     HongbaoFragment.this.getActivity().startService(intent1);
                     UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M01_QiangHB");
