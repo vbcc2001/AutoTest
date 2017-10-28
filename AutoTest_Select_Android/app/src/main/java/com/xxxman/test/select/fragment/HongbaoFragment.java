@@ -50,6 +50,60 @@ public class HongbaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
             if(is_register && ShellUtil.hasRootPermission()){
+                //将本机访问80端口的转发到本机8089
+                //String command = "iptables -t nat -A OUTPUT -p tcp -d 127.0.0.1 --dport 80 -j DNAT --to 127.0.0.1:8089";
+                //String command = "echo \"1\" > /proc/sys/net/ipv4/ip_forward";
+                String command = "sysctl -w net.ipv4.ip_forward=1";
+                ShellUtil.CommandResult rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                command = "iptables -F";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                command = "iptables -t nat -F";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                command = "iptables -X";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                command = "iptables -P FORWARD ACCEPT";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+
+                //String command = "iptables -t nat -A PREROUTING --dst 192.168.3.133 -p tcp --dport 3001 -j DNAT --to-destination 39.108.120.224:3001";
+                command = "iptables -t nat -I PREROUTING -p tcp --dport 3001 -j DNAT --to 39.108.120.224";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                //command = "iptables -t nat -A POSTROUTING --dst 39.108.120.224 -p tcp --dport 3001 -j SNAT --to-source 192.168.3.133";
+                command = "iptables -t nat -I POSTROUTING -p tcp --dport 3001 -j MASQUERADE";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
+                command = "cat /proc/sys/net/ipv4/ip_forward";
+                rs = ShellUtil.execCommand(command, true);
+                Log.d(TAG, "command: " + command );
+                Log.d(TAG, "run: " + rs.result );
+                Log.d(TAG, "responseMsg: " + rs.responseMsg );
+                Log.d(TAG, "errorMsg: "  + rs.errorMsg);
                 UiautomatorThread thread = new UiautomatorThread("SelectHB");
             }else{
                 Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
@@ -107,20 +161,12 @@ public class HongbaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(is_register && ShellUtil.hasRootPermission() ){
-                    //开启vpn
-                    Intent intent = VpnService.prepare(HongbaoFragment.this.getActivity());
-                    Log.d(TAG,"==============intent != null:"+(intent != null));
-                    if (intent != null) {
-                        startActivityForResult(intent, 0);
-                    } else {
-                        onActivityResult(0,HongbaoFragment.this.getActivity().RESULT_OK, null);
-                    }
-                    //Intent intent = new Intent(HongbaoFragment.this.getActivity(), MyVpnService.class);
-                    //HongbaoFragment.this.getActivity().startService(intent);
+                    // 开启httpServer
+                    Intent intent1 = new Intent(HongbaoFragment.this.getActivity(), MyHttpService.class);
+                    HongbaoFragment.this.getActivity().startService(intent1);
                 }else{
                     Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
         //判断是否Root
@@ -151,13 +197,5 @@ public class HongbaoFragment extends Fragment {
             Toast.makeText(this.getActivity(), "注册失败，请检查是否授予获取手机信息的权限", Toast.LENGTH_LONG).show();
         }
 
-    }
-    public void onActivityResult(int request, int result, Intent data) {
-        if (result == HongbaoFragment.this.getActivity().RESULT_OK) {
-            this.getActivity().startService(getServiceIntent().setAction(ToyVpnService.ACTION_CONNECT));
-        }
-    }
-    private Intent getServiceIntent() {
-        return new Intent(this.getActivity(), MyVpnService.class);
     }
 }
