@@ -39,7 +39,6 @@ public class S01_Quit {
                 Log.d(TAG,"豆数为："+dou.getText()+"---------");
                 int dou_sum = Integer.valueOf(dou.getText());
                 if(dou_sum>0){
-
                     String dou1 = "{\"phone\":\""+S00_Get_Sn_Code.getCode()+"\",\"account\":\""+task.getPhone()+"\",\"pwd\":\"*\",\"state\":\"1\",\"dou\":"+dou_sum+"}";
                     Map<String,String> map = new HashMap<>();
                     map.put("count",dou1);
