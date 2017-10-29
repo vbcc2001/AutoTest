@@ -95,7 +95,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.84"
                     android:lineSpacingExtra="10dp"
-                    android:text="已完成0个，待处理0个!" />
+                    android:text="" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,7 +151,7 @@
                 android:layout_height="match_parent"
                 android:gravity="right"
                 android:padding="10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <Button
                     android:id="@+id/runBtn2"
                     android:layout_width="80dp"
@@ -159,7 +159,31 @@
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="开始" />
+                    android:text="开始任务" />
+                <Button
+                    android:id="@+id/fab1"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开启WEB" />
+                <Button
+                    android:id="@+id/fab2"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="开启VPN" />
+                <Button
+                    android:id="@+id/fab3"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_selector"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="更新账号" />
             </LinearLayout>
         </LinearLayout>
         <!--*************注册和ROOT信息**********************************************************************************************-->
@@ -181,17 +205,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="+注册" />
-            <Button
-                android:id="@+id/fab1"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_margin="20dp"
-                android:visibility="visible"
-                android:background="@drawable/btn_selector"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:text="+开启HttpServer" />
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"

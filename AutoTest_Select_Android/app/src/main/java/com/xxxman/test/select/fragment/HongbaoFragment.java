@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.VpnService;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -15,18 +16,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xxxman.test.select.Constant;
 import com.xxxman.test.select.R;
 import com.xxxman.test.select.menu.LoginActivity;
 import com.xxxman.test.select.menu.VpnActivity;
+import com.xxxman.test.select.object.HttpResult;
+import com.xxxman.test.select.object.Task;
+import com.xxxman.test.select.process.V_5_0_7.S00_Get_Sn_Code;
 import com.xxxman.test.select.service.MyHttpService;
 import com.xxxman.test.select.service.MyVpnService;
 import com.xxxman.test.select.service.ToyVpnService;
+import com.xxxman.test.select.util.FileUtil;
+import com.xxxman.test.select.util.HttpUtil;
 import com.xxxman.test.select.util.RSAUtils;
 import com.xxxman.test.select.util.SNUtil;
 import com.xxxman.test.select.util.ServiceThread;
 import com.xxxman.test.select.util.ShellUtil;
 import com.xxxman.test.select.util.ToastUitl;
 import com.xxxman.test.select.util.UiautomatorThread;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HongbaoFragment extends Fragment {
@@ -145,16 +156,6 @@ public class HongbaoFragment extends Fragment {
                 }
             }
         });
-        //注册程序
-        Button fab = (Button) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(HongbaoFragment.this.getActivity(), LoginActivity.class);
-                HongbaoFragment.this.getActivity().startActivity(intent);
-            }
-        });
         //VPN程序
         Button fab1 = (Button) view.findViewById(R.id.fab1);
         fab1.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +168,44 @@ public class HongbaoFragment extends Fragment {
                 }else{
                     Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        //VPN程序
+        Button fab2 = (Button) view.findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_register && ShellUtil.hasRootPermission() ){
+                    // 开启VPN
+                    connect(view);
+                }else{
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        //更新账号
+        Button fab3 = (Button) view.findViewById(R.id.fab3);
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_register && ShellUtil.hasRootPermission() ){
+                    // 更新账号
+                    UpdateThread thread = new UpdateThread();
+                    thread.start();
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "更新成功", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        //注册程序
+        Button fab = (Button) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(HongbaoFragment.this.getActivity(), LoginActivity.class);
+                HongbaoFragment.this.getActivity().startActivity(intent);
             }
         });
         //判断是否Root
@@ -196,6 +235,53 @@ public class HongbaoFragment extends Fragment {
             e.printStackTrace();
             Toast.makeText(this.getActivity(), "注册失败，请检查是否授予获取手机信息的权限", Toast.LENGTH_LONG).show();
         }
+    }
+    public void connect(View view){
 
+        Intent intent = VpnService.prepare(this.getActivity());
+        Log.d(TAG,"==============intent != null:"+(intent != null));
+        if (intent != null) {
+            startActivityForResult(intent, 0);
+        } else {
+            onActivityResult(0, this.getActivity().RESULT_OK, null);
+        }
+    }
+    public void onActivityResult(int request, int result, Intent data) {
+        if (result == this.getActivity().RESULT_OK) {
+            this.getActivity().startService(getServiceIntent().setAction(ToyVpnService.ACTION_CONNECT));
+        }
+    }
+    private Intent getServiceIntent() {
+        return new Intent(this.getActivity(), MyVpnService.class);
+    }
+
+    class UpdateThread extends Thread {
+
+        @Override
+        public void run() {
+            super.run();
+            try {
+                List<Task> list = FileUtil.ReadTxtFile("bh_NumberList.txt");
+                Log.d(TAG,"bh_NumberList.txt中用户数量："+list.size());
+
+                Map<String,String> map = new HashMap<>();
+
+                //更新到服务器
+                String listStr = "[";
+                for (Task task : list) {
+                    listStr = listStr + "{n:" + task.getNumber() + ",a:" + task.getPhone() + "},";
+                }
+                listStr = listStr.substring(0,listStr.length()-1);
+                listStr = listStr + "]";
+                map.put("phone", S00_Get_Sn_Code.getCode(HongbaoFragment.this.getContext()));
+                map.put("list",listStr);
+                Log.d(TAG,"更新到服务器中，参数："+map);
+                HttpResult httpResult = HttpUtil.post("F100009",map);
+                Log.d(TAG,"更新完成，结果："+httpResult.getErrorNo());
+                Log.d(TAG,"更新完成，结果："+httpResult.getErrorInfo());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

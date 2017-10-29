@@ -38,7 +38,6 @@ public class SelectHB {
             Intent myIntent = mContext.getPackageManager().getLaunchIntentForPackage(APP);  //启动app
             mContext.startActivity(myIntent);
             mUIDevice.waitForWindowUpdate(APP, 5 * 2000);
-            mUIDevice.pressBack();
             Thread.sleep(3000);
             mUIDevice.pressBack();
             for (int i = 0; i < 9999; i++) {

@@ -21,4 +21,10 @@ public class S00_Get_Sn_Code {
         Log.d(TAG,"注册码为："+sn_code);
         return sn_code;
     }
+    public static String getCode(Context mContext) {
+        SharedPreferences preferences= mContext.getSharedPreferences("sn_code", Context.MODE_PRIVATE);
+        String sn_code =preferences.getString("sn_code", "xxx");
+        Log.d(TAG,"注册码为："+sn_code);
+        return sn_code;
+    }
 }

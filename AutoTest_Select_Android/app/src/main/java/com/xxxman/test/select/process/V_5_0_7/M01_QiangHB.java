@@ -21,6 +21,7 @@ import com.xxxman.test.select.object.DataRow;
 import com.xxxman.test.select.object.HttpResult;
 import com.xxxman.test.select.object.Task;
 import com.xxxman.test.select.sql.TaskSQL;
+import com.xxxman.test.select.util.FileUtil;
 import com.xxxman.test.select.util.HttpUtil;
 import com.xxxman.test.select.util.SQLUtil;
 import com.xxxman.test.select.util.ToastUitl;
@@ -154,6 +155,7 @@ public class M01_QiangHB {
             //mUIDevice.pressBack();
             //获取任务
             List<Task> list = S00_Get_Task.start();
+            FileUtil.write("task_"+SQLUtil.getDayString()+".txt","-------"+SQLUtil.getDayString2()+"开始运行，任务数"+list.size()+"--------");
             if(list.size()>0){
                 for (int j = 0; j < 6; j++) {
                     for(Task task :list){
@@ -178,6 +180,11 @@ public class M01_QiangHB {
                                         //提示
                                         ToastUitl.sendBroadcast(mContext,info);
                                         qiangHongBao(task);
+                                        String info2 = task.getNumber()+","
+                                                +task.getTask_count() +","
+                                                +task.getSuccess_count()+","
+                                                +task.getFail_count();
+                                        FileUtil.write("task_"+SQLUtil.getDayString()+".txt",info2);
                                     }
                                 }
                             }

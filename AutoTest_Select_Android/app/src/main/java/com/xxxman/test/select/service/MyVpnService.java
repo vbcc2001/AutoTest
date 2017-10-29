@@ -98,14 +98,12 @@ public class MyVpnService extends VpnService implements Handler.Callback,Runnabl
         Log.d(TAG,"开始启动vpn...");
         if (mHandler == null) {
             mHandler = new Handler(this);
+            mThread = new Thread(this, "VpnThread");
+            mThread.start();
         }
-        if (mThread != null) {
-            mThread.interrupt();
-        }
-        //getLocalIpAddress();
-        // Start a new session by creating a new thread.
-        mThread = new Thread(this, "VpnThread");
-        mThread.start();
+        //if (mThread != null) {
+        //    mThread.interrupt();
+        //}
         return START_STICKY;
     }
     @Override

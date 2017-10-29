@@ -6,10 +6,18 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject2;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.xxxman.test.select.Constant;
+import com.xxxman.test.select.util.Connection;
+import com.xxxman.test.select.util.FileUtil;
+import com.xxxman.test.select.util.SQLUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 切换飞行模式
@@ -40,7 +48,14 @@ public class S07_Change_AirPlane {
             }
             Thread.sleep(1000);
             check2.get(0).click();
-            Thread.sleep(3000);
+            Thread.sleep(10000);
+            Connection my = new Connection();
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            //更新到服务器
+            Map<String, String> parms = new HashMap<>();
+            String rs = my.getContextByHttp("http://pv.sohu.com/cityjson", parms);
+            Log.d(TAG, "http请求结果" + rs);
+            FileUtil.write("task_"+ SQLUtil.getDayString()+".txt",rs);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

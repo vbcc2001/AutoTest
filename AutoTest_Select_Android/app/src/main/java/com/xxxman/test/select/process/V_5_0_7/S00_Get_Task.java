@@ -1,6 +1,7 @@
 package com.xxxman.test.select.process.V_5_0_7;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.xxxman.test.select.object.DataRow;
 import com.xxxman.test.select.object.HttpResult;
 import com.xxxman.test.select.object.Task;
 import com.xxxman.test.select.sql.TaskSQL;
+import com.xxxman.test.select.util.FileUtil;
 import com.xxxman.test.select.util.HttpUtil;
 import com.xxxman.test.select.util.SQLUtil;
 
@@ -33,9 +35,18 @@ public class S00_Get_Task {
             TaskSQL.createTableTask();
         }
         if(TaskSQL.selectTaskCount(taskType)==0){
+            List<Task> list = FileUtil.ReadTxtFile("bh_NumberList.txt");
+            for(Task task : list){
+                task.setUid(0);
+                task.setDay("");
+                task.setTask_count(0);
+                task.setSuccess_count(0);
+                task.setType(taskType);
+            }
+            TaskSQL.inserTask(list,taskType);
+            /*
             for (int i = 0; i < 10; i++) {
                 String sn_code = S00_Get_Sn_Code.getCode();
-                sn_code = "ddbf44f57eb4";
                 Map<String,String> para = new HashMap<>();
                 para.put("phone",sn_code);
                 para.put("type","hongbao");
@@ -64,8 +75,9 @@ public class S00_Get_Task {
                     Log.e(TAG,"获取用户信息失败："+httpResult.getErrorInfo());
                     Thread.sleep(5000);
                 }
-            }
+            }        */
         }
+
         return TaskSQL.selectTask(taskType);
     }
 }

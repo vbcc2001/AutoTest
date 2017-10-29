@@ -54,4 +54,9 @@ public class SQLUtil {
         String dateString = formatter.format(new Date());
         return dateString;
     }
+    public static String getDayString2(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        String dateString = formatter.format(new Date());
+        return dateString;
+    }
 }
