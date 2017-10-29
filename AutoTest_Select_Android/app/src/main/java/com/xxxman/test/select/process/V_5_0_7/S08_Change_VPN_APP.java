@@ -36,6 +36,7 @@ public class S08_Change_VPN_APP {
             List<UiObject2> check2  = mUIDevice.findObjects(By.res("android:id/checkbox"));;
             if(check2.get(0).isChecked()){
                 check2.get(0).click();
+                Thread.sleep(4000);
             }
             Thread.sleep(1000);
             check2.get(0).click();
