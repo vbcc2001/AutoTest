@@ -39,13 +39,13 @@ public class S01_Quit {
                 Log.d(TAG,"豆数为："+dou.getText()+"---------");
                 int dou_sum = Integer.valueOf(dou.getText());
                 if(dou_sum>0){
+
+                    String dou1 = "{\"phone\":\""+S00_Get_Sn_Code.getCode()+"\",\"account\":\""+task.getPhone()+"\",\"pwd\":\"*\",\"state\":\"1\",\"dou\":"+dou_sum+"}";
                     Map<String,String> map = new HashMap<>();
-                    map.put("phone",S00_Get_Sn_Code.getCode());
-                    map.put("account",task.getPhone());
-                    map.put("state","1");
-                    map.put("pwd","*");
-                    map.put("dou",""+dou_sum);
+                    map.put("count",dou1);
                     HttpResult httpResult = HttpUtil.post("F100005",map);
+                    Log.d(TAG,"更新完成，结果："+httpResult.getErrorNo());
+                    Log.d(TAG,"更新完成，结果："+httpResult.getErrorInfo());
                 }
             }
         }
