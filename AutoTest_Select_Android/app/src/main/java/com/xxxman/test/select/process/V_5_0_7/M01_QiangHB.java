@@ -48,6 +48,7 @@ public class M01_QiangHB {
             //S07_Change_AirPlane.start();
             S08_Change_VPN_APP.start();
             S00_App_Reboot.start();
+            mUIDevice.runWatchers();
             S01_Login.start(task);
             task.setTask_count(task.getTask_count()+1);//更新任务数
             TaskSQL.updateTaskCount(task.getId(),"task_count",task.getTask_count());

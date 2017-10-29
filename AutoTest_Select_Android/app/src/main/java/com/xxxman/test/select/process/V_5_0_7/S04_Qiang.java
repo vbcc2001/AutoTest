@@ -22,7 +22,7 @@ public class S04_Qiang {
 
     public static void start(Task task) throws Exception{
         UiDevice mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        //mUIDevice.removeWatcher("close_ad");
+        mUIDevice.removeWatcher("close_ad");
         boolean is4X = Constant.IS_4X();
         for(int j =0 ;j < 50 ;j++){
             if(is4X){
