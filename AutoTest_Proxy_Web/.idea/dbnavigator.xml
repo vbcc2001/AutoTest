@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="0deb240a-a381-4636-afd7-4daf06f0960e">
-        <schema name="huajiao" object-types="table, view" />
+        <schema name="huajiao" object-types="column, function, table, view" />
       </connection>
     </loaded-nodes>
   </component>

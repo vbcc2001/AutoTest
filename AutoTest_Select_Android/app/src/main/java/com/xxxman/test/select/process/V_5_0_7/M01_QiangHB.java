@@ -43,10 +43,10 @@ public class M01_QiangHB {
     //抢红包
     private void qiangHongBao(Task task)   {
         try{
-            //S10_Start_Http_Service.start();
-            //S09_Start_Vpn_Service.start();
-            //S07_Change_AirPlane.start();
-            S08_Change_VPN_APP.start();
+            S10_Start_Http_Service.start();
+            S09_Start_Vpn_Service.start();
+            S07_Change_AirPlane.start();
+            //S08_Change_VPN_APP.start();
             S00_App_Reboot.start();
             S01_Login.start(task);
             task.setTask_count(task.getTask_count()+1);//更新任务数

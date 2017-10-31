@@ -39,17 +39,16 @@ public class NanoHttpServer extends NanoHTTPD {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else if("/substream".equals(session.getUri()) || ".flv".equals(r)){
+                Log.d(TAG,"*****请求匹配.flv*****:"+session.getUri());
+                try {
+                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
+                    FileInputStream fis = new FileInputStream(path+"/XY0.flv");
+                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "video/x-flv", fis,fis.available());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-//            else if(".flv".equals(r)){
-//                Log.d(TAG,"*****请求匹配.flv*****:"+session.getUri());
-//                try {
-//                    String path = Environment.getExternalStorageDirectory().getCanonicalPath();
-//                    FileInputStream fis = new FileInputStream(path+"/XY0.flv");
-//                    return newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "video/x-flv", fis,fis.available());
-//                } catch (Exception e) {
-//                    //e.printStackTrace();
-//                }
-//            }
         }
         StringBuilder builder = new StringBuilder();
         builder.append("<!DOCTYPE html><html><body>");
