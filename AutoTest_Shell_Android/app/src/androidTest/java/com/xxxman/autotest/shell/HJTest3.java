@@ -39,7 +39,7 @@ public class HJTest3{
     int fail_count= 0 ;
     SQLUtil1 sqlUtil = new SQLUtil1();
     boolean is4X=Constant.IS_4X;
-    String citys[] = new String[]{"最新","北京","上海","广州","深圳","黑龙江","吉林","辽宁"};
+    String citys[] = new String[]{"最新","北京","上海","广州","深圳","河北","黑龙江","吉林","辽宁","浙江"};
     int next_city = 0;
     @Before
     public void setUp() throws RemoteException {
