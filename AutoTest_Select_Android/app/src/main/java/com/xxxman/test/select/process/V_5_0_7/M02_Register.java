@@ -37,7 +37,7 @@ public class M02_Register {
                         token = XingjkAPI.loginIn();
                     }
                     if(token!=null){
-                        ToastUitl.sendBroadcast(mContext,"当前执行第"+i+"个注册，已成功"+suc+"个");
+                        ToastUitl.sendBroadcast(mContext,"正执行第"+i+"次注册，已成功"+suc+"个");
                         if(S01_Register.start(token)){
                           suc++;
                         }
@@ -46,7 +46,7 @@ public class M02_Register {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
-                    ToastUitl.sendBroadcast(mContext,"注册出错"+e.getMessage());
+                    ToastUitl.sendBroadcast(mContext,"注册出错："+e.getMessage());
                     S00_App_Reboot.start();
                 }
             }

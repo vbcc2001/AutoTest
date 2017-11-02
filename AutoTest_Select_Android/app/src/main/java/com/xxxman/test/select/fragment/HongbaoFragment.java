@@ -121,6 +121,18 @@ public class HongbaoFragment extends Fragment {
             }
             }
         });
+        Button regBtn = (Button) view.findViewById(R.id.regBtn);
+        //绑定运行按钮
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(is_register && ShellUtil.hasRootPermission() ){
+                    UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M02_Register");
+                }else{
+                    Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         Button runBtn1 = (Button) view.findViewById(R.id.runBtn1);
         //绑定运行按钮
         runBtn1.setOnClickListener(new View.OnClickListener() {
