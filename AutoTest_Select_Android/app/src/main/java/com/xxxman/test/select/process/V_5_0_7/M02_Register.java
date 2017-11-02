@@ -8,6 +8,8 @@ import android.support.test.uiautomator.UiWatcher;
 import android.util.Log;
 
 import com.xxxman.test.select.object.Task;
+import com.xxxman.test.select.util.ToastUitl;
+import com.xxxman.test.select.util.XingjkAPI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +29,24 @@ public class M02_Register {
             //启动APP
             S00_App_Reboot.start();
             Thread.sleep(3000);
-
-            for(int i = 0 ;i<100;i++){
+            String token = null;
+            int suc = 0;
+            for(int i = 1 ;i<=100;i++){
                 try {
-                    S01_Register.start();
-                    S01_Quit_2.start();
-                    S00_App_Reboot.start();
+                    if(token==null){
+                        token = XingjkAPI.loginIn();
+                    }
+                    if(token!=null){
+                        ToastUitl.sendBroadcast(mContext,"当前执行第"+i+"个注册，已成功"+suc+"个");
+                        if(S01_Register.start(token)){
+                          suc++;
+                        }
+                        S01_Quit_2.start();
+                        S00_App_Reboot.start();
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
+                    ToastUitl.sendBroadcast(mContext,"注册出错"+e.getMessage());
                     S00_App_Reboot.start();
                 }
             }

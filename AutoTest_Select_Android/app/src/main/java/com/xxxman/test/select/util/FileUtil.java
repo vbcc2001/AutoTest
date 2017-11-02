@@ -28,7 +28,8 @@ public class FileUtil {
 
     public static void write(String name,String text) {
 
-
+        Log.d(TAG,"文件名："+name);
+        Log.d(TAG,"内容："+text);
         try {
             //生成文件夹之后，再生成文件，不然会出错
             File file = null;

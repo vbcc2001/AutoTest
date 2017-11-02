@@ -53,15 +53,23 @@
                 android:layout_height="match_parent"
                 android:gravity="right"
                 android:padding="10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <Button
-                    android:id="@+id/runBtn"
+                android:id="@+id/runBtn"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_selector"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="刷红包" />
+                <Button
+                    android:id="@+id/regBtn"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_selector"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="开始" />
+                    android:text="注册账号" />
             </LinearLayout>
         </LinearLayout>
         <!--*************2、自动抢红包标题**********************************************************************************************-->
