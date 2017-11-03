@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +41,11 @@ public class RegFragment extends Fragment {
 
     private static final String TAG = RegFragment.class.getName();
     private boolean is_register = false;
-    private  TextView reg_count ;
-    private  TextView api_user;
-    private  TextView api_pwd;
-    private  TextView reg_pwd;
-    private  TextView project_id;
+    private  EditText reg_count ;
+    private  EditText api_user;
+    private  EditText api_pwd;
+    private  EditText reg_pwd;
+    private  EditText project_id;
     private  SharedPreferences prefs;
 
     public static RegFragment newInstance() {
@@ -54,11 +55,11 @@ public class RegFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_reg,container,false);
-        reg_count = (TextView) this.getActivity().findViewById(R.id.reg_count);
-        api_user = (TextView) this.getActivity().findViewById(R.id.api_user);
-        api_pwd = (TextView) this.getActivity().findViewById(R.id.api_pwd);
-        reg_pwd = (TextView) this.getActivity().findViewById(R.id.reg_pwd);
-        project_id = (TextView) this.getActivity().findViewById(R.id.project_id);
+        reg_count = (EditText) view.findViewById(R.id.reg_count);
+        api_user = (EditText) view.findViewById(R.id.api_user);
+        api_pwd = (EditText) view.findViewById(R.id.api_pwd);
+        reg_pwd = (EditText) view.findViewById(R.id.reg_pwd);
+        project_id = (EditText) view.findViewById(R.id.project_id);
         prefs = this.getActivity().getSharedPreferences("huajiao_reg", this.getActivity().MODE_PRIVATE);
         reg_count.setText(prefs.getString("reg_count", ""));
         api_user.setText(prefs.getString("api_user", ""));

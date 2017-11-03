@@ -34,7 +34,7 @@ public class S01_Register {
 
     public static boolean start(String reg_pwd,String project_id,String token) throws Exception{
         UiDevice mUIDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        Context mContext = InstrumentationRegistry.getContext();;
+        Context mContext = InstrumentationRegistry.getContext();
         String s_phone = null;
         String s_code  = null;
         UiObject my = mUIDevice.findObject(new UiSelector().text("我的"));
@@ -86,17 +86,18 @@ public class S01_Register {
                 UiObject2 register_do = mUIDevice.findObject(By.text("立即登录"));
                 if(register_do!=null){
                     Log.d(TAG,"注册失败，已注册过="+s_phone+","+reg_pwd);
-                    FileUtil.write("register_fail_"+ SQLUtil.getDayString()+".txt",s_phone+","+"已注册过");
+                    FileUtil.write("花椒注册失败_"+ SQLUtil.getDayString()+".txt",s_phone+","+"已注册过");
                     return false;
                 }
                 UiObject my1 = mUIDevice.findObject(new UiSelector().text("我的"));
                 my1.click();
                 Log.d(TAG,"注册成功="+s_phone+","+reg_pwd);
-                FileUtil.write("register_"+ SQLUtil.getDayString()+".txt",s_phone+","+reg_pwd);
+                FileUtil.write("花椒注册_"+ SQLUtil.getDayString()+".txt",s_phone+","+reg_pwd);
                 return true;
             }else{
                 Log.d(TAG,"没获得验证码="+s_phone+","+reg_pwd);
-                FileUtil.write("register_fail_"+ SQLUtil.getDayString()+".txt",s_phone+","+"没获得验证码");
+                ToastUitl.sendBroadcast(mContext,"注册失败，手机"+s_phone+"没有获取验证码");
+                FileUtil.write("花椒注册失败_"+ SQLUtil.getDayString()+".txt",s_phone+","+"没获得验证码");
                 return false;
             }
         }

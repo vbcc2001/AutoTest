@@ -56,7 +56,7 @@ public class XingjkAPI {
         Log.d(TAG,"phone："+phone);
         return phone;
     }
-    public static String getMessage(String phone,String project_id,String token) throws Exception{
+    public static String getMessage(String project_id,String phone,String token) throws Exception{
         String message = null;
         String url = "http://api.xingjk.cn/api/do.php?action=getMessage&sid="+project_id+"&phone="+phone+"&token="+token;
         Connection my  = new Connection();

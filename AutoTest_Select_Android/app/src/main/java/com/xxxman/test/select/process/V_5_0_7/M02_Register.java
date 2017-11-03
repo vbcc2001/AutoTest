@@ -28,7 +28,8 @@ public class M02_Register {
     public void test() {
         try {
             SharedPreferences preferences= mContext.getSharedPreferences("huajiao_reg", Context.MODE_PRIVATE);
-            int reg_count =preferences.getInt("reg_count", 0);
+            int reg_count =Integer.valueOf(preferences.getString("reg_count", "0"));
+            Log.d(TAG,"99999999----"+reg_count);
             String api_user =preferences.getString("api_user", "");
             String api_pwd =preferences.getString("api_pwd", "");
             String reg_pwd =preferences.getString("reg_pwd", "");
@@ -38,7 +39,7 @@ public class M02_Register {
             Thread.sleep(3000);
             String token = null;
             int suc = 0;
-            for(int i = 1 ;i<=reg_count*2;i++){
+            for(int i = 1 ;i<=reg_count*3;i++){
                 if (suc>=reg_count){
                     break;
                 }
