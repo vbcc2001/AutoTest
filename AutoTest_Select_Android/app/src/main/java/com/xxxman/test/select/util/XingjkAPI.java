@@ -67,10 +67,13 @@ public class XingjkAPI {
         if("1|".equals(rs.substring(0,2))){
             String[] r = rs.split("\\|");
             message = r[1];
-            if("【花椒直播】".equals(message.substring(0,6))){
-                message = message.substring(6);
-            }
-            message = message.substring(0,6);
+            int index = message.indexOf("（验证码）");
+            Log.d(TAG,"index："+index);
+            message = message.substring(index-6,index);
+//            if("【花椒直播】".equals(message.substring(0,6))){
+//                message = message.substring(6);
+//            }
+//            message = message.substring(0,6);
         }
         Log.d(TAG,"message："+message);
         return message;
