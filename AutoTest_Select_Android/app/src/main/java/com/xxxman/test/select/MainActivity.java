@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.xxxman.test.select.fragment.GiftFragment;
 import com.xxxman.test.select.fragment.HongbaoFragment;
+import com.xxxman.test.select.fragment.RegFragment;
 import com.xxxman.test.select.fragment.SunFragment;
 import com.xxxman.test.select.menu.LoginActivity;
 import com.xxxman.test.select.menu.UpdateActivity;
@@ -22,7 +23,7 @@ import com.xxxman.test.select.menu.VpnActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] titleArr = new String[]{"红包","阳光","礼物"};
+    String[] titleArr = new String[]{"花椒注册","其他","其他"};
     private static final String TAG = MainActivity.class.getName();
 
     @Override
@@ -43,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        //MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -55,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.login_menu:
                 intent.setClass(MainActivity.this, LoginActivity.class);
                 break;
-            case R.id.udate_menu:
-                intent.setClass(MainActivity.this, UpdateActivity.class);
-                break;
-            case R.id.vpn_menu:
-                intent.setClass(MainActivity.this, VpnActivity.class);
-                break;
+//            case R.id.udate_menu:
+//                intent.setClass(MainActivity.this, UpdateActivity.class);
+//                break;
+//            case R.id.vpn_menu:
+//                intent.setClass(MainActivity.this, VpnActivity.class);
+//                break;
             default:
                 intent.setClass(MainActivity.this, LoginActivity.class);
         }
@@ -76,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Fragment fragment ;
             if(position ==0 ){
-                fragment = HongbaoFragment.newInstance();
+                //fragment = HongbaoFragment.newInstance();
+                fragment = RegFragment.newInstance();
             }else if(position ==1 ){
                 fragment = SunFragment.newInstance();
             }else if(position ==2 ){

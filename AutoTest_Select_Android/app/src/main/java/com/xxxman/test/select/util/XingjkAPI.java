@@ -24,10 +24,10 @@ public class XingjkAPI {
 
     private static final String TAG = XingjkAPI.class.getName();
 
-    public static String  loginIn() throws Exception{
+    public static String  loginIn(String api_user,String api_pwd) throws Exception{
         String token = null;
         //登录
-        String url = "http://api.xingjk.cn/api/do.php?action=loginIn&name=api-6p9wdfxt&password=a13670752777";
+        String url = "http://api.xingjk.cn/api/do.php?action=loginIn&name="+api_user+"&password="+api_pwd;
         Connection my  = new Connection();
         Log.d(TAG,"请求地址为："+url);
         Map<String,String> map = new HashMap<String,String>();
@@ -40,10 +40,10 @@ public class XingjkAPI {
         Log.d(TAG,"token："+token);
         return token;
     }
-    public static String getPhone(String token) throws Exception{
+    public static String getPhone(String project_id,String token) throws Exception{
         String phone = null;
         //登录
-        String url = "http://api.xingjk.cn/api/do.php?action=getPhone&sid=7435&token="+token;
+        String url = "http://api.xingjk.cn/api/do.php?action=getPhone&sid="+project_id+"&token="+token;
         Connection my  = new Connection();
         Log.d(TAG,"请求地址为："+url);
         Map<String,String> map = new HashMap<String,String>();
@@ -56,9 +56,9 @@ public class XingjkAPI {
         Log.d(TAG,"phone："+phone);
         return phone;
     }
-    public static String getMessage(String phone,String token) throws Exception{
+    public static String getMessage(String phone,String project_id,String token) throws Exception{
         String message = null;
-        String url = "http://api.xingjk.cn/api/do.php?action=getMessage&sid=7435&phone="+phone+"&token="+token;
+        String url = "http://api.xingjk.cn/api/do.php?action=getMessage&sid="+project_id+"&phone="+phone+"&token="+token;
         Connection my  = new Connection();
         Log.d(TAG,"请求地址为："+url);
         Map<String,String> map = new HashMap<String,String>();
