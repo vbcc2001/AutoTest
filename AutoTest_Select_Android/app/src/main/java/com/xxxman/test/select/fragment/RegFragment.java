@@ -70,6 +70,7 @@ public class RegFragment extends Fragment {
     }
     @Override
     public void onViewCreated(View view,Bundle bundle){
+
         Button regBtn = (Button) view.findViewById(R.id.regBtn);
         //绑定运行按钮
         regBtn.setOnClickListener(new View.OnClickListener() {
@@ -106,26 +107,33 @@ public class RegFragment extends Fragment {
             rootTextView.setText("Root成功，" );
             rootTextView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
         }
-        try {
-            //判断是否注册
-            String sn = SNUtil.getuniqueId(this.getContext());
-            String enctytCode = RSAUtils.encryptWithRSA(sn);
-            String code = SNUtil.getMD5(enctytCode);
-            code = SNUtil.getMD5(code);
-            code= code.substring(0,12);
-            Log.d(TAG,code);
-            SharedPreferences preferences= this.getContext().getSharedPreferences("sn_code", Context.MODE_PRIVATE);
-            String sn_code =preferences.getString("sn_code", "xxx");
-            if(code.equals(sn_code)){
-                is_register = true;
-                fab.setVisibility(View.GONE);
-                TextView snView =  (TextView)  view.findViewById(R.id.sn_view);
-                snView.setText("注册成功！("+code+")" );
-                snView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this.getActivity(), "注册失败，请检查是否授予获取手机信息的权限", Toast.LENGTH_LONG).show();
-        }
+        //不用注册了
+        is_register = true;
+        fab.setVisibility(View.GONE);
+        TextView snView =  (TextView)  view.findViewById(R.id.sn_view);
+        snView.setText("注册成功！(免注册)" );
+        snView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
+
+//        try {
+//            //判断是否注册
+//            String sn = SNUtil.getuniqueId(this.getContext());
+//            String enctytCode = RSAUtils.encryptWithRSA(sn);
+//            String code = SNUtil.getMD5(enctytCode);
+//            code = SNUtil.getMD5(code);
+//            code= code.substring(0,12);
+//            Log.d(TAG,code);
+//            SharedPreferences preferences= this.getContext().getSharedPreferences("sn_code", Context.MODE_PRIVATE);
+//            String sn_code =preferences.getString("sn_code", "xxx");
+//            if(code.equals(sn_code)){
+//                is_register = true;
+//                fab.setVisibility(View.GONE);
+//                TextView snView =  (TextView)  view.findViewById(R.id.sn_view);
+//                snView.setText("注册成功！("+code+")" );
+//                snView.setTextColor(ContextCompat.getColor(this.getActivity(), R.color.green));
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Toast.makeText(this.getActivity(), "注册失败，请检查是否授予获取手机信息的权限", Toast.LENGTH_LONG).show();
+//        }
     }
 }
