@@ -79,12 +79,13 @@
             android:padding="10dp"
             android:background="@color/lightgray"
             android:layout_height="40dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="2、VPN模式自动抢红包"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:text="2、自动抢红包"/>
+                android:textStyle="bold" />
         </LinearLayout>
         <!--*************2、自动抢红包内容**********************************************************************************************-->
         <LinearLayout

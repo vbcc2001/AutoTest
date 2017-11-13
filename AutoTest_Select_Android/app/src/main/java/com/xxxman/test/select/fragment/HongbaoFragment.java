@@ -139,7 +139,7 @@ public class HongbaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
             if(is_register && ShellUtil.hasRootPermission() ){
-                UiautomatorThread thread = new UiautomatorThread("ClickHB");
+                UiautomatorThread thread = new UiautomatorThread("V_5_0_7.M03_QiangHB");
             }else{
                 Toast.makeText(HongbaoFragment.this.getActivity(), "请先注册并赋Root权限", Toast.LENGTH_LONG).show();
             }
