@@ -221,9 +221,9 @@ public class HJTest3{
                 hava_count = 0;
                 login(user);
                 Thread.sleep(3000);
-                mUIDevice.pressBack();
-                Thread.sleep(3000);
-                mUIDevice.pressBack();
+                //mUIDevice.pressBack();
+                //Thread.sleep(3000);
+                //mUIDevice.pressBack();
                 for (int i = 0; i < 30; i++) {
                     try {
                         if("hsm".equals(Constant.TAG) ||"ab".equals(Constant.TAG)){
